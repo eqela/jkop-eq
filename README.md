@@ -1,11 +1,6 @@
 Jkop EQ - A multi-platform, multi-language software application framework
 =========================================================================
 
-Copyright (c) 2016 Job and Esther Technologies, Inc.
-
-About Jkop EQ
--------------
-
 Jkop EQ is an open source software development framework and class library
 that targets multiple platforms, operating systems and programming languages,
 and provides a rich set of features ranging things like string manipulation,
