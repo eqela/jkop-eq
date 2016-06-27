@@ -195,7 +195,8 @@ public class SympathyApplication : CommandLineApplication, ConsoleApplication
 		if(datadir == null) {
 			datadir = File.for_native_path(param);
 			if(datadir.is_directory() == false) {
-				datadir = null;
+				log_error("Not a directory: `%s'".printf().add(datadir));
+				return(false);
 			}
 			return(true);
 		}
