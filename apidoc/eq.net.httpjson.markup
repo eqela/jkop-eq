@@ -1,0 +1,3 @@
+= Specialized HTTP client for JSON requests =
+
+This module implements a specialized utility / convenience class for retrieving JSON content over HTTP.

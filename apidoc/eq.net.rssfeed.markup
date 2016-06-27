@@ -1,0 +1,3 @@
+= RSS Feed reader / parser =
+
+Implements all necessary functionality to retrieve, read and process RSS news feeds from the Internet.

@@ -1,0 +1,5 @@
+= A multi-view application model framework =
+
+The activity manager widget provides a container widget that can be used to contain
+an application that contains multiple views within a single window, and can switch
+between the views and close and open new ones.

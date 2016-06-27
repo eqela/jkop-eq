@@ -1,0 +1,38 @@
+= A key/value pair data structure that maintains order and enables fast lookups =
+
+The OptionList is a simple data structure that combines that KeyValueList and HashTable
+data structures in one. Essentially, an arbitrary number of key/value pairs (both strings)
+can be added to the OptionList, which is effectively backed up by BOTH a KeyValueList and
+a HashTable. All calls to get(), then (string based lookups) will be done with the HashTable,
+and all calls to iterate() will be done on the KeyValueList. Effectively, then, this enables
+fast lookups (which KeyValueList does not do), as well as ordered data with multiple instances
+of the same key (which HashTable does not do).
+
+== Sample: Populating and accessing an OptionList ==
+
+--- code ---
+var options = new OptionList();
+options.add("test", "First");
+options.add("test", "Second");
+options.add("xxx", "Third");
+
+// Fast HashTable-backed lookups. Note that the "Second" entry
+// has overwritten the "First"
+Log.message(options.get("test")); // "Second"
+Log.message(options.get("xxx")); // "Third"
+
+// This will print all three entries: First, Second and Third
+foreach(KeyValuePair kvp in options) {
+	Log.message("`%s' = `%s'".printf().add(kvp.get_key()).add(kvp.get_value()));
+}
+--- code ---
+
+= add =
+
+Add a new entry to the data structure(s). Multiple values for the same key are allowed.
+
+= get =
+
+Get the entry with the given key. If multiple values for the given key have been supplied,
+this returns the one that was added last. To access all the values, use the iterate() method
+of a foreach loop.

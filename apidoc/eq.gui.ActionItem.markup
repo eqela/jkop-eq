@@ -1,0 +1,134 @@
+= A user interface action =
+
+An ActionItem object is a representation of an action within a graphical user interface. The same action item
+can conceivably be used in menus, toolbars, buttons, etc., and contains various commonly used properties:
+icon, text, description, data, event, context object, shortcut keys, selection status. Many classes in the
+Eqela GUI framework accept ActionItem objects.
+
+To construct an ActionItem, you can do something like the following:
+
+--- code ---
+// Create an item with no icon but with text and description; upon being selected, the event raised is
+// the string "on_item_selected"
+var myai1 = ActionItem.instance(null, "This is an item", "This is the description of the item", "on_item_selected");
+
+// Create an item with an icon and a class based event
+var myai2 = ActionItem.instance(IconCache.get("myicon"), "Another item", null, new MyEventClass());
+
+// Convert a string to an action item
+var myai3 = ActionItem.as_action_item("This is just a string");
+--- code ---
+
+= for_icon =
+
+Create an action item instance for a given icon image.
+
+= for_text =
+
+Create an action item instance for the given text label.
+
+= for_string =
+
+Create an action item instance for the given text label (equivalent to for_text).
+
+= for_event =
+
+Create an action item instance for the given event.
+
+= instance =
+
+Create an action item instance. Set the properties to the supplied values.
+
+= execute =
+
+Trigger the "action" of this action item, if possible. In practice, this means to call the execute()
+method of the action property, if set. Returns true if an action was actually taken, or false if no
+action took place.
+
+= set_icon =
+
+Set the icon of this action item.
+
+= get_icon =
+
+Get the icon of this action item.
+
+= set_text =
+
+Set the text label of this action item.
+
+= get_text =
+
+Get the text label of this action item.
+
+= set_desc =
+
+Set the description text of this action item.
+
+= get_desc =
+
+Get the description text of this action item.
+
+= set_data =
+
+Set the user data variable of this action item.
+
+= get_data =
+
+Get the user data variable of this action item.
+
+= set_event =
+
+Set the event to be triggered when the action item is selected.
+
+= get_event =
+
+Get the event that will be triggered when the action item is selected.
+
+= set_context =
+
+Set the object to be used to respond to context events (eg. right click, long press).
+
+= get_context =
+
+Get the current object to be used to respond to context events.
+
+= set_menu =
+
+Set a menu for this action item.
+
+= get_menu =
+
+Get the currently enabled menu of this action item.
+
+= set_shortcut =
+
+Set the (keyboard) shortcut string of this action item.
+
+= get_shortcut =
+
+Get the (keyboard) shortcut string of this action item.
+
+= set_selected =
+
+Set the "selected" flag that indicates if this action item is currently in a "selected" state.
+
+= get_selected =
+
+Get the "selected" flag.
+
+= set_action =
+
+Set an action (Executable object) that will be executed when this item is "selected".
+
+= get_action =
+
+Get the currently defined executable action.
+
+= set_disabled =
+
+Modify the "disabled" status of this action item.
+
+= get_disabled =
+
+Get the "disabled" status of this action item.

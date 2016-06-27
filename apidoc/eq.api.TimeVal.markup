@@ -1,0 +1,60 @@
+= A time value with microsecond precision =
+
+The TimeVal class provides a way to save time information, and to
+perform simple computations on it, using microsecond precision.
+
+= for_seconds =
+
+Create a new TimeVal object with the initial value of ''seconds'',
+expressed in seconds.
+
+= create =
+
+Create a new TimeVal object with the initial value of 0 seconds
+and 0 microseconds.
+
+= diff =
+
+Compare the two TimeVal objects and compute their difference ''b'' - ''a'',
+and return the result in microseconds.
+
+= get_seconds =
+
+Get the current second value of this TimeVal object.
+
+= get_useconds =
+
+Get the current microsecond value of this TimeVal object.
+
+= set_timeval =
+
+Set the value of this object to be the same as that of the other TimeVal
+object ''tv''.
+
+= set_seconds =
+
+Set the current second value of this TimeVal object.
+
+= set_useconds =
+
+Set the current microsecond value of this TimeVal object.
+
+= add =
+
+Add the specified number of seconds and/or microseconds to the value of this
+object. Either one of the parameters may be 0.
+
+= add_timeval =
+
+Add the value of the TimeVal object ''tv'' to the value of this object.
+
+= sub_timeval =
+
+Subtract the value of the TimeVal object ''tv'' from the value of this object.
+
+= usec =
+
+Return the complete value of this TimeVal object in microseconds (essentially,
+this means seconds*1000000+useconds). Note that this number gets really large
+really quickly, and the possibility of an integer overflow is very real, especially
+with larger values of seconds. Use with care.

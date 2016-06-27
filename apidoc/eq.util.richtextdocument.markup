@@ -1,0 +1,5 @@
+= Rich Text Document =
+
+Implements the data structures, parsing and processing of "rich text documents" that can
+contain text, formatting, links and other information.
+

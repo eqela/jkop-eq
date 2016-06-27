@@ -1,0 +1,4 @@
+= An asynchronous socket connection library =
+
+The socketconnection library provides an asynchronous API for
+socket programming. This is recommended and suitable for GUI applications.

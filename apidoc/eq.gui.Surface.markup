@@ -1,0 +1,49 @@
+= A low level element in a graphical user interface =
+
+Eqela user interfaces are fundamentally based on surfaces. A Surface is a low level
+instance of an element in a GUI or within a Frame. Surfaces can be moved, resized, scaled,
+rotated, and they can have various levels of transparency (alpha). Each operating system
+backend implements the Surface interface in a platform specific way, enabling all of the
+above functionalities. Surfaces can then be used to construct complex, high level interfaces.
+
+= move =
+
+Move the surface to the given coordinates (relative to parent).
+
+= resize =
+
+Change the size of the surface.
+
+= move_resize =
+
+Move and resize the surface in one operation.
+
+= set_scale =
+
+Set the current zooming scale of the surface. A separate zoom factor can be given for
+both x and y coordinate. Value of 1.0 would indicate "normal size".
+
+= set_alpha =
+
+Set the alpha value (transparency factor) of the surface.
+
+= set_rotation_angle =
+
+Set the rotation angle of the surface, in radians. Value of 0.0 would indicate "no rotation",
+and would cause the surface to appear in its default orientation.
+
+= get_scale_x =
+
+Get the current X scaling factor.
+
+= get_scale_y =
+
+Get the current Y scaling factor.
+
+= get_alpha =
+
+Get the current alpha value.
+
+= get_rotation_angle =
+
+Get the current rotation angle.

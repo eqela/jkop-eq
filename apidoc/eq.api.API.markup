@@ -1,0 +1,19 @@
+= API information =
+
+The API class can be used to access and retrieve the Eqcellent API
+information (= version).
+
+== Sample: Print the current Eqcellent version ==
+
+--- code ---
+class AboutAPI
+{
+	public static void print() {
+		Log.message("Eqcellent %s".printf().add(API.version()));
+	}
+}
+--- code ---
+
+= version =
+
+Returns the current API version

@@ -1,0 +1,76 @@
+= An integer-indexed collection of objects =
+
+An Array is a Collection that implements the underlying object storage
+in an integer-indexed, fixed-size buffer that is optimized for fast integer
+based lookups.
+
+== Sample: Creating an Array ==
+
+Note: An array is conventionally created with the static create() method,
+as shown below. The create() method MAY be given an integer parameter that,
+if present, will be used to allocate the initial size of the array. If no
+initial size is given, then the array will be grown as elements are added.
+However, if the intended size of the array is known at creation time, 
+providing the size upon creation will remove the need for repeated memory
+allocations during the adding of the elements, and will greatly enhance
+performance.
+
+--- code ---
+Array array = Array.create(4);
+array.append("First element");
+array.append("Second element");
+array.append("Third element");
+array.append("Fourth element");
+--- code ---
+
+Note that arrays are dynamic, and will grow beyond their allocated
+boundaries without being explicitly requested to do so. Therefore, the
+following continues to be legal, and will work as expected:
+
+--- code ---
+array.append("Fifth element");
+--- code ---
+
+== Sample: Iterating through an Array ==
+
+Since an Array is also a Collection, an array can be iterated using the
+exact same mechanism as any Collection. See the documentation for eq.api.Collection
+for samples.
+
+= for_iterator =
+
+Create a new array by iterating through the given iterator, and by
+adding all the encountered objects to the new linked list.
+
+= create =
+
+Create an empty array. If an integer parameter is supplied, the array is
+pre-allocated to be able to contain the specified number of elements. If the
+projected size of the array is known at creation time, this can be used to
+enhance the performance of adding the elements, as it would not then be
+required for the array to reallocate its memory upon adding the elements.
+
+= dup =
+
+Create a new array by iterating through the given collection,
+and by adding all the encountered objects to the new array.
+
+= allocate =
+
+Change the allocated size of the array. If the specified size is higher then
+the current, then the allocation will grow, making more space in the end. If the
+specified size is smaller than the current, the array will be truncated, and
+any existing elements beyond the newly allocated size will be discarded. Note
+that allocation only changes the allocated size of the array, and in the case
+of growing the array, does not affect the number of items that are added. In
+other words, when using allocate() to grow the array, the return value of count()
+returns the same value before and after calling allocate().
+
+= remove_index =
+
+Remove the element from the array at the given index.
+
+= remove_range =
+
+Remove a range of elements from the array, starting from the first (inclusive),
+ending to the last (inclusive).

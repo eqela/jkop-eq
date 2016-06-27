@@ -1,0 +1,4 @@
+= Graphical command line interface =
+
+The shell widget library implements user interface elements that can be
+used to embed a command line / text based interface within graphical applications.

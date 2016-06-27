@@ -1,0 +1,6 @@
+= Modal Dialog Library =
+
+The Modal Dialog library provides the ability to display common dialog windows and popups
+to inform the user, and to ask information from the user. The dialogs are often implemented
+using corresponding native controls, enabling native look and feel on all supported platforms.
+In cases where no such native dialogs are available, generic fallback implementations are included.

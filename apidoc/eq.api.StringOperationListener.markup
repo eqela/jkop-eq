@@ -1,0 +1,14 @@
+= A generic type for classes that receive string values as results =
+
+The StringOperationListener type allows a class to declare that it is able to
+receive a string value as a result of an operation.
+
+= to_event_receiver =
+
+Wrap this event listener object to a standard EventReceiver object. Any String
+values will then be treated appropriately, and passed to the original object.
+
+= on_string =
+
+Called when an operation has a String to submit.
+

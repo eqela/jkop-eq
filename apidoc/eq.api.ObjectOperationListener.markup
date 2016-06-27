@@ -1,0 +1,13 @@
+= A generic type for classes that receive objects as results =
+
+The ObjectOperationListener type allows a class to declare that it is able to
+receive an object as a result of an operation.
+
+= to_event_receiver =
+
+Wrap this event listener object to a standard EventReceiver object. Any object or
+Error values will then be treated appropriately, and passed to the original object.
+
+= on_object =
+
+Called when an operation has an object to submit.

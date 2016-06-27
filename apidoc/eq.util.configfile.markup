@@ -1,0 +1,5 @@
+= Simple configuration file support =
+
+The config file library module provides support for simple, commonly used
+text-based configuration files. Applications can use this functionality for
+saving of persistent configuration settings or similar information.

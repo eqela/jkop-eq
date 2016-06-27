@@ -1,0 +1,6 @@
+= Dialog widgets =
+
+The dialogwidget library contains many commonly used dialogs, such as an error
+dialog, message dialog, text input dialog, etc. Dialogs are user interface controls
+that are popped up on top of other elements, usually to either provide immediate
+output, or to ask input from the user.

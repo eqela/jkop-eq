@@ -1,0 +1,24 @@
+= A simple object that stores a key and a value =
+
+A KeyValuePair object can be used to store a key and a value in one
+object. This class is used as the underlying storage object of the
+KeyValueList, but can also be reused for other similar purposes.
+
+(See the documentation of KeyValueList for further information and
+code samples)
+
+= set_key =
+
+Set the value of the key.
+
+= get_key =
+
+Get the value of the key.
+
+= set_value =
+
+Set the value.
+
+= get_value =
+
+Get the value.

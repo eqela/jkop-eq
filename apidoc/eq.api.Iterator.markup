@@ -1,0 +1,18 @@
+= Can be used to traverse through a number of objects =
+
+A class that implements the Iterator interface provides a mechanism to "walk" or
+iterator through a sequence of objects. This class is often implemented in
+collection classes (such as LinkedList and Array).
+
+= for_object =
+
+Create a new iterator that iterates through the given object. Returns a valid
+iterator object if the given object is a known object that can be iterated over
+(eg. the object implements the Iterateable interface). If the object is not
+known to be iterateable, a null object is returned.
+
+= next =
+
+Returns the next elements in the iterateable sequence. A null object is returned
+when the sequence ends (NOTE: Therefore, null is not a valid element in any
+iterateable sequence).

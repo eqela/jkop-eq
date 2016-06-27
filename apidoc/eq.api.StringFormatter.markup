@@ -1,0 +1,15 @@
+= Constructing strings through string formatting templates =
+
+The StringFormatter acts in a way very similar to the C function printf(),
+and allows the creation of strings out of different data types (eg. strings,
+integers, floating point numbers) while choosing the formatting and the
+presentation. This functionality is normally achieved by using the printf()
+method of the String class, and this interface is rarely used directly.
+
+(See the documentation of the String class for further information and code
+samples).
+
+= add =
+
+Add parameters / content that will be substituted to the %* tags when
+performing the formatting.

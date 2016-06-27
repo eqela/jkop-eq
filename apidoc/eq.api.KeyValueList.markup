@@ -1,0 +1,92 @@
+= A collection that stores data as an ordered sequence of key / value pairs =
+
+A KeyValueList is similar to a HashTable in that it stores key / value pairs.
+However, while a HashTable provides a facility to store values based on unique
+keys that can be searched and accessed quickly, a KeyValueList stores the data
+in an ordered sequence of key / value pairs. Notably, a KeyValueList may contain
+several instances of the same key, and maintains the ordering of the key / value
+pairs, unlike a HashTable. A lookup of data from a KeyValueList, likewise,
+involves walking through the underlying data structure, and is not as fast as
+with a HashTable.
+
+== Sample: Creating a list and adding entries ==
+
+--- code ---
+var list = new KeyValueList();
+list.append("aaa", "Value for aaa");
+list.append("xx", "Value for xx");
+--- code ---
+
+== Sample: Iterating through a list ==
+
+--- code ---
+foreach(KeyValuePair kvp in list) {
+	Log.message("Key=`%s', value=`%s'".printf()
+		.add(kvp.get_key()).add(kvp.get_value()));
+}
+--- code ---
+
+= prepend =
+
+Add a new entry to the beginning of the list.
+
+= append =
+
+Add a new entry to the end of the list.
+
+= append_pair =
+
+Add a new entry (as a KeyValuePair object) to the end of the list.
+
+= set =
+
+Set the entry with the specified key to the given value. If an entry
+with the given key already exists, it will be overridden: If no such entry
+is yet present in a list, then a new one will be appended to the end of the
+list.
+
+= get =
+
+Get the first entry in the list where the key matches the given value. If
+no such entry is found, a null object is returned.
+
+= get_string =
+
+Get the first entry in the list where the key matches the given value, and
+return the value as a String object. If no such value is found, or if the
+value cannot be represented as a string, a null object is returned.
+
+= get_int =
+
+Get the first entry in the list where the key matches the given value, and
+return the value as an integer. If no such value is found, or if the
+value cannot be represented as an integer, then a default value is returned.
+You can control the default value by setting the last parameter to the desired
+value.
+
+= get_bool =
+
+Get the first entry in the list where the key matches the given value, and
+return the value as a boolean variable. If no such value is found, or if the
+value cannot be represented as boolean, then a default value is returned.
+You can control the default value by setting the last parameter to the desired
+value.
+
+= get_double =
+
+Get the first entry in the list where the key matches the given value, and
+return the value as a double. If no such value is found, or if the
+value cannot be represented as double, then a default value is returned.
+You can control the default value by setting the last parameter to the desired
+value.
+
+= get_values =
+
+Return all values in the list where the key matches the given value. The
+values will be returned as a collection object.
+
+= as_hash_table =
+
+Convert the entire list to a hash table. Note that any duplicate keys in the
+list will be truncated to a single entry, where the last entry in the list will
+be kept in the resulting hash table.

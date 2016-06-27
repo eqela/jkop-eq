@@ -1,0 +1,16 @@
+= A utility class for splitting strings =
+
+The StringSplitter allows the cutting of a string into smaller
+substrings by using a delimiter character. The effect of using
+this class is the same as calling the split() method of a String
+object.
+
+This class is provided for legacy compatibility only: Rather, use
+the split() method of the String class directly.
+
+(See the documentation for String for further information.)
+
+= split =
+
+Calls the split() method of the String ''str'' to split the string
+into components.

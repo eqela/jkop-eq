@@ -1,0 +1,4 @@
+= Encrypted file support =
+
+This module implements support for reading and writing files that are
+automatically protected by an encryption algorithm.

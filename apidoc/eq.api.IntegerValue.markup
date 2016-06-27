@@ -1,0 +1,22 @@
+= An object encapsulation of an integer primitive value =
+
+An IntegerValue object allows the encapsulation of an integer
+primitive into an object type (a subclass of Object).
+
+== Sample: Using an IntegerValue ==
+
+Using an IntegerValue is simple:
+
+--- code ---
+var iv = new IntegerValue();
+iv.set_value(30);
+Log.message("IV: %d".printf().add(iv.get_value()));
+--- code ---
+
+= set_value =
+
+Set the current integer value of the object.
+
+= get_value =
+
+Get the current integer value of the object.

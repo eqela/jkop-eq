@@ -1,0 +1,4 @@
+= Support for SQL databases =
+
+Provides generic support for the SQL language, including the
+base types for the implementation of database specific access drivers.

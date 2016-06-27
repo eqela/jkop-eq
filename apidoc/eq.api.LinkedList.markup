@@ -1,0 +1,105 @@
+= A collection type implemented as a linked list. =
+
+A linked list is a sequence of objects connected via pointers,
+optimized for fast inserts, removals and iterations. This implementation
+is implemented as a doubly-linked list.
+
+Normally, linked lists are used primarily through the methods defined
+in the Collection interface.
+
+== Sample: Create and traverse a linked list ==
+
+--- code ---
+var list = LinkedList.create();
+list.append("One string");
+list.append("Another string");
+foreach(String str in list) {
+	Log.message(str);
+}
+--- code ---
+
+= for_iterator =
+
+Create a linked list by iterating through the given iterator, and by
+adding all the encountered objects to the new linked list.
+
+= create =
+
+Create an empty linked list.
+
+= dup =
+
+Create a new linked list by iterating through the given collection,
+and by adding all the encountered objects to the new linked list.
+
+= get_first_node =
+
+Get the node object pointing to the first (HEAD) node of this
+linked list.
+
+= get_last_node =
+
+Get the node object pointing to the last (TAIL) node of this
+linked list.
+
+= get_first =
+
+Get the first object (value) in this linked list.
+
+= get_last =
+
+Get the last object (value) in this linked list.
+
+= get_node =
+
+Get a node object by index. (NOTE: Due to the nature of a linked list,
+this includes traversal of the list from the beginning. For large indexes,
+this may be slow).
+
+= add_node =
+
+Add the specified linked list node object to this list.
+
+= insert_node =
+
+Insert the specified linked list node object to this list in the specified
+index location.
+
+= insert_node_before =
+
+Insert a node in this linked list prior to the specified node.
+Returns true if successfully added.
+
+= insert_node_after =
+
+Insert a node in this linked list right after the specified node.
+Returns true if successfully added.
+
+= insert_before =
+
+Insert a node in this linked list prior to a node that contains the
+specified object (value). Returns true if successfully added.
+
+= insert_after =
+
+Insert a node in this linked list after a node that contains the
+specified object (value). Returns true if successfully added.
+
+= remove_node =
+
+Remove the specified linked list node from this list. Returns true if
+successfully removed.
+
+= find_node =
+
+Find a node from this linked list that has the specified value. Note that
+the comparison is done by direct object comparison (not by the value or
+contents or by using a .equals() method).
+
+= remove_first =
+
+Remove the first node from this list. Returns true if successfully removed.
+
+= remove_last =
+
+Remove the last node from this list. Returns true if successfully removed.

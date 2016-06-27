@@ -1,0 +1,6 @@
+= A generic parser for network streams =
+
+The module provides a simple mechanism for receiving data over the network in
+complete application level packets rather than in packets as determined by
+the network. The parser waits for packets to be completely received prior
+to sending them to the application.

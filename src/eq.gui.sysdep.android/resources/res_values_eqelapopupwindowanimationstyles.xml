@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+	<style name="eqelapopupwindowanimation" parent="android:Animation">
+		<item name="@android:windowEnterAnimation">@anim/eqelapopupwindowanimationshow</item>
+		<item name="@android:windowExitAnimation">@anim/eqelapopupwindowanimationhide</item>
+	</style>
+</resources>

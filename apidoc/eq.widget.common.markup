@@ -1,0 +1,5 @@
+= Implementations for commonly used user interface controls =
+
+The common widget library contains many commonly used user interface controls
+(widgets), such as text labels, push buttons, etc. This library is normally
+used in Eqela GUI applications to provide basic user interface functionality.

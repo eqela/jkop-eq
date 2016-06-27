@@ -1,0 +1,4 @@
+= File system related user interface controls =
+
+The file widget library provides commonly used user interface controls that can be
+used when dealing with files and directories, or other filesystem related activities.

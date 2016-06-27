@@ -1,0 +1,113 @@
+= A generic error class =
+
+The Error class can be used to represents various kinds of errors that can also be
+represented as strings. The Error class can also be subclassed by the user to add
+application specific information.
+
+The Error class has two notable properties: ''code'' and ''message'', both of
+which are used to indicate what the error was and any other details about the error.
+The "code" parameter is intended to be machine readable (eg. "file_not_found"), and
+the "message" is intended to be human readable (eg. "The specified file was not found").
+
+== Sample: Using the Error class as a return value ==
+
+--- code ---
+class ErrorSample1
+{
+	public Error do_something(int n) {
+		if(n == 0) {
+			return(Error.for_message("N should not be 0"));
+		}
+		return(null);
+	}
+
+	public void call_something(int n) {
+		var e = do_something(n);
+		if(e != null) {
+			// Error is Stringable, so it can be passed
+			// directly to the logger methods.
+			log_error(e);
+		}
+	}
+}
+--- code ---
+
+== Sample: Using the Error class as a parameter ==
+
+--- code ---
+class ErrorSample2
+{
+	public bool do_something(int n, Error error) {
+		if(n == 0) {
+			Error.set_error_message(error, "N should not be 0"));
+			return(false);
+		}
+		return(true);
+	}
+
+	public void call_something(int n) {
+		var e = new Error();
+		if(do_something(n, err) == false) {
+			log_error(e);
+		}
+	}
+}
+--- code ---
+
+= for_code =
+
+Create a new Error object, and initialize it with the given error code.
+
+= for_message =
+
+Create a new Error object, and initialize it with the given error message.
+
+= instance =
+
+Create a new Error object, and initialize it with the given error code and message.
+
+= set =
+
+Set the code and/or the message of an existing Error object to the specified values.
+This is a convenience method to set the values in a null-safe manner: If the specified
+object is null, then no action is taken.
+
+= set_error_code =
+
+Set the error code of an existing Error object to the specified value.
+This is a convenience method to set the values in a null-safe manner: If the specified
+object is null, then no action is taken.
+
+= set_error_message =
+
+Set the error message of an existing Error object to the specified value.
+This is a convenience method to set the values in a null-safe manner: If the specified
+object is null, then no action is taken.
+
+= is_error =
+
+Checks if the given Object is an Error object. If it is, then return true.
+
+= as_string =
+
+Returns a String representation of the given Error object, if Error is not null.
+
+= clear =
+
+Clears the properties of this Error object (both code and message will be set to null).
+
+= set_code =
+
+Set the current value of ''code''.
+
+= get_code =
+
+Get the current value of ''code''.
+
+= set_message =
+
+Set the current value of ''message''.
+
+= get_message =
+
+Get the current value of ''message''.

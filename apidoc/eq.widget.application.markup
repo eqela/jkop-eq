@@ -1,0 +1,4 @@
+= A high level application main widget =
+
+The application widget provides a common base class that can be used to easily
+construct the main view of an application. The widget by default includes a title bar.

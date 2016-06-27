@@ -1,0 +1,3 @@
+= A widget that can be used to represent the frame of a popup window =
+
+The window frame widget provides a custom rendering of a window frame that can be used to construct custom window controls.

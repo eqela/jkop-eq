@@ -1,0 +1,13 @@
+= A generic type for classes that receive collection objects as results =
+
+The CollectionOperationListener type allows a class to declare that it is able to
+receive a Collection object as a result of an operation.
+
+= to_event_receiver =
+
+Wrap this event listener object to a standard EventReceiver object. Any Collection
+objects will then be treated appropriately, and passed to the original object.
+
+= on_collection =
+
+Called when an operation has a Collection to submit.

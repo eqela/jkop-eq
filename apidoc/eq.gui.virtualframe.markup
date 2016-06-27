@@ -1,0 +1,5 @@
+= An offscreen GUI frame implementation =
+
+Provides a simulation of a window frame that does not really exist. Can be used to
+perform off screen rendering, and acts as a basis for printing, taking screenshots
+and otherwise exporting output of graphical rendering.

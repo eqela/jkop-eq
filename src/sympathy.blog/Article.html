@@ -1,0 +1,46 @@
+<div class="article">
+<div class="title"><%= article.title %></div>
+<div class="intro"><%= article.timestamp %></div>
+<div class="content">
+<% if ${article.cover_photo} != "" %>
+	<img class="article_photo" src="<%= article.cover_photo %>" />
+<% end %>
+<% if ${article.intro_html} != "" %>
+	<%= article.intro_html %>
+<% end %>
+<hr />
+<%= article.content_html %>
+<% if ${site.sharethis_publisher_id} != "" %>
+<hr />
+<div id="sharearticle">
+<h2>Share this article:</h2>
+<div id="buttons">
+<span class='st_sharethis_large' displayText='ShareThis'></span>
+<span class='st_facebook_large' displayText='Facebook'></span>
+<span class='st_twitter_large' displayText='Tweet'></span>
+<span class='st_linkedin_large' displayText='LinkedIn'></span>
+<span class='st_pinterest_large' displayText='Pinterest'></span>
+<span class='st_email_large' displayText='Email'></span>
+</div>
+<div style="clear: both;"></div>
+</div>
+<% end %>
+<% if ${site.disqus_id} != "" %>
+<hr />
+<div id="disqus_thread"></div>
+<script>
+var disqus_config = function () {
+this.page.url = "<%= site_url %>/articles/<%= article.title_id %>/";
+this.page.identifier = "<%= article.title_id %>";
+};
+(function() {
+var d = document, s = d.createElement('script');
+s.src = '//<%= site.disqus_id %>.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+<% end %>
+</div>
+</div>

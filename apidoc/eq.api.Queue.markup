@@ -1,0 +1,57 @@
+= A First-In-First-Out (FIFO) data structure =
+
+The Queue class provies a data structure implementation that
+represents a first-in-first-out (FIFO) approach. Note that the
+Queue is NOT thread-safe, and needs to be synchronized using appropriate
+techniques (Mutex) in order to use the Queue from multiple threads.
+
+== Sample: Adding (pushing) to a queue ==
+
+--- code ---
+var q = Queue.instance();
+q.push("First");
+q.push("Second");
+--- code ---
+
+== Sample: Getting (popping) from a queue ==
+
+--- code ---
+Log.message(q.peek()); // "First"
+Log.message(q.pop()); // "First"
+Log.message(q.pop()); // "Second"
+--- code ---
+
+= instance =
+
+Create a new instance of a Queue object.
+
+= create =
+
+Create a new instance of a Queue object.
+
+= push_first =
+
+Push to the beginning of the queue (the newly pushed Object becomes the
+first in line to be popped).
+
+= push =
+
+Push to the end of the queue.
+
+= pop =
+
+Get the first element of the queue, and remove the element from the queue.
+
+= peek =
+
+Get the first element of the queue, but do not remove it from the queue. Subsequent
+calls to peek() will render the same result, and a subsequent call to pop() will
+also return the same object again.
+
+= count =
+
+Return the number of elements in this queue.
+
+= clear =
+
+Remove all elements from this queue.

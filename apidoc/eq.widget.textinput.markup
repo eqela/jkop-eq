@@ -1,0 +1,5 @@
+= Text input widgets =
+
+The text input widget offers a way for an application to ask the user for text input.
+The input can be requested in various ways and formats, and depending on the platform,
+a virtual keyboard may or may not be shown automatically.

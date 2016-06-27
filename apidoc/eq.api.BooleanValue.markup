@@ -1,0 +1,24 @@
+= An object encapsulation of a boolean (bool) primitive value =
+
+A BooleanValue object allows the encapsulation of a boolean (bool) primitive into
+an object type (a subclass of Object).
+
+== Sample: Using a BooleanValue ==
+
+Using a BooleanValue is simple:
+
+--- code ---
+var bv = new BooleanValue();
+bv.set_value(true);
+if(bv.get_value()) {
+	; // Do any necessary operations
+}
+--- code ---
+
+= set_value =
+
+Set the current boolean value of the object.
+
+= get_value =
+
+Get the current boolean value of the object.

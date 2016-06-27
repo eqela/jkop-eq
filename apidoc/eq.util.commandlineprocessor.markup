@@ -1,0 +1,4 @@
+= Command line processor =
+
+Implements functionality that can be used to process and parse a text
+based command line command, including expanding wildcards and matching them as filename patterns.

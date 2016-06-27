@@ -1,0 +1,71 @@
+= A generic way to encapsulate primitive types as objects =
+
+The programming language defines a number of primitive types (eg. int,
+double, bool, etc.) that are distinct from object types, and cannot be
+treated as objects. Sometimes, however, there is a need to pass a primitive
+type as an object instead, which can also be done through the use of the
+primitive type support of the API. Notably, the API defines three interfaces
+for this purpose: eq.api.Integer (for integer values), eq.api.Double (for
+floating point values) and eq.api.Boolean (for boolean values).
+
+Each of the interfaces represents the corresponding primitive type, but is
+in itself an object type and has a prerequisite of being an eq.api.Object.
+Thus, wherever an Object is expected, this primitive object can also be passed.
+
+One particular class that implements these interfaces is the Primitive class,
+which is a convenience class to convert primitives to objects and vice-versa.
+To make objects out of primitive types with this class, one could use the following
+kind of code:
+
+--- code ---
+var p_double = Primitive.for_double(100.5);
+var p_int = Primitive.for_integer(100);
+var p_bool = Primitive.for_boolean(false);
+--- code ---
+
+This would result in variables p_double, p_int and p_bool that are instances
+of "eq.api.Object", and could be passed around in API calls as such. To convert
+back to primitive types, then, you could do this:
+
+--- code ---
+// Perform a type safe conversion. If the objects given as parameters are NOT
+// of the required data types, then a default value is returned instead. An optional
+// second parameter can be used to specify the default value if necessary.
+// If in doubt, this is the recommended way.
+{
+    double val_double = Double.as_double(p_double);
+    int val_int = Integer.as_integer(p_int);
+    bool val_bool = Boolean.as_boolean(p_bool);
+}
+
+// Perform an explicit conversion without type checking. If the objects given
+// (p_double, p_int and p_bool) are not of the expected data types, then unspecified
+// behaviour will occur (most likely crashing of the program).
+{
+    double val_double = ((Double)p_double).to_double();
+    int val_int = ((Integer)p_int).to_integer();
+    bool val_bool = ((Boolean)p_bool).to_boolean();
+}
+--- code ---
+
+In fact, the objects returned by the Primitive class implement all three interfaces,
+so the primitive objects constructed as above can also be used to be converted to the
+other data types as well. Thus, the following code is also legal:
+
+--- code ---
+double val_double = Double.as_double(p_int);
+int val_int = Integer.as_integer(p_bool);
+bool val_bool = Boolean.as_boolean(p_double);
+--- code ---
+
+= for_integer =
+
+Create an Integer / Object for the given primitive int value.
+
+= for_double =
+
+Create a Double / Object for the given primitive double value.
+
+= for_boolean =
+
+Create a Boolean / Object for the given primitive bool value.

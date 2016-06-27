@@ -1,0 +1,3 @@
+= Secure Socket Layer (SSL) support =
+
+The SSL library implements support for the Secure Socket Layer (SSL) socket encapsulation.

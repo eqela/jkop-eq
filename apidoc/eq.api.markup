@@ -1,0 +1,6 @@
+= The core API module =
+
+The eq.api module serves the fundamental core module for the Eqcellent
+platform, and provides all common / generic programming environment
+functionalities such as data types, string operations and data
+structures. All other modules are heavily dependent on eq.api.

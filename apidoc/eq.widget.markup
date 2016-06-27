@@ -1,0 +1,8 @@
+= Graphical user interface component library =
+
+The widget library provides a common application model for applications that
+are composed of a collection of reusable user interface components (which are
+called widgets in Eqela programming). The widget library includes a few commonly
+used widgets for the layout of user interface requirements, and provides the
+programmer with the ability to extend the functionality by implementing their
+own custom widgets.

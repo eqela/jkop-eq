@@ -1,0 +1,4 @@
+= GUI support for dealing with compressed archives =
+
+This module provides graphical front end(s) for dealing with graphical
+archives like ZIP, tar.gz, tar.bz2, etc.

@@ -1,0 +1,4 @@
+= Background task management functionality =
+
+Provides functionality and interfaces for the starting, stopping and
+execution of tasks in the background, including timers and runnable tasks or task threads.

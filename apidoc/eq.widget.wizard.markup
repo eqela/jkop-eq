@@ -1,0 +1,6 @@
+= A widget that can present a series of questions or other UI elements =
+
+Wizard user interfaces are familiar to many users from other platforms. In a
+wizard, the user is presented with a series of consecutive dialogs or forms
+that can gather all required information from the user in small parts. This
+module implements a wizard interface for Eqela applications.

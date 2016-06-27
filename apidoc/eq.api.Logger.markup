@@ -1,0 +1,58 @@
+= A backend for logging messages =
+
+By subclassing Logger, an application can provide a custom backend for determining
+the output and format of log messages commonly logged by using the Log class.
+
+== Sample: A custom logger class ==
+
+The following sample Logger class stores all messages in a linked list instead
+of displaying them on screen or terminal.
+
+--- code ---
+class MyLogger : Logger
+{
+	property Collection messages;
+
+	public MyLogger() {
+		messages = LinkedList.create();
+	}
+
+	public void log(String prefix, String msg) {
+		messages.append("[%s] %s".printf().add(prefix).add(msg).to_string());
+	}
+}
+--- code ---
+
+= for_default =
+
+Create a new instance of a logger that represents the system default.
+
+= log =
+
+The log() method is used as a generic fallback method, and is by default called
+by the other log_*() methods to perform the actual work. Therefore, overriding this
+method would be enough in a custom logger implementation to provide full functionality.
+
+= log_message =
+
+Called for "message" level log messages. By default, calls log().
+
+= log_error =
+
+Called for "error" level log messages. By default, calls log().
+
+= log_warning =
+
+Called for "warning" level log messages. By default, calls log().
+
+= log_debug =
+
+Called for "debug" level log messages. By default, calls log().
+
+= set_log_level =
+
+Configures the current logging level used by this object.
+
+= get_log_level =
+
+Gets the currently configured logging level for this object.

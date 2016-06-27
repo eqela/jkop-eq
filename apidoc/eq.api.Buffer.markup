@@ -1,0 +1,53 @@
+= A collection of bytes =
+
+A buffer represents a chunk of bytes (buffer) of a specific
+size that can contain any kind of binary data in any format.
+
+(See the descriptions for eq.api.Pointer and eq.api.DynamicBuffer
+for code samples)
+
+= is_empty =
+
+Check if the given variable represents an "empty" buffer. This would mean
+that the pointer is either null or represents a valid object with no data
+(size is 0).
+
+= dup =
+
+Create and allocate a new buffer that has the exact same (duplicate) contents
+as the given buffer.
+
+= for_pointer =
+
+Creates a new buffer object, the contents of which will be represented by the
+memory pointed to by the given Pointer object. The given size value will also
+be considered as the size of the buffer itself. Note that a Buffer object that
+is created in this way does not create or allocate a new buffer (nor will it
+copy the contents pointed to by the Pointer), but will simply share the memory
+space with the original Pointer. If a copy is desired, then calling dup() for
+the newly created Buffer object would work.
+
+= for_owned_pointer =
+
+The for_owned_pointer() works exactly the same way as for_pointer() on all
+platforms except those that are based on the C language. On C based targets,
+the for_owned_pointer() creates a Buffer object just like for_pointer() does,
+but will now consider itself as the "owner" of the memory area pointed to.
+Essentially this means that once the Buffer object is unallocated, it will also
+automatically unallocate the memory area that was pointed to. The for_pointer()
+method will never do that.
+
+= for_hex_string =
+
+The method takes a String object as a parameter, and parses it as a hex encoded
+string (two characters per byte). The resulting binary bytes are then saved
+in a buffer, and the resulting object returned.
+
+= get_pointer =
+
+Get an instance of a Pointer object that points to the beginning of the memory
+area represented by this Buffer.
+
+= get_size =
+
+Get the size (in bytes) of this buffer.

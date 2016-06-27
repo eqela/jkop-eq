@@ -1,0 +1,63 @@
+= A chunk of memory that is dynamically allocated =
+
+A dynamic buffer is allocated dynamically to a specified size, and can be grown and
+shrinked as necessary to accommodate a variable-sized amount of data.
+
+== Sample: Creating a dynamic buffer ==
+
+The following sample allocates a new Buffer of 1024 bytes:
+
+--- code ---
+var buffer = DynamicBuffer.for_size(1024);
+if(buffer == null) {
+	return;
+}
+--- code ---
+
+== Sample: Reallocating the buffer ==
+
+The following code adds 1024 bytes to the size of the buffer:
+
+--- code ---
+buffer.append(1024);
+--- code ---
+
+= create =
+
+Create a new dynamic buffer object, initially with zero length. A parameter
+value (integer) can be supplied to specify the initial buffer size. However, it
+is recommended to use the other method for_size() for that purpose (see below).
+
+= for_size =
+
+Create a new dynamic buffer object, and initialize it to the given size (given
+in bytes).
+
+= for_buffer =
+
+Create a new dynamic buffer object, and initialize it with the contents of the
+given Buffer.
+
+= cat =
+
+Concatenate a Buffer object to a given DynamicBuffer. By default, the entire buffer
+is copied, but to limit the size of the data to be copied, a third parameter can be
+supplied (which indicates the size in bytes to concatenate).
+
+= cat_byte =
+
+Add a single byte to the dynamic buffer.
+
+= free =
+
+Unallocate all memory associated with the buffer. The lifetime of the DynamicBuffer
+object itself is subject to regular memory management rules.
+
+= append =
+
+Append the specified number of bytes to the size of the buffer, reallocating the
+memory of the Buffer if necessary.
+
+= allocate =
+
+Specify a new size for the buffer.

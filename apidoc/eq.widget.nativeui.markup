@@ -1,0 +1,5 @@
+= Native widget support =
+
+The nativewidget library provides support for the inclusion of native widgets
+of various platforms. The implementation is obviously highly platform specific,
+and not all platforms are fully supported.

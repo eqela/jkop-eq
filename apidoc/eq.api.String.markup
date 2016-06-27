@@ -1,0 +1,332 @@
+= A text string =
+
+A String object represents a textual string that may contain either ASCII
+or UNICODE characters. The exact implementation and memory storage encoding
+of the string depends on the underlying platform and may be UTF-8, USC2, or
+some other encoding. In all cases, String objects are immutable, and any
+method that "modifies" a string, in fact returns a new copy of the string
+(for strings that can be modified, see either StringBuffer or EditableString).
+Strings are exclusively constructed using one of the static methods. However,
+the compiler automatically adds a relevant call to "String.for_strptr()"
+when string literals in the source code are encountered.
+
+== Sample: Declaring a String ==
+
+The easiest way by far is by simply declaring a string literal, as follows:
+
+--- code ---
+var strobject = "This is a string";
+--- code ---
+
+The resulting ''strobject'' object would now be of type "eq.api.String". In
+fact, string literals themselves can be considered to be valid instances of
+the String class, and therefore you can directly call string methods on them,
+and the following is legal:
+
+--- code ---
+var substring = "This is a string".substring(5, 2); // "is"
+--- code ---
+
+== Sample: Constructing strings ==
+
+String objects are immutable, therefore modifying a string creates a new object,
+and will not change the original. Consider the following code:
+
+--- code ---
+var strobject = "This is a string";
+var secondobject = strobject.append(" and this one");
+--- code ---
+
+The value of "strobject" continues to be "This is a string", while the value of
+"secondobject" will now be "This is a string and this one".
+
+Given this nature of strings, it is not efficient to construct strings from smaller
+components through the use of append(), as on each call, the entire string is
+reallocated. Rather, when constructing strings, one can use the StringBuffer object
+as follows:
+
+--- code ---
+var sb = StringBuffer.create();
+sb.append("This ");
+sb.append("is ");
+sb.append_c('a');
+sb.append_c(' ');
+sb.append("a string");
+var as_string = sb.to_string();
+--- code ---
+
+The StringBuffer handles memory allocation and appending efficiently, and thus the
+above code represents a faster way to construct a string from components.
+
+== Sample: Formatting strings ==
+
+Another way to construct strings is through the use of formatting. This can be done
+through the "eq.api.StringFormatter" interface and the builtin printf() method of
+String objects. This interprets the string as a kind of a template, and allows parts
+of it to be substituted with other strings, integers, etc. The syntax of this
+formatting is familiar to C programmers as being the same as that of the classic C
+printf() function. Thus, consider the following code:
+
+--- code ---
+var mystring = "This is %s. Very nice".printf().add("Hello").to_string();
+--- code ---
+
+The above code would result to a string object "mystring" with the value of "This
+is Hello. Very nice".
+
+Note that the add() method of StringFormatter, as shown above, expects an instance of
+"eq.api.Object". Thus, to pass primitive types, one would use the Primitive class as
+was discussed earlier. To format in integers and doubles, it would therefore be done
+this way:
+
+--- code ---
+var anotherstring = "Integer %d and double %f".printf()
+    .add(Primitive.for_integer(100))
+    .add(Primitive.for_double(15.64)).to_string();
+--- code ---
+
+This would result in the value of "anotherstring" to become "Integer 100 and double 15.64".
+
+= instance =
+
+Create a new String object that has the same value as ''o''.
+
+= as_string =
+
+Try to convert the given Object ''o'' to a String object, and return the newly created
+object. If o is null, or if it cannot be converted to a String, a null object will
+be returned.
+
+= as_strptr =
+
+Try to convert the given Object to the primitive strptr type (the String type of the
+underlying platform). It this cannot be done, null will be returned.
+
+= is_in_collection =
+
+Checks if the given String ''str'' is found in Collection ''c''. If a matching
+String is found in the collection, true is returned. Otherwise false. Note that the
+Strings will be compared using the equals() method, and therefore the result is true
+if any of the CONTENTS of the strings in the collection will match, even if they are
+not represented by the same object as ''str''.
+
+= is_empty =
+
+Return true if the given Object is either null, not a String, or is a String with a
+length < 1.
+
+= for_object =
+
+Try to construct a String representation of Object ''o''. If successful, a valid
+String object is returned, otherwise null.
+
+= for_character =
+
+Create a String object that will contain the specified character only.
+
+= for_integer =
+
+Create a String object that will be a string representation of the given integer.
+
+= for_double =
+
+Create a String object that will be a string representation of the given double-precision
+floating point number.
+
+= for_boolean =
+
+Create a String object that will be a string representation of the given boolean
+value (either "true" or "false").
+
+= for_strptr =
+
+Create a String object from an instance of strptr (the native String type/format of
+the underlying platform).
+
+= for_utf8_buffer =
+
+Create a new String object by parsing the contents of the given Buffer that
+is expected to be in UTF8 format. The alternative second parameter ''haszero'' indicates
+if the Buffer ''data'' contains a trailing 0-byte (sometimes called null-byte),
+as is common in C-derived platforms, or not.
+
+= combine =
+
+The combine() method accepts a Collection of String objects (''strings''), and
+an optional delimiter (''delim''). The method will then loop through all String
+objects in the collection, and will concatenate them into a single String. If
+delim > 0, then the delim character will be inserted in between all the strings.
+If the last parameter (''unique'') is set to "true", the method will also ensure
+that if the same string occurs several times in the collection, only one instance
+will be included in the resulting String. The method will then return the resulting
+String as its return value.
+
+= printf =
+
+Creates a StringFormatter that can be used to format new strings (see above for
+examples).
+
+= dup =
+
+Creates a new string that is the exact duplicate of this one. Often used for
+memory management purposes especially on C-based platforms (where the ownership
+of the original strptr is not under the application's control, calling dup() offers
+a convenient way for the new String object to take ownership of its memory).
+
+= append =
+
+Creates a new String that is the result of concatenation of the current string
+and the parameter given to append.
+
+= get_length =
+
+Gets the length (in characters, not bytes) of the current string.
+
+= get_char =
+
+Gets the character with index ''n'' in the current string. Note that, depending
+on the underlying implementation, this may involve traversing the entire string
+from the beginning, and should therefore not be used for iteration purposes
+(use iterate() instead, see below).
+
+= truncate =
+
+Shorten the string to the maximum length of ''len''. Returns the new String
+representing the result of the operation.
+
+= replace =
+
+Replace all instances of character ''o'' with character ''r''. Returns the new String
+representing the result of the operation.
+
+= replace_char =
+
+Replace all instances of character ''o'' with character ''r''. Returns the new String
+representing the result of the operation.
+
+= replace_string =
+
+Replace all instances of substring ''o'' with new string ''r''. Returns the new String
+representing the result of the operation.
+
+= remove =
+
+Remove ''len'' characters starting from ''start''. Returns the new String
+representing the result of the operation.
+
+= insert =
+
+Creates a new String where the string ''str'' has been inserted to position ''pos''.
+
+= substring =
+
+Extract characters starting from index ''start'', and create a new string that represents
+those characters. If the last parameter ''alength'' is specified, then copy a maximum
+of that many characters to the new string. If alength < 0, then copy until the end
+of the original string.
+
+= reverse =
+
+Create a new string that represents the same string, but in reverse order.
+
+= lowecase =
+
+Create a new string that represents the same string, but with all uppercase characters
+converted to lowercase.
+
+= uppercase =
+
+Create a new string that represents the same string, but with all lowercase characters
+converted to uppercase.
+
+= strip =
+
+Remove all whitespace and blank characters from the beginning and end of the string,
+and create a new string that represents the result of this.
+
+= split =
+
+Cut the string into several components (accessible via the returned Iterator), each
+of them delimited by the character ''delim''. If the ''max'' parameter is supplied,
+then a maximum of that many components will be returned. The results will include
+empty strings if delimiters are found in consecutive indexes, and/or in the very
+beginning or end of the string.
+
+= str =
+
+Returns the first index in the string where the given substring is found.
+
+= contains =
+
+Returns true if the string contains the given substring.
+
+= rstr =
+
+Returns the last index in the string where the given substring is found.
+
+= chr =
+
+Returns the first index in the string where the given character is found.
+
+= rchr =
+
+Returns the last index in the string where the given character is found.
+
+= has_prefix =
+
+Returns true if the string starts with the given prefix.
+
+= has_suffix =
+
+Returns true if the string ends with the given suffix.
+
+= compare =
+
+Compare this string to the given object's String representation, and return an
+integer that indicates their sorting order (either -1, 0 or 1).
+
+= compare_ignore_case =
+
+Same operation as compare(), but treats all lowercase and uppercase characters
+as equivalent.
+
+= equals =
+
+Checks if this object and the one given as parameter are representative of the
+same String content. Return true if the content of both strings is exactly the same.
+
+= equals_ignore_case =
+
+Same operation as equals(), but treats all lowercase and uppercase characters
+as equivalent.
+
+= iterate =
+
+Iterate this string one character at a time.
+
+= iterate_reverse =
+
+Iterate this string one character at a time, starting from the last character of
+the string, moving towards the first one.
+
+= to_integer_base =
+
+Convert the string to an integer variable using the specified ''ibase'' as the
+base number system (commonly either 10 or 16).
+
+= to_strptr =
+
+Get the strptr value (the string data type of the underlying platform) of this String.
+
+= to_utf8_buffer =
+
+Convert this string to a buffer encoded in UTF8 format. If the parameter ''zero''
+is true, then include also an additional 0-byte in the end of the Buffer.
+
+= hash =
+
+Compute the hash value (integer) of this string.
+
+= as_editable =
+
+Get an instance of EditableString that represents the same contents as this String.

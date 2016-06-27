@@ -1,0 +1,4 @@
+= Implementations of common commands to be used with com.eqela.libshell =
+
+This module implements many commands that are commonly used on the command line,
+that can be used together with the shell implementation in com.eqela.libshell

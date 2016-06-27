@@ -1,0 +1,37 @@
+= Create and access a temporary directory =
+
+Sometimes an application needs to use a temporary space to save its files. The Tmpdir
+class provides a shortcut for the creation and deletion of such temporary directories.
+
+This class is considered deprecated, and should not be used. Use of eq.os.TemporaryDirectory
+is encouraged instead.
+
+= create =
+
+Create a new temporary directory, and return a Tmpdir instance to represent it. The first
+parameter can be used to control the parent directory of the new directory, and the second parameter
+to provide a part of the newly created directory name. If "transient" is set to true, then the
+directory will automatically be deleted when release() is called or the Tmpdir object itself
+gets unallocated. A custom logger can also be provided.
+
+= release =
+
+If the object was marked as transient, the directory will be deleted, along
+with all of its contents.
+
+= set_transient =
+
+Set the value of the transient flag.
+
+= get_transient =
+
+Get the value of the transient flag.
+
+= set_logger =
+
+Set a custom logger object.
+
+= get_logger =
+
+Get the currently used logger object.
+

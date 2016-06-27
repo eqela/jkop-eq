@@ -1,0 +1,43 @@
+
+= A special iterator for String objects =
+
+The StringIterator class provides a specialized iterator interface to be used for
+iterating String objects. Notably, it allows to access the characters of the string
+directly as primtive integers, rather than Integer objects, as would be the case with
+a regular Iterator, thereby providing a slightly more efficient way to iterate strings.
+
+== Sample: Iterating through all the characters in a string ==
+
+--- code ---
+String mystring = "This is my string";
+StringIterator it = mystring.iterate();
+int c;
+while((c = it.next_char()) > 0) {
+	Log.message("Character: `%c'".printf().add(c));
+}
+--- code ---
+
+= peek_next_char =
+
+Return the next available character, but do not advance the iterator. Repeated
+calls to peek_next_char() will yield the same character until such time that
+next_char() is called. Returns a value < 0 if the string has ended and no character
+is available.
+
+= next_char =
+
+Return the next available character in the iterator, and advances the iterator
+forward to the next character. Returns a value < 0 if the string has ended and
+no character is available.
+
+= prev_char =
+
+Move the iterator back by one character, and return the character found in that
+previous position. Returns a value < 0 if the movement would cause the iterator
+to move beyond the beginning of the string.
+
+= copy =
+
+Return a new iterator that is initially pointing to the exact same position as the
+original. After the duplicate has been returned, the two iterators can move
+independently.

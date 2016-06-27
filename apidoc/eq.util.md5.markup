@@ -1,0 +1,4 @@
+= MD5 hashing support =
+
+MD5 is a popular hashing (one way encryption) mechanism, used in many applications.
+This module provides support for generating MD5 hashes from any input data.

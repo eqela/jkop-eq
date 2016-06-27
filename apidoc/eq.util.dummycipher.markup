@@ -1,0 +1,5 @@
+= Dummy cipher protocol =
+
+A trivial implementation of a cipher protocol that can be used for testing of
+encryption algorithms. Do not use for "real encryption": Any data encrypted
+with the dummy cipher is easily restored.

@@ -1,0 +1,5 @@
+= Form widgets =
+
+Provides widgets for the implementation of simple forms; user interface
+layouts intended to ask the user for input, usually using a number of
+controls of different types.

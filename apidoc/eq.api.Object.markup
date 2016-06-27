@@ -1,0 +1,48 @@
+= A common base class for all objects =
+
+The Object class is the common base class for all objects in Eqela programs.
+All objects that are not declared as "fundamental" will automatically use Object
+as their base class if no other base class is defined. The class therefore also
+serves as a "generic class" where the exact type of an object is not specified.
+The class has no methods or member variables.
+
+Therefore, the following declarations are equivalent:
+
+--- code ---
+class MyClass
+{
+}
+
+class MyClass : Object
+{
+}
+
+class MyClass : eq.api.Object
+{
+}
+--- code ---
+
+Because of this, the Object class also serves as a generic type, and can be used
+as a type where the exact type is known. Thus, consider the following code:
+
+--- code ---
+public void process_object(Object o) {
+	if(o is String) {
+		; // Do string actions
+	}
+	if(o is Buffer) {
+		; // Do buffer actions
+	}
+	// etc.
+}
+--- code ---
+
+= _S =
+
+A globally available shortcut method for constructing a String
+object out of an strptr object.
+
+= get_object_id =
+
+Gets an ID string that represents this object. The exact format of the ID is
+platform specific, but should always be unique for each instance of object.

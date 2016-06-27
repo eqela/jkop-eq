@@ -1,0 +1,81 @@
+= An object that can log messages =
+
+By subclassing LoggerObject, a class can have a built-in mechanism for logging
+messages via either the system default logger or an object-specific instance of
+a Logger class.
+
+For this purpose, the LoggerObject class provides several methods (prefixed with
+"log_") that the subclass can use (as opposed to static methods of the "Log" class
+that would otherwise need to be used).
+
+== Sample: A class that inherits LoggerObject ==
+
+--- code ---
+class MyClass : LoggerObject
+{
+	public MyClass() {
+		// Should you define a custom logger class to be used
+		// only in this class, you can configure it this way:
+		set_logger(new MyCustomLogger());
+	}
+
+	public void log_some_messages() {
+		log_message("This message is logged through LoggerObject");
+		log_error("This is an error");
+		log_warning("This is a warning");
+		log_debug("Debug information");
+	}
+}
+--- code ---
+
+= set_logger_for_object =
+
+A convenience method for setting the logger for any given instance of Object.
+If the object reference is null, or if the object is not an instance of
+LoggerObject, then the operation will fail and produce no result: However, if
+the given object is a valid instance of a class that extends LoggerObject,
+then the active logger of the object will be set accordingly.
+
+= get_logger =
+
+Get the current Logger instance being used by this object.
+
+= set_logger =
+
+Set the current Logger instance being used by this object.
+
+= on_logger_changed =
+
+Automatically called when the Logger object instance used by this object
+is changed. Override the method in order to do any necessary processing
+in response to the change.
+
+= is_log_debug =
+
+Will be called to determine if the object is in "debug logging" mode.
+
+= set_log_level =
+
+Called to set the current logging level. See the documentation for
+eq.api.Log for the different possible levels.
+
+= get_log_level =
+
+Called to get the current logging level. See the documentation for
+eq.api.Log for the different possible levels.
+
+= log_message =
+
+Log a message using the currently active logger, using the "message" logging level.
+
+= log_error =
+
+Log a message using the currently active logger, using the "error" logging level.
+
+= log_warning =
+
+Log a message using the currently active logger, using the "warning" logging level.
+
+= log_debug =
+
+Log a message using the currently active logger, using the "debug" logging level.

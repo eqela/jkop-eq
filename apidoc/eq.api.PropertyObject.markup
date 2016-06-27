@@ -1,0 +1,6 @@
+= An object that can store key / value properties =
+
+A PropertyObject is a kind of object that includes a HashTable that
+can store key / value properties. The use of this class is considered
+deprecated, and direct use of the HashTable class is considered
+the recommended way to achieve key / value storage functionality.

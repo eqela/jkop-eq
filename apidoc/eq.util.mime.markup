@@ -1,0 +1,3 @@
+= MIME type support =
+
+Common functionality for determining MIME types of files and other MIME related information.

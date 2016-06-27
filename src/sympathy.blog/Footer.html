@@ -1,0 +1,50 @@
+</div>
+
+<div id="rightsidebar">
+
+<% if ${site.twitter_widget_id} != "" %>
+<div class="sidebox">
+	<a class="twitter-timeline button" href="https://twitter.com/<%= site.twitter_id %>" data-widget-id="<%= site.twitter_widget_id %>">Tweets of @<%= site.twitter_id %> ..</a>
+	<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+</div>
+<% end %>
+	
+<div class="sidebox">
+	<a target="_blank" href="http://www.eqela.com/"><img src="/public/DiscoverEqela300x250.jpg" /></a>
+</div>
+	
+<div class="sidebox">
+	<a target="_blank" href="http://emerge.training/"><img src="/public/EMERGE300x250.jpg" /></a>
+</div>
+
+<div class="sidebox">
+<div class="fb-page" data-href="https://www.facebook.com/eqela/" data-tabs="timeline" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><div class="fb-xfbml-parse-ignore"><blockquote cite="https://www.facebook.com/eqela/"><a class="button" href="https://www.facebook.com/eqela/">Eqela @ FB</a></blockquote></div></div>
+</div>
+
+<div class="sidebox">
+<div class="fb-page" data-href="https://www.facebook.com/EmergeTrainings/" data-tabs="timeline" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><div class="fb-xfbml-parse-ignore"><blockquote cite="https://www.facebook.com/eqela/"><a class="button" href="https://www.facebook.com/EmergeTrainings/">Emerge Trainings @ FB</a></blockquote></div></div>
+</div>
+
+</div>
+
+<div style="clear: both;"></div>
+
+</div>
+
+<div class="footer">
+	<% if ${site.copyright} != "" %>
+		<div id="copyright">
+			<% if ${site.copyright_url} != "" %>
+				<a href="<%= site.copyright_url %>"><%= site.copyright %></a>
+			<% end %>
+			<% if ${site.copyright_url} == "" %>
+				<span><%= site.copyright %></span>
+			<% end %>
+		</div>
+	<% end %>
+	<div id="poweredby">
+		<a href="http://sympathy.ws">Powered by Sympathy</a>
+		<a href="http://www.eqela.com">Powered by Eqela</a>
+	</div>
+	<div style="clear: both;"></div>
+</div>

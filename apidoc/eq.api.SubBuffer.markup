@@ -1,0 +1,26 @@
+= A subsection of a buffer =
+
+A SubBuffer is created with reference to an existing memory buffer,
+and represents a portion of the original buffer. No new copy of the
+memory is made when creating a SubBuffer object; the SubBuffer is simply
+a pointer to the original buffer, thereby making it very fast to make
+a SubBuffer. Any changes to the underlying buffer will also manifest in
+the SubBuffer, and vice versa.
+
+== Sample: Creating a SubBuffer ==
+
+--- code ---
+class SubBufferSampleClass
+{
+	public void do_sub_buffer(Buffer buffer) {
+		// Create a sub-buffer that represents bytes
+		// 1024-2048 of the original buffer.
+		var subbuffer = SubBuffer.create(buffer, 1024, 1024);
+	}
+}
+--- code ---
+
+= create =
+
+Create a new Buffer instance that represents ''size'' bytes of data from
+the original Buffer ''buf'', starting from byte offset ''offset''.

@@ -1,0 +1,7 @@
+= Support for audio playback and streaming =
+
+The audio player library is meant for the playback of audio content that is
+typically long, and is not read into memory all at once. Typically this is used
+for music. For short audio clips (commonly used for sound effects), you should
+also look at com.eqela.libaudioclip. The two libraries can be, and commonly are,
+used together (libaudioplayer for music, libaudioclip for sound effects).

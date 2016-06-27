@@ -1,0 +1,4 @@
+= Memory-cached file support =
+
+The cached file module implements a mechanism to read a file to memory
+once and reuse the data, only rereading the file automatically if ever it has been changed.

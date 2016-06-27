@@ -1,0 +1,49 @@
+= An integer-indexed collection of floating point values =
+
+A DoubleArray object represents an array data structure that can
+store double primitive values.
+
+== Sample: How to use a DoubleArray ==
+
+--- code ---
+var da = DoubleArray.create();
+da.add(0.1);
+da.add(1.464);
+da.add(99.5);
+int n;
+for(n=0; n<da.count(); n++) {
+	double r = ba.get_index(n);
+	Log.message("DA %d: %f".printf().add(n).add(r));
+}
+--- code ---
+
+= create =
+
+Create a new instance of a double array.
+
+= clear =
+
+Clear all elements from this array.
+
+= get_index =
+
+Gets the element at the given index.
+
+= set_index =
+
+Sets the value of the element at the given index.
+
+= add =
+
+Appends a new value to the end of the array, growing the array if
+necessary.
+
+= count =
+
+Returns the number of elements in this array.
+
+= set_size =
+
+Preallocates a size for the array. If an attempt is made to add additional
+elements beyond this size, the array will still grow to become bigger.
+

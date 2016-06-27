@@ -1,0 +1,6 @@
+= PNG image processing and manipulation =
+
+The PNG library implements direct manipulation of PNG images / files
+without using the underlying GUI framework. The library is still
+undergoing development, and currently includes encoding of PNG images
+from a buffer of pixel data on C based platforms.

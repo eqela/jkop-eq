@@ -1,0 +1,20 @@
+= A generic type for classes that receive completion notifications =
+
+Many background operations will require a common interface that can be
+called when an operation has completed. In those cases where no return
+value or result is needed, and simply a notification of completion will
+do, the OperationListener can be used as a common interface to implement
+such handlers. Simple implement the interface in a class:
+
+--- code ---
+class MyClass : OperationListener
+{
+	public void on_operation_complete() {
+		// Your implementation here
+	}
+}
+--- code ---
+
+= on_operation_complete =
+
+The method that will be called by the operation once it has completed.

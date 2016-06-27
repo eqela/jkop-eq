@@ -1,0 +1,3 @@
+= AES128 encryption support =
+
+Implements support for the AES128 encryption algorithm

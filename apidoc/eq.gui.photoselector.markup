@@ -1,0 +1,6 @@
+= Graphical selector for photos / images =
+
+The photo selector library provides a platform appropriate method for the application
+user to select a photo or an image from the library of the current device or computer.
+The photo selector will use whatever native method is usual for doing this on any given
+platform, where available.

@@ -1,0 +1,103 @@
+= A generic collection type =
+
+A Collection is a generic type for collections, for which different implementations can be
+supplied. Such implementations could be, for example, a linked list or an array.
+
+Collections are used extensively in Eqela applications, and it is recommended to use the
+generic Collection type as the type in method parameters, member variables, etc., so that
+the exact data structure (usually either Array or LinkedList) can be swapped in as may
+be required.
+
+== Sample: The common Collection type ==
+
+--- code ---
+class SampleCollectionClass
+{
+	Collection mycollection;
+
+	public SampleCollectionClass() {
+		mycollection = LinkedList.create();
+	}
+
+	public void change_to_array() {
+		mycollection = Array.create();
+	}
+}
+--- code ---
+
+== Sample: Iterating through a Collection ==
+
+A Collection object would always implement the Iterateable interface.
+As such, it can be iterated over by using the standard iteration mechanisms:
+
+--- code ---
+var it = array.iterate();
+Object o;
+while((o = it.next() as String) != null) {
+	Log.message("Found in array: ".append(o));
+}
+--- code ---
+
+NOTE, however, that the foreach construct of the language is meant precisely
+for these kinds of tasks, and gives a much simpler syntax to do the same thing:
+
+--- code ---
+foreach(String string in array) {
+	Log.message("Found in array: ".append(string));
+}
+--- code ---
+
+= count =
+
+Return the number of items currently stored in this collection.
+
+= remove =
+
+Remove the specified item from this collection. If the item is not in the
+collection, no action is taken.
+
+= iterate_from_index =
+
+Iterate this collection, starting from the specified index.
+
+= iterate_reverse =
+
+Iterate this collection in reverse order (starting from the end, proceeding
+towards the beginning).
+
+= append =
+
+Add an object to the end of this collection.
+
+= prepend =
+
+Add an object to the beginning of this collection.
+
+= insert =
+
+Add an object in the specified index location in this collection.
+
+= get =
+
+Get an object by index.
+
+= set =
+
+Set an object by index.
+
+= clear =
+
+Clear the entire collection (remove all objects).
+
+= add =
+
+Add an object to the end of this collection (same as append: It is preferred
+to call append() instead).
+
+= set_index =
+
+Set an object by index (same as set: It is preferred to call set() instead).
+
+= get_index =
+
+Get an object by index (same as get: It is preferred to call get() instead).

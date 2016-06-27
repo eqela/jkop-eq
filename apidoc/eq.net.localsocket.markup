@@ -1,0 +1,5 @@
+= Local socket support =
+
+Local sockets are like network sockets, but are only used to connect to other applications
+on the same device / system, enabling a sort of IPC (inter process communication). This
+library provides a mechanism to implement local sockets.

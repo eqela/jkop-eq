@@ -1,0 +1,3 @@
+= Hardware sensor support =
+
+The sensor library implements support for various hardware sensors, such as accelerometers, compass, gyroscope, etc.

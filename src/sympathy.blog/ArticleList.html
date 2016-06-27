@@ -1,0 +1,29 @@
+<% for article in articles %>
+<div class="article">
+<div class="title"><a href="/articles/<%= article.title_id %>"><%= article.title %></a></div>
+<div class="intro"><%= article.timestamp %></div>
+<div class="content">
+<% if ${article.cover_photo} != "" %>
+	<img class="article_photo" src="/articles/<%= article.id %>/<%= article.cover_photo %>" />
+<% end %>
+<%= article.intro_html %>
+<p><a href="/articles/<%= article.title_id %>">Read more &raquo;</a></p>
+</div>
+</div>
+<% end %>
+
+<div class="navigator">
+<% if ${previous_page} != "" %>
+	<a class="left" href="/articles?page=<%= previous_page %>">&lt;</a>
+<% end %>
+<% if ${previous_page} == "" %>
+	<a class="left" href="#">&nbsp;</a>
+<% end %>
+<p>Page <%= current_page %> of <%= page_count %></p>
+<% if ${next_page} != "" %>
+	<a class="right" href="/articles?page=<%= next_page %>">&gt;</a>
+<% end %>
+<% if ${next_page} == "" %>
+	<a class="right" href="#">&nbsp;</a>
+<% end %>
+</div>

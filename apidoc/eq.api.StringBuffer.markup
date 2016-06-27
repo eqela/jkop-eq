@@ -1,0 +1,60 @@
+= An editable string that can efficiently construct strings =
+
+While all instances of String are immutable, StringBuffer provides a
+way to construct strings efficiently. Where appending to a String will always
+cause a reallocation of the entire string (making it very inefficient to
+construct strings eg. one character at a time), the StringBuffer works by
+adding to the existing buffer, making it more suitable for creating strings
+either character-by-character or by adding several strings into one.
+
+(See the documentation for String for examples on constructing strings.)
+
+= create =
+
+Create a new StringBuffer object, and use the ''initial'' String as the
+initial contents.
+
+= for_string =
+
+Create a new StringBuffer object, and use the ''initial'' String as the
+initial contents.
+
+= for_initial_size =
+
+Create an empty StringBuffer object, but pre-allocate the memory buffer to
+the specified size (in bytes). This will prevent the need for the StringBuffer
+to reallocate / grow its memory while adding content. If the size of the resulting
+string is known or can be estimated, this may be used to significantly boost
+performance in constructing strings.
+
+= append =
+
+Append the given String ''c'' to the end of this buffer.
+
+= append_c =
+
+Append the given character ''c'' to the end of this buffer.
+
+= dup =
+
+Duplicate this StringBuffer, and create a new, completely independent StringBuffer
+object that can be edited seprately from the current instance.
+
+= dup_string =
+
+Retrieve the current value of this buffer and return it as a String object, but
+without clearing the contents of the buffer. This way, you can get the current value
+of the buffer but can still continue adding more content to the buffer. By constract,
+calling to_string() will clear the buffer, making further edits impossible.
+
+= get_buffer =
+
+Get the memory buffer currently used for editing the String.
+
+= clear =
+
+Clear the entire buffer and start from scratch.
+
+= count =
+
+Returns the number of characters currently in the buffer.

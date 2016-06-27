@@ -1,0 +1,4 @@
+= Navigation controller widget =
+
+Implements a user interface paradigm where the application moves horizontally
+from one page to another, much like is common on many iOS applications.

@@ -1,0 +1,3 @@
+= A tabbed pager widget =
+
+The tab view widget can present its children in a tabbed pager format, allowing the user to switch between pages.

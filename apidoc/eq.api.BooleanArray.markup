@@ -1,0 +1,48 @@
+= An integer-indexed collection of boolean values =
+
+A BooleanArray object represents an array data structure that can store boolean
+primitive values.
+
+== Sample: How to use a BooleanArray ==
+
+--- code ---
+var ba = BooleanArray.create();
+ba.add(true);
+ba.add(false);
+ba.add(false);
+int n;
+for(n=0; n<ba.count(); n++) {
+	bool r = ba.get_index(n);
+	Log.message("BA %d: %s".printf().add(n).add(r));
+}
+--- code ---
+
+= create =
+
+Create a new instance of a boolean array.
+
+= clear =
+
+Clear all elements from this array.
+
+= get_index =
+
+Gets the element at the given index.
+
+= set_index =
+
+Sets the value of the element at the given index.
+
+= add =
+
+Appends a new value to the end of the array, growing the array if
+necessary.
+
+= count =
+
+Returns the number of elements in this array.
+
+= set_size =
+
+Preallocates a size for the array. If an attempt is made to add additional
+elements beyond this size, the array will still grow to become bigger.

@@ -1,0 +1,6 @@
+= A string template system =
+
+The text template library implements a complete templating system that can be
+used to transform text based templates / template files into complete documents
+based on other input data / variables. This is commonly used to eg. produce HTML
+documents on web servers, but can only be used for any other kind of text processing.

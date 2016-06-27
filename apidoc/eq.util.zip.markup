@@ -1,0 +1,4 @@
+= ZIP file format implementation =
+
+Implements the compression / decompression of ZIP files in-process without
+the need for external tools or commands. Currently only implemented for C based platforms.

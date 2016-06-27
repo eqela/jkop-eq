@@ -1,0 +1,34 @@
+= A data aware object =
+
+A "data aware object" is an object that can receive data, and that can be
+queried for its data. This implementation defines "data" as an instance of
+class Object, which means any kind of class can be used to represent the
+actual "data".
+
+== Sample: A data aware object ==
+
+The following class is a very simple example of a data aware object that
+stores its data as a single String object:
+
+--- code ---
+class MyDataAwareClass : DataAwareObject
+{
+	String str;
+
+	public void set_data(Object data) {
+		this.str = data;
+	}
+
+	public Object get_data() {
+		return(str);
+	}
+}
+--- code ---
+
+= set_data =
+
+Sets the data for the object.
+
+= get_data =
+
+Gets the current data.

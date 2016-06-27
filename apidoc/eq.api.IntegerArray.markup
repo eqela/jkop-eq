@@ -1,0 +1,48 @@
+= An integer-indexed collection of integer values =
+
+An IntegerArray object represents an array data structure that can
+store integer primitive values.
+
+== Sample: How to use an IntegerArray ==
+
+--- code ---
+var ia = IntegerArray.create();
+ia.add(0);
+ia.add(1);
+ia.add(38);
+int n;
+for(n=0; n<ia.count(); n++) {
+	int r = ia.get_index(n);
+	Log.message("IA %d: %d".printf().add(n).add(r));
+}
+--- code ---
+
+= create =
+
+Create a new instance of an integer array.
+
+= clear =
+
+Clear all elements from this array.
+
+= get_index =
+
+Gets the element at the given index.
+
+= set_index =
+
+Sets the value of the element at the given index.
+
+= add =
+
+Appends a new value to the end of the array, growing the array if
+necessary.
+
+= count =
+
+Returns the number of elements in this array.
+
+= set_size =
+
+Preallocates a size for the array. If an attempt is made to add additional
+elements beyond this size, the array will still grow to become bigger.

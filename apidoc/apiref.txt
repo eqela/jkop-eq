@@ -1,0 +1,4158 @@
+Frame
+
+/**
+ * Base element for all user interface operations
+ *
+ * A Frame is the fundamental element in Eqela GUI development. All graphical operations will be done
+ * inside a Frame. The Frame on a desktop computer is a window, on a mobile device it generally represents
+ * an area allocated to the application that covers the whole screen. In any case, it is covering the
+ * area to which the application can draw.
+ *
+ * Upon the startup of a GUI application, one instance of a Frame (the implementation of which is of course
+ * system specific) is created. If, during the life time of the application, new Frames are required, they
+ * can be created using one of the static methods in the interface. Not all of the possible ways of opening
+ * a frame are necessarily supported on all platforms, in which case the methods would return a null pointer.
+ **/
+
+AsyncImage
+
+/**
+ * An asynchronous image
+ *
+ * An asynchronous image is an image that is loaded in the background, and the loading may
+ * take some time. The AsyncImage interface specifies a method that can be queried to see
+ * if the image is done loading.
+ **/
+
+CapabilityFrame
+
+/**
+ * A frame that can be queried for capabilities
+ *
+ * A Frame that implements the CapabilityFrame interface can be queried by others for its
+ * specific capabilities. This way, the application may adjust its appearance or behavior
+ * in runtime depending on what the underlying frame can do.
+ **/
+
+CircleShape
+
+/**
+ * A circle shape
+ *
+ * The CircleShape class can be used to describe the dimensions of a circle.
+ **/
+
+ClearOperation
+
+/**
+ * A drawing operation to clear a shape
+ *
+ * A drawing operation will "clear" a shape or a region of the drawing destination.
+ * Usually this means clearing the shape to be completely transparent.
+ **/
+
+Clipboard
+
+/**
+ * A common data exchange mechanism
+ *
+ * Clipboard objects can be used for data exchange between an element in a program and/or
+ * with elements in other programs. The Eqela Clipboard classes implement and interact with
+ * the system clipboard in a way that enables cut/copy/paste functionality across Eqela apps
+ * and all other apps on the system.
+ **/
+
+ClipboardData
+
+/**
+ * Representation of the clipboard contents
+ *
+ * ClipboardData objects are representations of the actual data that is stored within a Clipboard.
+ * Conceptually, the data can be stored in three formats: Either as text (string), image or buffer
+ * (binary data). Only the string storage is currently implemented, however.
+ **/
+
+ClipboardDataProvider
+
+/**
+ * A data provider for clipoard data
+ *
+ * An object that implements the ClipboardDataProvider interface can be queried for
+ * clipboard data.
+ **/
+
+ClipClearOperation
+
+/**
+ * A drawing operation to clear the current clip rectangles
+ *
+ * Issuing the ClipClearOperation causes the underlying rendering backend to clear all
+ * clip rectangles. Subsequent drawing operations will not be clipped.
+ **/
+
+ClipOperation
+
+/**
+ * A drawing operation to clip the drawings
+ *
+ * After issuing a ClipOperation on a drawing backend, all future drawing will be clipped to the
+ * given shape (ie., nothing outside the given shape will be drawn). To undo a ClipOperation, one
+ * must do a ClipClearOperation (clearing all clips). Clips themselves can be stacked (multiple
+ * clips can be issued at once); the combined clip region will be the intersection of
+ * all issued clips.
+ **/
+
+ClosableFrame
+
+/**
+ * A frame that can be closed
+ *
+ * A Frame that implements the ClosableFrame interface has a close() method which
+ * causes the frame to be closed.
+ **/
+
+Color
+
+/**
+ * A color value representation
+ *
+ * The Color class is meant to represent color values in the API where necessary. A Color object
+ * can be constructed from strings that can be formatted in one of two ways:
+ *
+ * (1) Commonly used constant values: white, black, red, green, blue, lightred, lightgreen, lightblue,
+ * yellow, cyan, orange.
+ *
+ * (2) Using RGB(A) values with each component encoded in hexadecimal notation, preceded with a '#' character,
+ * eg. #0000FF #FF000080 #FFFFFF00
+ *
+ * Color objects can likewise be converted back to their string representation in hexadecimal notation.
+ **/
+
+ColoredFrame
+
+/**
+ * A frame that has a configurable background color
+ *
+ * If a Frame object implements the ColoredFrame interface, that means the background color
+ * of the frame can be configured and set using the method in the interface.
+ **/
+
+CreateFrameOptions
+
+/**
+ * Options for creating a new frame
+ *
+ * When creating a new frame, the CreateFrameOptions class can be used to communicate
+ * the necessary parameters for the newly created frame. NOTE: Not all frame types will
+ * be supported on all platforms (eg. TYPE_DESKTOP and TYPE_DOCK_* are really only expected
+ * to be relevant on Linux based targets).
+ **/
+
+Cursor
+
+/**
+ * The graphical representation of a mouse / pointer cursor
+ *
+ * The Cursor class can be used to communicate to the framework which cursor should be
+ * displayed in any given situation. The class supports some commonly used stock cursor
+ * icons.
+ **/
+
+CursorFrame
+
+/**
+ * A frame that has a configurable mouse / pointer cursor
+ *
+ * If a Frame implements the CursorFrame interface, that means that the current cursor
+ * can be queried and reconfigured by the application. This usually indicates a desktop
+ * platfor.
+ **/
+
+CustomShape
+
+/**
+ * A shape that has a completely custom appearance and boundary
+ *
+ * Unlike the pre-set Shape classes, the CustomShape class has an appearance and form that
+ * are programmed by the developer, and are drawn in runtime. The shape itself can be a combination
+ * of different elements such as lines, arcs, curves, etc.
+ **/
+
+CustomShapeElement
+
+/**
+ * A component of a CustomShape object
+ *
+ * CustomShapeElement objects are used to represent the different parts of a CustomShape object,
+ * representing a programmer-defined shape that can be drawn or otherwise manipulated graphically.
+ **/
+
+DesktopWindowFrame
+
+/**
+ * A Frame class that represents a desktop window
+ *
+ * If a Frame class implements the DesktopWindowFrame interface (and its various prerequisites), the application
+ * can assume that it is indeed running inside a window on a desktop. An application can use this to customize
+ * its user interface or other behavior accordingly, and/or to call the different methods in the prerequisite
+ * interfaces.
+ **/
+
+DrawObjectOperation
+
+/**
+ * A drawing operation to draw an object
+ *
+ * The DrawObjectOperation is used to render / draw an "object" to the graphical rendering backend.
+ * The backend itself can implement ways to render various different kinds of objects; usually these
+ * are images (of type Image) or text layouts.
+ **/
+
+FileHandler
+
+/**
+ * Open a file / directory in the desktop environment
+ *
+ * The FileHandler class provides a simple shortcut to open a file or a directory using
+ * the standard mechanisms for doing so in the current operating system or desktop
+ * environment. What exactly will happen is highly system dependent, but usually involves
+ * opening a new window with another application that is associated to handle a file or
+ * directory of the given type.
+ **/
+
+FillColorOperation
+
+/**
+ * A drawing operation to fill a shape with a color
+ *
+ * The FillColorOperation takes in essentially a shape, a color and a location, and will fill
+ * the given shape at the given location with the given color.
+ **/
+
+FillGradientOperation
+
+/**
+ * A drawing operation to fill a shape with a color gradient
+ *
+ * The FillColorOperation takes in essentially a shape, a location and specifications for
+ * drawing a color gradient (smooth transition from one color to another), and will fill
+ * the given shape at the given location with the given gradient.
+ **/
+
+FocusAwareFrame
+
+/**
+ * A frame that is aware of the focusing of controls inside it
+ *
+ * If a frame implements the FocusAwareFrame, it will be informed of the focus
+ * events that are happening in the user interface controls inside it, and is able
+ * to react to them. This is usually something that the Eqela framework does together
+ * with specific backend classes, and is rarely necessary for applications to worry
+ * about.
+ **/
+
+Font
+
+/**
+ * A representation of a graphical font
+ *
+ * The Font class is used to specify and communicate the kind of fonts to use to render text
+ * in GUI applications. The Font class can be configured with various parameters that will affect
+ * the actual rendering.
+ *
+ * To construct a new Font object, use the static instance() method, supplying it with a string parameter
+ * that describes the actual parameters of the font. The same parameters in the same format can also
+ * be added or changed later by using the modify() method, which accepts the same kind of content.
+ * The actual string then contains the specifications of the font style itself, for example:
+ *
+ * ---
+ * var myfont1 = Font.instance("Arial 3mm color=black outline-color=white bold");
+ * var myfont2 = new Font().modify("Verdana 2500um color=#FF0000");
+ * ---
+ **/
+
+FrameCloseRequestEvent
+
+/**
+ * An event object representing the user's desire to close a frame
+ *
+ * When the application user tries to close a frame (eg. by clicking on the close button on a desktop window),
+ * the framewokr generates a FrameCloseRequestEvent and sends it to the application code. The application code
+ * can then either accept or reject the closing, and/or do any other necessary activities (like saving all unsaved
+ * files and/or asking the user if he/she really wants to close the application).
+ **/
+
+FrameController
+
+/**
+ * An object that takes control of a Frame
+ *
+ * A Frame object represents the graphical area allocated to the application, the implementation of
+ * which is highly platform dependent. The FrameController, on the other hand, takes care of the
+ * application aspect of handling the Frame. Upon initialization of a Frame, the FrameController is
+ * also initialized, and ultimately takes control of handling the logic of managing the frame.
+ *
+ * Known classes implementing this interface include the com.eqela.libwidget.WidgetEngine (for widget
+ * based applications) and com.eqela.libspriteengine.SEScene (for 2D games / animated graphics).
+ **/
+
+FrameResizeEvent
+
+/**
+ * An event object representing the resizing of a frame
+ *
+ * When a frame is resized for any reason, the Frame object (backend) generates a FrameResizeEvent
+ * event object and sends it to the application. The application may then do whatever operations are
+ * necessary, such as (commonly) resizing the user interface elements to match the new size.
+ **/
+
+GUI
+
+/**
+ * Representation of the GUI backend
+ *
+ * The GUI interface provides a link to the actual implementation of the graphical user
+ * information implementation on the current system. The methods of the interface form
+ * the foundation of creating a user interface, and the static member variable `engine',
+ * when configured, represents the actual GUI implementation on the current system. By calling
+ * methods on the engine object, the application has access to the GUI system of the
+ * current platform. All of Eqela's GUI code ultimately passes through here.
+ **/
+
+GuiApplication
+
+/**
+ * A helper class for executing GUI applications
+ *
+ * For Eqela applications that are marked as "GUI apps" (eg. widgetapplication or customguiapplication),
+ * after the system specific initialization, the framework calls into the GuiApplication class to
+ * continue execution. As an application developer, you should not call into this class.
+ **/
+
+HidableFrame
+
+/**
+ * A frame that can be hidden
+ *
+ * If a Frame implements the HidableFrame interface, it can be hidden or shown at
+ * the request of the application code.
+ **/
+
+Image
+
+/**
+ * Representation of a graphical image / picture
+ *
+ * Classes that implement the Image interface are representations of graphical bitmap pictures,
+ * and are often read from storage as PNG or JPEG files. Images are immutable: While the image
+ * class has some methods to modify the image (ie. resize() and crop()), those methods do not
+ * modify the image, but instead create a new Image that they return as a result.
+ *
+ * NOTE: While calling Image.for_resource() and IconCache.get() are usually seen as functionally
+ * equivalent (both would return the same image), using IconCache to read image resources is
+ * highly preferred, as this will conserve memory when using the images repeatedly, and would
+ * work consistently on platforms that load images asynchronously (HTML5).
+ **/
+
+ImageBuffer
+
+/**
+ * A buffer of data that represents an image
+ *
+ * The ImageBuffer class can be used to transfer and store image data that is stored in
+ * the form of a buffer or data, contained in memory. This data can then, using the ImageBuffer,
+ * passed on to appropriate GUI classes to turn it into an Image object that can be rendered
+ * to the screen.
+ *
+ * Using an ImageBuffer class, a programmer can construct images out of pixel color data (RGBA)
+ * using any mechanism or algorithm of their choosing.
+ **/
+
+ImageBufferHelper
+
+/**
+ * A utility class for converting a buffer to an image
+ *
+ * This class provides a simple, generic implementation for converting an in-memory buffer to an Image
+ * object. While each platform may or may not have a more optimized way of doing this, this help class
+ * writes the contents of the buffer into a temporary file and reads the newly created file by calling
+ * Image.for_file() on the file. This class is primarily meant to be used as a fallback implementation in
+ * the backend code, and as such is not meant to be called from application code. For application code,
+ * please use the create_image_for_buffer() method of the GUI interface instead.
+ **/
+
+ImageTextLayout
+
+/**
+ * A text layout that is implemented as an image
+ *
+ * The implementation of a text layout is highly platform dependent. On those platforms
+ * where the text layout is implemented by rendering the text into an image, this interface
+ * is implemented by the text layout object. Through this, the image can be retrieved for
+ * whatever purpose that may serve.
+ **/
+
+KeyEvent
+
+/**
+ * A keyboard event object
+ *
+ * When a keyboard event is triggered (eg. key press or release), then the framework / backend
+ * will generate an instance of the KeyEvent object and send it to the application. The application
+ * may then use it for proessing of the event.
+ *
+ * The KeyEvent class supports the detection of special keys, such as shift, alt, ctrl and command
+ * (on Mac OS X only), and provides a couple of convenience methods to see if any of those keys are
+ * currently pressed (has_modifiers()) and/or if the keypress is to be considered as a "shortcut"
+ * key press. A "shortcut" is considered as either Ctrl+<key> or Command+<key> (on Mac OS X). This
+ * way, event Ctrl+<key> presses are considered shortcut presses on Mac OS X.
+ *
+ * There are two known subclasses of KeyEvent: KeyPressEvent and KeyReleaseEvent. Neither adds any
+ * functionality or data fields; rather, the application can detect which event it was by checking the class
+ * type of the event object.
+ **/
+
+KeyPressEvent
+
+/**
+ * A key press event
+ *
+ * The Key press event is sent to the application by the framework when the
+ * application user has pressed a key on a keyboard (whether physical or virtual).
+ **/
+
+KeyReleaseEvent
+
+/**
+ * A key release event
+ *
+ * The Key release event is sent to the application by the framework when the
+ * application's user has released a key on a keyboard (whether physical or virtual).
+ **/
+
+Length
+
+/**
+ * Measurement conversion utility class
+ *
+ * The Length class provide a method to convert a string to pixels using a given DPI
+ * (dots per inch). The string can represent a measurement of length or distance in a number
+ * of representations, and is then converted to pixels. For example:
+ *
+ * ---
+ * // Computes how many pixels will be needed to represent 1 millimeter on a 200 DPI screen
+ * var p1 = Length.to_pixels("1mm", 200);
+ *
+ * // Returns the length of 100 pixels (which is still 100 pixels, regardless of DPI)
+ * var p2 = Length.to_pixels("100px", 200);
+ *
+ * // Micrometers and nanometers are also acceptable units
+ * var p3 = Length.to_pixels("1000um", 200);
+ * var p4 = Length.to_pixels("1000000nm", 200);
+ *
+ * // Converts 1 inch to pixels
+ * var p5 = Length.to_pixels("1in", 200);
+ * ---
+ **/
+
+Menu
+
+/**
+ * The contents of a graphical menu
+ *
+ * Many different types of applications utilize menus to enable functionality to become
+ * available to users in various different ways. While a menu in itself can be
+ * implemented in many different ways, and most platforms do have their own specific ways of
+ * implementing menus, generally the contents of all menus consist of common
+ * content, and are essentially lists of entries with text and action, possibly with 
+ * separators in between them. This class enables an application developer to describe
+ * the contents of a menu in a platform independent manner.
+ *
+ * For example:
+ *
+ * ---
+ * var menu = new Menu();
+ * menu.add(ActionItem.instance(IconCache.get("open"), "Open", "Open a new file", "open_file_event"));
+ * menu.add(ActionItem.instance(IconCache.get("save"), "Save", "Save this file", "save_file_event"));
+ * menu.add_separator();
+ * menu.add(ActionItem.instance(IconCache.get("close"), "Close", "Close this file", "close_file_event"));
+ * ---
+ **/
+
+PointerCancelEvent
+
+/**
+ * An event object representing cancellation of a pointer press
+ *
+ * When a pointer is pressed, a PointerPressEvent is sent to the application. When the pointer
+ * is released, a PointerReleaseEvent is sent. In some cases, the pointer is pressed but will
+ * never be "released" from a logical perspective. This happens, for example, in cases where the
+ * pointer is pressed and held, and after a period of holding is treated as a context click
+ * (equivalent to a "right click" on a computer). The PointerCancelEvent is used to signal these
+ * conditions: It ends a pointer press, but it is not a pointer release.
+ **/
+
+PointerEvent
+
+/**
+ * Base class for pointer events
+ *
+ * When the framework transmits pointer-related events to the application, all
+ * those events are objects that are derived from PointerEvent. What the actual
+ * event is (press, release, move, etc.) is determined by the type of the subclass.
+ **/
+
+PointerLeaveEvent
+
+/**
+ * Pointer leave event
+ *
+ * When the pointer leaves the frame, the framework sends this event to the application.
+ **/
+
+PointerMoveEvent
+
+/**
+ * Pointer move event
+ *
+ * When the pointer moves within the frame, the framework sends this event to the application.
+ **/
+
+PointerPressEvent
+
+/**
+ * Pointer press event
+ *
+ * When the pointer is pressed inside the frame, the framework sends this event to the application.
+ * This may be a click on a mouse button or trackpad, or a touch on a touchscreen. The "button"
+ * parameter indicates which "button" was clicked, where applicable. On a touchscreen, button == 0
+ * at all times. Left mouse button is likewise considered button 0.
+ **/
+
+PointerReleaseEvent
+
+/**
+ * Pointer release event
+ *
+ * When a previousely pressed pointer is released, the framework sends this event to the application.
+ * See the description of the "button" parameter in the definition of PointerPressEvent.
+ **/
+
+Position
+
+/**
+ * X/Y coordinate position
+ *
+ * The Position type represents two dimensional coordinates using the X and Y coordinates.
+ * The type is declared as an interface so that different kinds of classes can represent
+ * a 2-dimensional position. For a concrete implementation, simply use the instance() method:
+ *
+ * ---
+ * var pos = Position.instance(100, 200);
+ * ---
+ **/
+
+Rectangle
+
+/**
+ * A 2-dimensional rectangle
+ *
+ * The Rectangle type represents a rectangle in 2-dimensional space. As with the
+ * Position type, the Rectangle type is declared as an interface in order to allow
+ * different types of classes to be used to represent rectangles. For a concrete
+ * implementation, use the instance() method:
+ *
+ * ---
+ * var rect = Rectangle.instance(10, 10, 100, 100);
+ * ---
+ **/
+
+RectangleShape
+
+/**
+ * A rectangle shape
+ *
+ * The RectangleShape class can be used to describe the dimensions of a rectangle.
+ **/
+
+Renderable
+
+/**
+ * Renderable object
+ *
+ * Classes that implement the Renderable interface are objects that can be drawn into,
+ * or that can draw their contents. The actual rendering is done by specifying a collection
+ * of "ops", or drawing operations, represented by the various *Operation classes in com.eqela.libgui.
+ * The renderable object would then take the operations, play them in sequence, creating the
+ * desired rendering output. For example, the following method could be used to draw a green
+ * rectangle with a red outline:
+ *
+ * ---
+ * public void draw_my_stuff(Renderable output) {
+ * 	var ops = LinkedList.create();
+ * 	// Draw a rectangle of 100x100 pixels at coordinates 10,10 in green color
+ * 	ops.add(new FillColorOperation().set_x(10).set_y(10).set_shape(RectangleShape.create(0, 0, 100, 100))
+ * 		.set_color(Color.instance("green")));
+ * 	// Draw an outline of 1 pixel in red color using the same rectangle dimensions
+ * 	ops.add(StrokeOperation().set_x(10).set_y(10).set_shape(RectangleShape.create(0, 0, 100, 100))
+ * 		.set_color(Color.instance("red")).set_width(1));
+ * 	// Send the drawing commands to the backend for processing
+ * 	output.render(ops);
+ * }
+ * ---
+ **/
+
+RenderableImage
+
+/**
+ * An image that can be rendered into
+ *
+ * A RenderableImage is an image that the application can use as a drawing target.
+ * Once created, the application can send drawing operations to the image in order to
+ * modify the contents. See the discussion on rendering operations in the description
+ * of the Renderable interface.
+ **/
+
+ResizableFrame
+
+/**
+ * A frame that can be resized
+ *
+ * A ResizableFrame is a frame that can be programmatically resized. If a Frame implements this
+ * interface, then calls to the resize() method are expected to change the size of the frame
+ * accordingly.
+ **/
+
+RoundedRectangleShape
+
+/**
+ * A rounded rectangle shape
+ *
+ * The RoundedRectangleShape class can be used to describe the dimensions of a rectangle with
+ * rounded corners.
+ **/
+
+ScrollEvent
+
+/**
+ * A scrolling event
+ *
+ * When the user initiates a scrolling event (eg. a mousewheel), the Eqela framework generates
+ * a ScrollEvent and sends it to the application for further processing.
+ **/
+
+SeparatorItem
+
+/**
+ * A class representing a graphical separator
+ *
+ * The SeparatorItem can be added to different kinds of collections that describe the
+ * components of a user interface, eg. a toolbar or a menu. In such contexts, the class
+ * represents a graphical separator that would need to be rendered.
+ **/
+
+Shape
+
+/**
+ * Base class for shapes
+ *
+ * The Eqela rendering API can draw many different kinds of shapes that all implement the Shape
+ * interface. While the shapes can vary significantly, they all have the common attributes that
+ * cover their overall size, as defined in this interface.
+ **/
+
+Size
+
+/**
+ * 2-dimensional size
+ *
+ * The Size type represents a two dimensional size of something.
+ * The type is declared as an interface so that different kinds of classes can represent
+ * a 2-dimensional size. For a concrete implementation, simply use the instance() method:
+ *
+ * ---
+ * var sz = Size.instance(100, 200);
+ * ---
+ **/
+
+StrokeOperation
+
+/**
+ * A drawing operation to draw an outline
+ *
+ * The StrokeOperation takes in essentially a shape, a color and a location, and will draw
+ * an outline on the given shape at the given location with the given color and outline width.
+ **/
+
+StrutsFrame
+
+/**
+ * A frame that can require space on the borders of the screen
+ *
+ * If a frame implements this interface, it can set "struts" that define how much space
+ * should be reserved on the edges of the screen. This maps closely to the concept of
+ * "struts" in the X Window System desktops, and is usually only implemented on the Linux
+ * backend. Setting the struts is usual and common when implementing windows that dock
+ * to the edges of the desktop, such as panels and menus.
+ **/
+
+SurfaceContainer
+
+/**
+ * A container for surfaces
+ *
+ * A SurfaceContainer object can contain surfaces; surfaces can be added and removed.
+ **/
+
+SurfaceOptions
+
+/**
+ * Configuration for creating new surfaces
+ *
+ * When creating new surfaces, the SurfaceOptions class can be used to specify the attributes
+ * and placement of the newly created surface.
+ **/
+
+SurfaceWithId
+
+/**
+ * A surface with an ID
+ *
+ * If the surface implementation implements the SurfaceWithId method, then
+ * the surface can be configured with a text-based (String) id. This can be
+ * further utilized in UI automation frameworks that enable the lookup of
+ * components using a text-based ID.
+ **/
+
+TextImage
+
+/**
+ * A dynamically created image containing text
+ *
+ * This is a convenience class for creating an image that represents a text string with specific
+ * text rendering attributes (font, color, etc.). By simply calling the for_properties() method
+ * with the appropriate parameters, an Image will be created that represents the rendered text in
+ * a bitmap format. For example:
+ *
+ * ---
+ * var props = TextProperties.for_string("Draw this text");
+ * props.set_font(Font.instance("Arial 5mm bold color=#FF8080 outline-color=#80FF80"));
+ * var myimage = TextImage.for_properties(props, get_frame(), get_dpi());
+ * // .. You can now use the myimage anywhere that you would use an Image object
+ * ---
+ **/
+
+TextLayout
+
+/**
+ * A prepared text layout
+ *
+ * With the Eqela GUI framework, text rendering is done in two steps: (1) preparation of a "text layout",
+ * and (2) rendering the text layout on the screen or other rendering backend. The TextLayout interface
+ * represents an object that carries the results of the first step.
+ **/
+
+TextProperties
+
+/**
+ * Properties for preparing text layouts
+ *
+ * When preparing a text layout, the application can supply various properties that affect the
+ * appearance of the layout. These are submitted by using the TextProperties class.
+ **/
+
+TickHandler
+
+/**
+ * An object that can receive "tick" notifications
+ *
+ * A "tick" is something that happens periodically and continuously, usually several times per second.
+ * A TickHandler is an object that can receive notifications of such and act accordingly.
+ **/
+
+TitledFrame
+
+/**
+ * A user interface element that has a configurable icon and title
+ *
+ * An object that implements the TitledFrame interface can have an icon and a title
+ * that can be changed by the program. Note that despite the name of the interface,
+ * the implementing clas does not HAVE TO be a Frame. It can be some other object in
+ * the user interface element hierarchy that in this respect acts like a frame.
+ **/
+
+ToolBar
+
+/**
+ * The contents of a graphical toolbar
+ *
+ * Many different types of applications utilize a toolbar to enable certain commonly
+ * used features to be easily accessible for the user. While the toolbar itself can be
+ * implemented in many different ways, and while most platforms have their own specific way
+ * of implementing a toolbar, generally the contents of all toolbars consist of common
+ * content, such as toolbar entries with an icon or text (or both), possibly with 
+ * separators in between them. This class enables an application developer to describe
+ * the contents of a toolbar in a platform independent manner.
+ *
+ * For example:
+ *
+ * ---
+ * var toolbar = new ToolBar();
+ * toolbar.add_entry(ActionItem.instance(IconCache.get("open"), "Open", "Open a new file", "open_file_event"));
+ * toolbar.add_separator();
+ * toolbar.add_entry(ActionItem.instance(IconCache.get("save"), "Save", "Save this file", "save_file_event"));
+ * toolbar.add_wide_separator();
+ * toolbar.add_entry(ActionItem.instance(IconCache.get("close"), "Close", "Close this file", "close_file_event"));
+ * ---
+ *
+ * NOTE: There are two kinds of separators: A "normal" separator (add_separator()), which is usually displayed as
+ * a vertical line or horizontal space, and a "wide" separator (add_wide_separator()), which would fill all unused
+ * space and place the next entry to the rightmost edge of the toolbar, where possible. In the previous sample, the
+ * "open" and "save" buttons would appear on the left side of the window, and the close button on the right side.
+ **/
+
+Transform
+
+/**
+ * A graphical transformation
+ *
+ * The Transform class can be used to represent and describe a graphical transformation of an object
+ * or a rendering operation. This is used in various parts of the API to determine how to transform
+ * rendering output.
+ **/
+
+URLHandler
+
+/**
+ * Open a URL address or web link in the desktop environment
+ *
+ * The URLHandler class provides a simple shortcut to open a URL address or web link using
+ * the standard mechanisms for doing so in the current operating system or desktop
+ * environment. What exactly will happen is highly system dependent, but usually would
+ * involve opening a browser window and pointing it to the given URL.
+ **/
+
+WindowManager
+
+/**
+ * A window manager for the GUI environment
+ *
+ * A WindowManager is able to interact with the window management system of the current
+ * graphical environment / desktop / operating system. Primarily, this involves creating
+ * new windows, with some level of awareness to the different screens available on the systen.
+ **/
+
+WindowManagerScreen
+
+/**
+ * A screen connected to the current system
+ *
+ * A WindowManagerScreen object would represent one of the physical or logical screens
+ * connected to the system. Depending on the system, several screens may be connected
+ * to it.
+ **/
+
+ZoomEvent
+
+/**
+ * An event object representing a zoom event
+ *
+ * When the backend determines that a zoom event has taken place, it sends this event to the
+ * application. This may happen eg. when a pinch-zoom gesture was performed on a touch screen.
+ **/
+
+ModalDialog
+
+/**
+ * The main class for executing modal dialogs
+ *
+ * The ModalDialog class provides a number of methods that can be called to display
+ * different kinds of commonly used modal dialogs in an application.
+ **/
+
+BackgroundTaskDialog
+
+/**
+ * A dialog for the execution of background tasks
+ * 
+ * The BackgroundTaskDialog represents a dialog window / popup that provides the user
+ * with progress information while a background task is executing.
+ **/
+
+ModalDialogBooleanListener
+
+/**
+ * A listener for boolean values
+ *
+ * Some modal dialogs would return a boolean value: By implementing this interface, a
+ * class can be used to receive those return values.
+ **/
+
+ModalDialogEngine
+
+/**
+ * The implementation of a modal dialog engine
+ *
+ * Any class implementing the ModalDialogEngine interface can be used as the engine
+ * that executes and opens the modal dialogs used in an application.
+ **/
+
+ModalDialogListener
+
+/**
+ * A listener for modal dialog status
+ *
+ * When a modal dialog exits, a class implementing this interface can received a notification
+ * of the event.
+ **/
+
+ModalDialogStringListener
+
+/**
+ * A listener for string values
+ *
+ * Some modal dialogs would return a string value: By implementing this interface, a
+ * class can be used to receive those return values.
+ **/
+
+*** eq.gui.sceneapplication
+
+Scene
+
+/**
+ * A subsection of a larger application
+ *
+ * A Scene is a special kind of FrameController that represents a part of a bigger application.
+ * While a reguler Frame would usually only have one FrameController for the duration of its
+ * existence, the scene mechanism allows us to change the FrameController of a Frame so as to
+ * create applications that are composed of several "scenes", each of which could be considered
+ * an application in itself.
+ *
+ * From the perspective of the Scene class itself, this is very straightforward. The scene is
+ * informed of its scene controller so that it can switch to another scene as it wishes; and it
+ * is notified when it is time to end, so that it can do the proper cleanup procedures.
+ *
+ * See further discussion of scene applications under the SceneApplication class.
+ **/
+
+SceneApplication
+
+/**
+ * An application that is composed of multiple scenes
+ *
+ * While a regular Frame would usually only have one FrameController for the duration of its
+ * existence, the scene mechanism allows us to change the FrameController of a Frame so as to
+ * create applications that are composed of several "scenes", each of which could be considered
+ * an application in itself. The central class facilitating all this is the SceneApplication.
+ * To make an application composed of several scenes, your main class must (directly or indirectly)
+ * inherit from SceneApplication:
+ *
+ * ---
+ * public void Main : SceneApplication
+ * {
+ * 	public FrameController create_main_scene() {
+ * 		return(new MyMainScene());
+ * 	}
+ * }
+ * ---
+ *
+ * After that, implement as many instances of your scene classe as you need, each of them being a FrameController,
+ * implementing the Scene interface. Then you can call push_scene(), pop_scene() or switch_scene()
+ * to switch between them.
+ **/
+
+SceneController
+
+/**
+ * An object that can control scenes
+ *
+ * In a multi-scene application, a SceneController is used to control the currently shown
+ * scene.
+ **/
+
+SceneEndListener
+
+/**
+ * An object that can receive scene end information
+ *
+ * By sending SceneEndListener object notifications, a Scene can inform its listeners
+ * when it has ended.
+ **/
+
+TransferrableScene
+
+/**
+ * A scene that can be "transferred"
+ *
+ * A TransferrableScene is a scene that is able to somehow interact with the scene that was
+ * shown before it. This can be used to transfer reusable state from a previous scene, preventing
+ * unnecessary reinitialization.
+ **/
+
+CodeImage
+
+/**
+ * An programmatically implemented image
+ *
+ * By subclassing CodeImage, and by implementing the render() method, a programmer can
+ * declare a VgContext -compatible image that is not read from a file or a buffer, but
+ * can be implemented in code through VgContext instructions.
+ *
+ * Note that a programmatic image implemented this way is VgContext specific, and may
+ * not work on all platforms. It is therefore not recommended to use this class directly.
+ **/
+
+VgContext
+
+/**
+ * A graphics context for immediate mode 2D rendering
+ *
+ * The VgContext interface provides an API for rendering 2D graphics in immediate mode
+ * (the instructions are executed immediately). There are different implementations of
+ * this API for the different target platforms. Note, however, that not all platforms
+ * will necessarily have a VgContext implementation (not all platforms support immediate
+ * mode rendering). It is therefore not recommended to use this type directly, but rather
+ * to use the rendering mechanism of surfaces, which may or may not utilize a VgContext
+ * as a lower level rendering mechanism.
+ **/
+
+VgFrame
+
+/**
+ * A top level frame for Vg rendering
+ *
+ * A top level frame (VgFrame) is something that can be invalidated. Upon invalidation,
+ * the frame will then arrange to redraw itself in accordance to the parameters that
+ * were given for the invalidate() method.
+ **/
+
+VgPath
+
+/**
+ * A base type for representing shapes
+ *
+ * A path represents a shape of some kind, usually through a series of primitive instructions
+ * that together compose a whole shape. The VgPath interface provides a base type for different
+ * kinds of paths and shapes.
+ **/
+
+VgPathCircle
+
+/**
+ * A circle shape
+ *
+ * Represents a circle that can be drawn in a context.
+ **/
+
+VgPathCustom
+
+/**
+ * A custom shape
+ *
+ * Represents a custom shape that can be drawn in a context.
+ **/
+
+VgPathElement
+
+/**
+ * A primitive drawing instruction
+ *
+ * Represents a primitive drawing instruction that can be used as a part of a custom
+ * shape.
+ **/
+
+VgPathRectangle
+
+/**
+ * A rectangle shape
+ *
+ * Represents a rectangle that can be drawn in a context.
+ **/
+
+VgPathRoundedRectangle
+
+/**
+ * A rounded rectangle shape
+ *
+ * Represents a rounded rectangle that can be drawn in a context.
+ **/
+
+VgRenderable
+
+/**
+ * An object that can be rendered into
+ *
+ * Represents an object that has the ability to receive drawing instructions through
+ * a VgContext. Usually either a window, user interface control or an offscreen bitmap.
+ **/
+
+VgRenderableImage
+
+/**
+ * An image that can be rendered into
+ *
+ * A VgRenderableImage is an Image, and it also provides the ability for the user
+ * to render new content into it using the VgRenderable interface.
+ **/
+
+VgRenderer
+
+/**
+ * A renderer that applies drawing operations to a VgContext
+ *
+ * A VgRenderer class takes a collection of drawing operations as input, and "plays back"
+ * those drawing operations on a VgContext object. This functionality can be used to
+ * play back display lists in a repeatable and reliable manner.
+ **/
+
+VgSurface
+
+/**
+ * A surface implementation
+ *
+ * The VgSurface class provides an implementation of the Surface data type using the
+ * Vg APIs. A VgSurface can be used as a surface implementation on backends that are
+ * otherwise implemented using the Vg infrastructure. As an application developer, this
+ * class should not be used.
+ **/
+
+VgSurfaceList
+
+/**
+ * A helper class for implementing surfaces with Vg
+ *
+ * The VgSurfaceList provides a common facility for the implementation of the libgui
+ * Surface mechanism using the Vg APIs.
+ **/
+
+VgTransform
+
+/**
+ * A graphical transformation
+ *
+ * The VgTransform class provides a mechanism to express graphical transformations in the
+ * Vg API family. Supported transformations include rotation, transparency (alpha),
+ * scaling and rotation.
+ **/
+
+BufferReader
+
+/**
+ * A reader that reads from a memory buffer
+ *
+ * The BufferReader can be used to construct a Reader that reads from an in-memory buffer,
+ * and can be used (among other things) to simulate file I/O but reading from memory.
+ **/
+
+BufferWriter
+
+/**
+ * A writer that writes to an in-memory buffer
+ *
+ * Much like a BufferReader is used to read from an in-memory buffer, the BufferWriter
+ * class can be used to write to one. This way, one can simulate file I/O but writing
+ * to memory instead of the filesystem.
+ **/
+
+ConnectedSocket
+
+/**
+ * A convenience interface to represent a bidirectional connection
+ *
+ * The ConnectedSocket interface provides a convenient interface that allows
+ * for bidirectional data transfer (both reading and writing). This interface
+ * would commonly be implemented by network socket classes or other classes
+ * that can perform bidirectional data transfer.
+ **/
+
+FileDescriptor
+
+/**
+ * An object representation of a file descriptor (integer)
+ *
+ * The FileDescriptor object can be used to wrap a file descriptor (which is an integer)
+ * into an Object.
+ **/
+
+InputStream
+
+/**
+ * A buffered input stream used for reading data
+ *
+ * The InputStream is a convenient utility class that allows any Reader object
+ * to be wrapped into a buffered stream which can be read from in various ways.
+ * The InputStream includes reading the incoming data per byte, per line or in
+ * chunks of specified sizes (eg. as 8bit integers, 16bit integers or 32bit integers),
+ * while performing the actual reading operations in chunks to maximize performance.
+ **/
+
+OutputStream
+
+/**
+ * A buffered output stream used for writing data
+ *
+ * The OutputStream is a convenient utility class that allows any Writer object
+ * to be wrapped into an OutputStream object that offers various ways to easily
+ * output data in different formats.
+ **/
+
+Reader
+
+/**
+ * A generic interface for reading incoming binary data
+ *
+ * All classes and objects that can be used for the purpose of reading input data
+ * in binary format (Buffer) usually will implement the Reader interface, which
+ * provides a single method read() that receives data by filling the given Buffer
+ * object with data and returning the number of bytes read.
+ *
+ * The read() method will, as its return value, return the number of bytes that were
+ * read. There is some level of variance to the meaning where the return value is 0.
+ * In most cases, a return value of 0 means that the data has ended (eg. "end of file"
+ * condition), but in some cases this may simply mean that no data is "currently
+ * available" (as would be in the case of non-blocking sockets, for example). The
+ * return value may also be negative (-1) to indicate an error or to explicitly
+ * signal an end of data condition. To accommodate all of the above, usually the best
+ * way to detect end of data is by checking for return values 0 or less, as follows:
+ *
+ * ---
+ * void mymethod(Reader reader, Buffer buf) {
+ * 	int n = reader.read(buf);
+ * 	if(n <= 0) {
+ * 		// end of data has been reached
+ * 	}
+ * 	else {
+ * 		// buffer now contains n bytes of data
+ * 	}
+ * }
+ * ---
+ *
+ * In cases where you specifically intend to be dealing with non-blocking sockets (or any other
+ * type of reader that may temporily return 0), handle the case of 0 return value separately.
+ **/
+
+ReaderWriter
+
+/**
+ * A generic interface for reading and writing
+ *
+ * A bidirectional object that can both read and write data in binary format
+ * can implement the ReaderWriter convenience interface. This is similar to a
+ * ConnectedSocket with the exception that the ConnectedSocket interface also
+ * requires a close() method to be implemented.
+ **/
+
+Seekable
+
+/**
+ * A seekable object, normally used for moving within files
+ *
+ * A Seekable object is something that the user can seek in. Usually this is an open
+ * file, and the "seek" operation involves moving the current location to point to a
+ * different point in the file.
+ **/
+
+SizedReader
+
+/**
+ * A reader that can report its size
+ *
+ * If a reader class implements the SizedReader interface, that means the reader can
+ * also report the size of the data being read.
+ **/
+
+StringReader
+
+/**
+ * A string reader class
+ *
+ * A StringReader object can be initialized with a string, which will then act as
+ * the source data that the reader will read from.
+ **/
+
+Writer
+
+/**
+ * A generic interface for writing binary data
+ *
+ * All classes and objects that can be used for the purpose of writing data
+ * in binary format (Buffer) will usually implement the Writer interface, which
+ * provides a single method write() that will write the contents given to it to
+ * the output target, returning the number of bytes written.
+ **/
+
+*** eq.io.asyncfile
+
+AsyncFile
+
+/**
+ * A file that is accessed asynchronously
+ *
+ * The Async file type represents files and directories that can be accessed asynchronously
+ * in the background. With AsyncFile instances, all operation method calls return immediately,
+ * while the results are returned by calling callback methods.
+ *
+ * Consider the following callback class:
+ *
+ * ---
+ * class MyStringOperationListener : StringOperationListener
+ * {
+ * 	public void on_string(String str, Error error) {
+ * 		if(error != null) {
+ * 			Log.error(String.as_string(error));
+ * 		}
+ * 		else {
+ * 			Log.message("File contents: `%s'".printf().add(str));
+ * 		}
+ * 	}
+ * }
+ * ---
+ *
+ * This could be utilized through the AsyncFile mechanism as follows:
+ *
+ * ---
+ * var af = AsyncFile.for_file(File.for_native_path("/tmp/somefile.txt"), get_background_task_manager());
+ * af.get_contents_string(new MyStringOperationListener());
+ * ---
+ **/
+
+AsyncFileOperationListener
+
+/**
+ * A generic type for classes that receive asynchronous files as results
+ *
+ * The AsyncFileOperationListener type allows a class to declare that it is able to
+ * receive instances of AsyncFile classes as a result. This can be used eg. by file
+ * operations that create files, rename files, etc.
+ **/
+
+AsyncFileWrapper
+
+/**
+ * An asynchronous file wrapper type
+ *
+ * This is a wrapper class that takes a regular file (com.eqela.libos.File), and wraps it
+ * so that it can be utilized, accessed and modified asynchronously. For this to happen, an
+ * instance of a background task manager is required, which will be utilized to start any
+ * necessary background thread or execution instances necessary to make the processing
+ * asynchronous.
+ *
+ * NOTE: Calling AsyncFile.for_file() is a shortcut for creating an instance of this class.
+ **/
+
+CommandLineApplication
+
+/**
+ * A base class for command line applications
+ *
+ * The CommandLineApplication provides a higher level base class for the implementation
+ * of command line applications. As compared to implementing the Command interface, inheriting
+ * CommandLineApplication will provide standard input / output streams (stdin, stderr, stdout),
+ * command line parameter parsing, logging features, printing to the console, and automatic
+ * handling of printing an "application header" (short description, copyright, licensing, etc.).
+ * This class is a convenience class, and in itself implements the Command interface.
+ **/
+
+CommandLineApplicationAction
+
+/**
+ * An action in a multi-action command line application
+ *
+ * For multi-action command line applications (represented by class
+ * MultiActionCommandLineAppliction), multiple "actions" can be specified, each
+ * of which executes some specific functionality of the program. These actions
+ * are supplied as subclasses of CommandLineApplicationAction.
+ **/
+
+MultiActionCommandLineApplication
+
+/**
+ * Command line application that encapsulates multiple independent actions
+ *
+ * If a command line application is required to execute multiple actions
+ * that can be considered somewhat independent of each other, a
+ * MultiActionCommandLineApplication provides a convenient way to structure
+ * the application. In a multi-action application, the first parameter to the
+ * application signifies the action to take, which in turn is represented by
+ * a separate class that inherits from CommandLineApplicationAction. The
+ * action can have their own set of command line arguments and parameters.
+ **/
+
+ConsoleApplication
+
+/**
+ * A console aware application
+ *
+ * If an application's Main class implements the ConsoleApplication interface, the
+ * framework will treat the application as "aware" of console events, and will call
+ * the two callback methods (on_close() and on_refresh()) on appropriate times, giving
+ * the application the chance to respond to them. While the exact time when these
+ * methods are invoked is platform dependent, in practice the on_close() method is
+ * called on Posix-like systems when Ctrl+C is pressed on the terminal, and on_refresh()
+ * is called when the applications receives the SIGHUP signal. Implementing these
+ * methods gives the application a chance to respond to these events.
+ **/
+
+Command
+
+/**
+ * A base type for command line application entry points
+ *
+ * The Command interface is implemented by classes that are intended to be used
+ * as the entry points of command line applications. The interface requires a
+ * single method "main" that receives as its arguments the command (the actual
+ * command given, usually the first parameter on the command line) and a collection
+ * of parameters given to the command as a Collection of String objects, representing
+ * the rest of the parameters that were given on the command line.
+ **/
+
+Stderr
+
+/**
+ * Standard error output stream
+ *
+ * The standard error (stderr) output stream provides an output stream that 
+ * the application can write to. Traditionally (as the name suggests) this is used
+ * for writing error messages or warnings so that they can be cleanly separeted
+ * from the "real" application output.
+ **/
+
+Stdin
+
+/**
+ * Standard input stream
+ *
+ * The standard input stream represents the input device / stream of the application
+ * from which input data can be read.
+ **/
+
+Stdout
+
+/**
+ * Standard output stream
+ *
+ * The standard output (stdout) output stream provides an output stream that 
+ * the application can write to.
+ **/
+
+UsageInfo
+
+/**
+ * Usage information for a command line application
+ *
+ * The UsageInfo class is used to store and communicate information about how to use
+ * a command line application. This is traditionally used as the parameter of the on_usage()
+ * of CommandLineApplication, where subclasses of CommandLineApplication can specify information
+ * about how the command is to be used. The framework will then present that information to
+ * the user as requested or required.
+ **/
+
+HTTPClientRequest
+
+/**
+ * An HTTP request
+ *
+ * The HTTPClientRequest is the main class for accessing HTTP functionality in Eqela applications.
+ * Generally, to execute an HTTP request, one would construct an HTTPClientRequest object, set the
+ * appropriate parameters and then either execute the request (synchronously) or start the request
+ * (asynchronously). Note that synchronous execution of HTTP requests is not considered appropriate
+ * in GUI applications as this would freeze the user interface, and as such is not even supported on
+ * all platforms (such as HTML5). Synchronous requests are, however, often used especially in server
+ * applications where they can be executed in background threads.
+ **/
+
+HTTPClientBufferReceiver
+
+/**
+ * Binary data (Buffer) receiver for HTTP client
+ *
+ * A buffer receiver class receives data from the HTTP client in binary format,
+ * and appends all incoming data to a DynamicBuffer object stored in memory.
+ **/
+
+HTTPClientBufferResponse
+
+/**
+ * HTTP client response in binary format
+ *
+ * The HTTPClientBufferResponse represents a response received from the HTTP server
+ * by the HTTP client, where the response data is stored in binary format as a Buffer
+ * object.
+ **/
+
+HTTPClientDataEvent
+
+/**
+ * A data event received through the HTTP client class
+ *
+ * When the HTTP client receives data from the server, it generates "data events"
+ * that are represented by this class. The data events can then be reacted to by
+ * the class listening for the HTTP client events.
+ **/
+
+HTTPClientEndEvent
+
+/**
+ * A termination event received through the HTTP client class
+ *
+ * When the HTTP client is done receiving data from the server, it generates an "end
+ * event" or "termination event" that is represented by this class, notifying the listener
+ * that the data transmission has ended.
+ **/
+
+HTTPClientErrorEvent
+
+/**
+ * An error event received through the HTTP client class
+ *
+ * When the HTTP client encounters error during its operation, it generates "error
+ * events" that are represented by this class.
+ **/
+
+HTTPClientFileResponse
+
+/**
+ * HTTP client response as a File
+ *
+ * The HTTPClientFileesponse represents a response received from the HTTP server
+ * by the HTTP client where the response data is stored in a file.
+ **/
+
+HTTPClientFileWriter
+
+/**
+ * HTTP client listener that writes its output to a file
+ *
+ * This HTTP client listener listens for incoming response data from the HTTP server,
+ * and writes all bytes reveived to the specified file, generating also a
+ * HTTPClientFileResponse upon successful completion.
+ **/
+
+HTTPClientListener
+
+/**
+ * A base class for HTTP client listeners
+ *
+ * This convenience class implements the functionality for receiving event
+ * objects from the HTTP client, and translates them to calls on virtual methods
+ * that can be overridden in a subclass in order to achieve desired functionality.
+ * This class is used by subclassing it and implementing the necessary functionality.
+ **/
+
+HTTPClientOutputStreamWriter
+
+/**
+ * HTTP client listener that writes its output to an output stream
+ *
+ * This HTTP client listener listens for incoming response data from the HTTP server,
+ * and writes all bytes reveived to an output stream. Usually this class is used by
+ * subclassing it, eg. HTTPClientFileWriter.
+ **/
+
+HTTPClientResponseEvent
+
+/**
+ * An initial response event received through the HTTP client class
+ *
+ * When the HTTP client has initiated a connection with the HTTP server, and has received
+ * an initial response (HTTP headers), it generates a "response event" that contains the HTTP
+ * status code and response headers, and is represented by this class.
+ **/
+
+HTTPClientResponseHeader
+
+/**
+ * Response header for HTTP responses
+ *
+ * Acting as the base class for the classes that implement HTTP client responses, the HTTPClientResponseHeader
+ * class contains the HTTP status code and the response headers. Usually this class is subclasses into a class
+ * that also includes the response body in a suitable format.
+ **/
+
+HTTPClientStartEvent
+
+/**
+ * A beginning event received through the HTTP client class
+ *
+ * When the HTTP client has started its operation, it generates a "start
+ * event" that is represented by this class, notifying the listener
+ * that the HTTP client has started.
+ **/
+
+HTTPClientStringReceiver
+
+/**
+ * A text (String) receiver for HTTP client
+ *
+ * A string receiver class receives data from the HTTP client in text format,
+ * and appends all incoming data to a StringBuffer object stored in memory.
+ * Upon completion of the data transfer, the StringBuffer can be converted to
+ * a String object.
+ **/
+
+HTTPClientStringResponse
+
+/**
+ * HTTP client response in text format
+ *
+ * The HTTPClientStringResponse represents a response received from the HTTP server
+ * by the HTTP client, where the response data is stored in text format as a String
+ * object.
+ **/
+
+DNSResolver
+
+/**
+ * DNS (Domain Name System) client
+ *
+ * The DNSResolver can be used to query the Domain Name System for records. A common
+ * (but not only) use of this is to discover the IP address of a hostname.
+ **/
+
+BufferPipeHandler
+
+/**
+ * Pipe handler for binary data
+ *
+ * The buffer pipe handler interface is implemented by classes that can received piped content in
+ * binary format (as opposed to text / string). Pipe handlers can be set for executed external
+ * commands using the ProcessLauncher class.
+ **/
+
+DateTime
+
+/**
+ * A date / time class that can be represented in various formats
+ *
+ * The DateTime class can be constructed to represent either the current time, or any time in history
+ * by specifying the number of seconds since January 1, 1970. The time can then be represented either
+ * as a string in one of the supported formats, or be broken down to detailed components.
+ **/
+
+DateTimeDetails
+
+/**
+ * Detailed breakdown of a date / time
+ *
+ * Usually returned from the DateTime class, the DateTimeDetails class contains a detailed
+ * breakdown of the components of a date and time.
+ **/
+
+FileAdapter
+
+/**
+ * A convenience class for the implementation of custom File implementations
+ *
+ * When implementing the File interface, there are many methods for which common
+ * implementations exist. This class provides many implementations for those common
+ * methods, only requiring the implementor to add the methods that he/she may
+ * need.
+ **/
+
+FileDescriptorReader
+
+/**
+ * A reader for a file descriptor
+ *
+ * On Unix / Linux systems, everything is a file descriptor. This class can be initialized
+ * with a file descriptor (integer), and subsequently provides a convenient way to read from
+ * the file descriptor (whatever it may be underneath).
+ *
+ * This function only works on Posix-like systems (eg. Linux and Mac OS X); the create() method
+ * returns null on systems that do not support file descriptors.
+ **/
+
+FileExtender
+
+/**
+ * Extension mechanism for standard File objects
+ *
+ * Instead of implementing new File objects (creating virtual files) by implementing the File
+ * interface of by extending FileAdapter, one can extend existing File implementations using
+ * FileExtender. By implementing any of the methods within FileExtender, the implementor can
+ * "intercept" calls to the underlying file, while all unimplemented methods will be serviced
+ * by the underlying file directly.
+ *
+ * The com.eqela.libencryptedfile.EncryptedFile class is implemented in this manner.
+ **/
+
+FileFinder
+
+/**
+ * A utility class for searching for files with a given pattern inside a given directory
+ *
+ * The FileFinder class can be initialized with a directory reference, and can be configured
+ * with a number of patterns to search for and patterns to exclude from the results. The
+ * matching files inside the directory (recursively searched) can then be iterate over.
+ **/
+
+FileInfo
+
+/**
+ * Stores detailed information about a file and its attributes
+ *
+ * The FileInfo class is used to store and transmit detailed information about files and their attributes.
+ * Instances of this class are commonly retrieved by using the stat() method of File objects.
+ **/
+
+FileInfoOperationListener
+
+/**
+ * A generic type for classes that receive file information as results
+ *
+ * The FileInfoOperationListener type allows a class to declare that it is able to
+ * receive file information as a result of an operation.
+ **/
+
+LogPipeHandler
+
+/**
+ * A pipe handler that prints all output to the current log
+ *
+ * The LogPipeHandler provides a specialized string pipe handler that prints all of the output
+ * received from the pipe into the current logger. The LogPipeHandler can be specified to output
+ * either on the "message" level or on the "debug" level.
+ **/
+
+Mutex
+
+/**
+ * A mutex (mutual exclusion) implementation
+ *
+ * Mutexes can be used to synchronize threads, ie. prevent simultaneous access by multiple
+ * threads on a shared resource.
+ **/
+
+Path
+
+/**
+ * A utility class for performing file / directory pathnane operations
+ *
+ * The Path class provides a number of statically called utility methods that can be
+ * used to perform manipulations on strings that represents pathnames pointing to either
+ * files or directories. Note that many of these methods perform their tasks in a
+ * platform dependent manner, and can therefore be used to abstract away the differences
+ * in pathname notations (eg. slash vs. backslash, Windows drive letters, etc.).
+ **/
+
+Process
+
+/**
+ * Representation of a running process on the system
+ *
+ * Objects implementing the Process interface are representing running processes on the system.
+ * Instances to Process objects are usually received from the ProcessLauncher class, and are
+ * therefore representative of child processes of the current process.
+ **/
+
+ProcessLauncher
+
+/**
+ * Creation of processes and execution of other commands or applications
+ *
+ * The ProcessLauncher class facilitates the execution of external commands or
+ * starting of other applications on platforms where such is possible to do.
+ * The ProcessLauncher can either "execute" a command and waits for it to exit
+ * prior to continuing, or it can "start" a process and let it continue
+ * independently in the background.
+ **/
+
+ProcessLauncherListener
+
+/**
+ * Listener interface for ProcessLauncher
+ *
+ * When creating new processes through the ProcessLauncher class, a listener
+ * object can be provided that implements this interface. In such a case, the
+ * ProcessLauncher class will notify the listeners of the status of the launched
+ * process as appropriate.
+ **/
+
+Runnable
+
+/**
+ * An object that can be called to run (usually as a thread)
+ *
+ * The Runnable interface can be seen as a generic interface for an object that can
+ * be called to "run". However, in practice, the Runnable interface is mostly used
+ * to implement multi-threaded objects; an instance of a Runnable object can be passed
+ * to a Thread, after which the "run" method will perform as the thread function to
+ * be executed in another thread.
+ **/
+
+StringPipeHandler
+
+/**
+ * A pipe handler that receives data as text (strings)
+ *
+ * When executing commands and creating processes through the ProcessLauncher class,
+ * the processes can be directed to send their output to a "pipe" for processing. Implementing
+ * a pipe handler through the StringPipeHandler enables the creation of a pipe handler
+ * that receives the output from the child process as a String (as opposed to the
+ * BufferPipeHandler, which receives Buffer objects filled with binary data).
+ **/
+
+SystemClock
+
+/**
+ * Retrieve the current system time
+ *
+ * The SystemClock class provides a simple mechanism to retrieve the current system
+ * time. This is usually represented either as seconds elapsed since January 1, 1970,
+ * or as a TimeVal object.
+ **/
+
+SystemEnvironment
+
+/**
+ * Retrieve many details about the current system environment
+ *
+ * The SystemEnvironment class provides various details about the current system / environment
+ * in which the current application is running. Methods in this class can be used to adapt
+ * an application to the different platforms, and/or to abstract away their differences.
+ **/
+
+TemporaryDirectory
+
+/**
+ * Create and access a temporary directory
+ *
+ * Sometimes an application needs temporary space to use as transient storage. The
+ * TemporaryDirectory class provides a shortcut for the creation and deletion of a directory that is
+ * guaranteed to be empty and have a unique name. When the create() method returns with a non-null return
+ * value, the empty directory will have been created. The directory or its contents will NOT be
+ * automatically deleted; the caller is responsible to call delete_recursive() on the created directory when
+ * it is no longer needed.
+ **/
+
+TemporaryFile
+
+/**
+ * Create and access a temporary file
+ *
+ * Sometimes an application needs to use a temporary file to use as transient storage. The
+ * TemporaryFile class provides a shortcut for the creation and deletion of a file that is
+ * guaranteed to have a unique name. When the create() method returns with a non-null return
+ * value, the file will have been created with a 0 size (no content). The file will NOT be
+ * automatically deleted; the caller is responsible to call remove() on the created file when
+ * it is no longer needed.
+ **/
+
+Thread
+
+/**
+ * Concurrent thread of execution
+ *
+ * Multi-threading in Eqela applications is fundamentally handled by the
+ * Thread class, which can be used to start Runnable objects; when started,
+ * the run() method of the Runnable object would then be called in another
+ * thread that executes simultaneously with the calling thread.
+ *
+ * When implementing threading functionality "manually" through Thread and
+ * Runnable, careful usage of Mutex objects must be observed in order to
+ * prevent multiple threads from accessing resources simultaneously.
+ **/
+
+BackgroundTask
+
+/**
+ * A task that is running in the background
+ *
+ * BackgroundTask objects are representing tasks that are somehow running in the background. This
+ * does not necessarily mean threads (but it does include threads), but also other kinds of things
+ * that can run in the background, such as asynchronous API calls, child processes, etc. The common
+ * denominator is that those tasks can be aborted as requested.
+ *
+ * Many APIs in the Eqela framework return BackgroundTask objects.
+ **/
+
+BackgroundTaskManager
+
+/**
+ * A background task manager
+ *
+ * A BackgroundTaskManager is an object that can start two kinds of background tasks:
+ * (1) timers that execute periodically or with a delay, or (2) one-time tasks that
+ * are started and execute concurrently with the calling thread.
+ *
+ * There are many implementations of BackgroundTaskManager objects in the Eqela framework.
+ * Commonly, when running in the GUI environment, this functionality is provided by
+ * the GUI engine.
+ **/
+
+BackgroundTaskAdapter
+
+/**
+ * A convenience class for the implementation of BackgroundTask objects
+ *
+ * This class can be used as a base class for the implementation of customized
+ * BackgroundTask objects. This class introduces a BooleanValue class member that
+ * is used to implement the abort() functionality. None of the actual task functionality
+ * is implemented here; that is left solely to the subclass.
+ **/
+
+ProgressListener
+
+/**
+ * A progress listener
+ *
+ * A class that implements the ProgressListener interface can receive progress notifications.
+ * This is commonly used together with the ProgressTimer, wherein the ProgressListener will
+ * receive a series of calls to on_progress(), with the parameter ranging from 0.0 to 1.0,
+ * indicating the level of completion. 
+ **/
+
+ProgressTimer
+
+/**
+ * A convenience class to execute a timer with periodic updates
+ *
+ * The ProgressTimer offers a simple mechanism to run a timer over a period of
+ * time by issuing a series of update() calls to the listener.
+ **/
+
+RunnableTask
+
+/**
+ * A task that can be executed
+ *
+ * RunnableTask is the base type for background tasks. To create a task executed
+ * in the background using a BackgroundTaskManager, create a class and implement
+ * the RunnableTask interface. For example:
+ *
+ * ---
+ * // Declare a class that implements RunnableTask
+ * class MyTask : RunnableTask
+ * {
+ * 	public void run(EventReceiver listener, BooleanValue abortflag) {
+ * 		// this runs on another thread.
+ * 		if(listener != null) {
+ * 			listener.on_event("Hello friendly thread");
+ * 		}
+ * 	}
+ * }
+ *
+ * // Call the task from somewhere else by calling the start_task() method of
+ * // a BackgroundTaskManager object.
+ * ---
+ **/
+
+RunnableTaskStarter
+
+/**
+ * A wrapper that enables the use of RunnableTask as a StartableTask
+ *
+ * This wrapper wraps a RunnableTask, together with a BackgroundTaskManager, into
+ * a class that implements the StartableTask interface. This way, the RunnableTask
+ * can be used as a StartableTask.
+ **/
+
+StartableTask
+
+/** 
+ * A task that can start itself
+ *
+ * Unlike a RunnableTask, which requires a BackgroundTaskManager that will run the task,
+ * a StartableTask will handle its own startup. To start a StartableTask, simply call
+ * the start() method.
+ **/
+
+Timer
+
+/**
+ * Delayed and/or periodic code execution
+ *
+ * The Timer class provides a shortcut method for the execution of a timer using
+ * a BackgroundTaskManager. This class is strictly a convenience wrapper, and the
+ * actual work is really done by the BackgroundTaskManager.
+ **/
+
+TimerHandler
+
+/**
+ * A timer handler
+ *
+ * The on_timer() method of a timer handler is called whenever the timer expires.
+ * The method should return true if the timer is to be repeated, and false if the
+ * timer should end. A common timer implementation:
+ *
+ * ---
+ * public class MyTimerHandler : TimerHandler
+ * {
+ * 	public bool on_timer(Object arg) {
+ * 		Log.message("TIMER HAS ELAPSED!");
+ * 		// Continue the timer execution. Return false instead
+ * 		// if this should be the last time.
+ * 		return(true);
+ * 	}
+ * }
+ * ---
+ **/
+
+*** eq.util.aes128
+
+AES128Cipher
+
+/**
+ * Implementation of the AES128 block cipher algorithm
+ *
+ * The AES128Cipher class provides an implementation of the AES-128 encryption
+ * algorithm in the form of an Eqela BlockCipher object that can be used in any
+ * encryption task that accepts a BlockCipher object.
+ *
+ * NOTE: Currently implemented only on C-based platforms.
+ **/
+
+*** eq.util.applicationdata
+
+ApplicationState
+
+/**
+ * A convenience class to save persistent application state
+ *
+ * This class provides convenience methods that assist in saving and restoring the current
+ * application state in the form of a hash table. The methods in this class simply call
+ * the methods in the ApplicationData class to perform their work.
+ *
+ * Example usage in a GUI application:
+ *
+ * ---
+ * class Main : Widget
+ * {
+ * 	HashTable state;
+ * 
+ * 	public void initialize() {
+ * 		base.initialize();
+ * 		state = ApplicationState.restore();
+ * 	}
+ *
+ * 	// modify and work on the state while the application runs
+ * 
+ * 	public void cleanup() {
+ * 		base.cleanup();
+ * 		ApplicationState.save(state);
+ * 	}
+ * }
+ * ---
+ **/
+
+ApplicationData
+
+/**
+ * Access application specific persistent data
+ *
+ * The ApplicationData class provides access for an application-specific space somewhere on the
+ * storage of the current system / device that the application can use to save its state or other
+ * transient files. The usage of the class itself is very simple:
+ *
+ * ---
+ * var mydir = ApplicationData.for_this_application();
+ * if(mydir != null) {
+ * 	// the mydir variable now points to a directory, represented by File,
+ * 	// in which you can now create files or other directories.
+ * }
+ * ---
+ *
+ * Note: While indeed the method returns a File object, it is not necessarily a real directory
+ * on the file system, and the backend storage may be something else (eg. on HTML5, we use the
+ * HTML5 Local Storage facility, on J2ME the record store, etc.). Regardless, from the application
+ * perspective, you can continue to use it as a regular directory.
+ *
+ * Note: On some platforms (eg. Posix), the returned object does point to a real directory that
+ * you can use to store the application data, but the directory may not yet exist. Therefore,
+ * prior to creating any data files, it is considered good practice to create the directory first:
+ *
+ * ---
+ * mydir.mkdir_recursive();
+ * ---
+ *
+ * On platforms where it is not really a directory or the directory already exists, doing this
+ * causes no harm.
+ *
+ * Note: The other method, for_application(), can be used to also query for the application data
+ * directories of OTHER applications, should you know their name or id. This is not supported on
+ * most platforms (especially mobile platforms), but can be used on the desktop platforms. Generally
+ * we don't recommend using it without a strong reason to do so.
+ **/
+
+*** eq.util.archive
+
+ArchiveExtractor
+
+/**
+ * Support for extracting archive files
+ *
+ * ArchiveExtractor objects are able to extract archive files (eg. zip, tar.bz2, etc.) to
+ * other locations on the system storage. An ArchiveExtractor is usually initialized for a
+ * file (which needs to be a supported archive file), after which it can be extracted by
+ * calling the relevant methods.
+ *
+ * Example:
+ *
+ * ---
+ * // Create the ArchiveExtractor object. It may return null, eg. if type file
+ * // type is not supported.
+ * var x = ArchiveExtractor.for_file(File.for_native_path("Z:\\myfile.zip"));
+ * if(x != null) {
+ * 	// Extract all contents of the archive to directory Z:\\tmp1
+ * 	// This creates Z:\\tmp1 and then saves each entry in the archive under that directory
+ * 	if(x.extract_to_dir("Z:\\tmp1") == false) {
+ * 		Log.error("Failed to extract (1)");
+ * 	}
+ * 	// Extract all contents of the archive AS directory Z:\\tmp2
+ * 	// If all entries in the archive are in one directory, then the
+ * 	// tmp2 directory will contain all the files inside the directory,
+ * 	// not the directory itself anymore.
+ * 	if(x.extract_as_dir("Z:\\tmp2") == false) {
+ * 		Log.error("Failed to extract (2)");
+ * 	}
+ * }
+ * ---
+ **/
+
+ArchiveExtractorCommon
+
+/**
+ * Common base class for archive extractors
+ *
+ * The class provides common functionality used in different ArchiveExtractor implementations.
+ * Is not meant to be used directly.
+ **/
+
+ArchiveReader
+
+/**
+ * A reader for a custom archive file format
+ *
+ * The ArchiveReader implements a reader for a simple, custom archive file format.
+ * This format is internal to Eqela / com.eqela.libarchive, and can be created using
+ * the ArchiveWriter.
+ **/
+
+ArchiveWriter
+
+/**
+ * A writer for a custom archive file format
+ *
+ * The ArchiveWriter implements a writer for a simple, custom archive file format.
+ * This format is internal to Eqela / com.eqela.libarchive, and can be read / extracted
+ * using the ArchiveReader.
+ **/
+
+Tar
+
+/**
+ * An archive extractor for the tar archive file format
+ *
+ * This extractor is able to extract archive files in the tar file format, including
+ * the compressed extensions (.tar.gz and .tar.bz2). The implementation is done by
+ * calling external commands to do the actual extraction, therefore this works out
+ * of the box on Unix/Linux/Posix based systems, but on others would require a tar
+ * command to be installed (notably on Windows).
+ **/
+
+UnZip
+
+/**
+ * An archive extractor for the ZIP archive file format
+ *
+ * This extractor is able to extract archive files in the ZIP file format. The
+ * implementation is internal, and does not require or use any external commands.
+ **/
+
+Zip
+
+/**
+ * Archive maker / extractor using the ZIP file format
+ *
+ * This class can be used to create ZIP files. The current implementation
+ * is dependent on the availability of an external "zip" command (which
+ * is not standard on Windows).
+ **/
+
+*** eq.util.base64
+
+Base64Decoder
+
+/**
+ * A base64 decoder
+ *
+ * The base64 decoder receives incoming data as a String object that contains data
+ * in the base64 encoded format. The decoder will then decode the string and return
+ * a Buffer object representing the (original) unencoded binary representation of the
+ * data.
+ **/
+
+Base64Encoder
+
+/**
+ * A base64 encoder
+ *
+ * The base64 encoder receives either a String object or a Buffer object as input data,
+ * and then converts / encodes the input to a string encoded using the Base64 encoding
+ * format. This way, the original binary data can be transferred over protocols and other
+ * media that can only handle text and not binary data. The base64 representation of the
+ * data is slightly larger than the original binary data.
+ **/
+
+*** eq.util.blockcipher
+
+BlockCipher
+
+/**
+ * An encryption algorithm that encodes data in blocks (chunks)
+ *
+ * The BlockCipher interface offers a base type for the implementation of data encryption
+ * algorithms that receive input and return their output in block / chunks of binary data
+ * (as Buffer objects). Different classes that implement this interface will implement the
+ * specific encryption algorithms.
+ **/
+
+BlockCipherReader
+
+/**
+ * A reader that decrypts incoming data as it reads
+ *
+ * A BlockCipherReader is initialized with another Reader object and a BlockCipher
+ * object that represents the actual encryption parameters. Whatever is then read from
+ * the BlockCipherReader will automatically be decrypted using the BlockCipher object,
+ * and returned to the caller in its original (unencrypted) format.
+ **/
+
+BlockCipherWriter
+
+/**
+ * A writer that automatically encrypts all written data
+ *
+ * A BlockCipherWriter object is initialized with another writer as well as with
+ * a BlockCipher object that represents the actual encryption parameters. All data
+ * that is then written to this writer will be automatically encrypted, and then
+ * passed forward and written to the "original" Writer, thereby producing output
+ * that is encrypted using the parameters and algorithm given through the BlockCipher
+ * object.
+ **/
+
+*** eq.util.cachedfile
+
+CachedFile
+
+/**
+ * A base class for cached files
+ *
+ * The CachedFile class provides a base class and common functionality for cached files,
+ * but does not provide a complete implementation. To implement new kinds of cached files,
+ * subclass CachedFile; otherwise use one of the existing subclasses.
+ **/
+
+CachedJSONFile
+
+/**
+ * A cached file in JSON format
+ *
+ * This class provides a way to read a JSON file from the disk, and reuse
+ * the previously read contents until such time that the file has changed.
+ * On every call to get_data(), you can expect to receive the current, most
+ * recent contents of the file; but the file will only be read once unless
+ * it changes.
+ **/
+
+CachedTextFile
+
+/**
+ * A cached file in text format
+ *
+ * This class provides a way to read a text file from the disk, and reuse
+ * the previously read contents until such time that the file has changed.
+ * On every call to get_contents(), you can expect to receive the current, most
+ * recent contents of the file; but the file will only be read once unless
+ * it changes.
+ **/
+
+*** eq.util.shell.common
+
+CommonShellEngine
+
+/**
+ * A shell engine that comes read with common built-in commands
+ *
+ * The ShellEngine class itself does not come with any built-in commands, but is rather
+ * a base class for building a command line environment. The CommonShellEngine provides
+ * many useful commands for a common command line environment (ls, cp, rm, etc.).
+ **/
+
+*** eq.util.json
+
+JSONEncoder
+
+/**
+ * A class to produce JSON string data
+ *
+ * The JSONEncoder class receives either a HashTable or a Collection objects, and encodes
+ * the contents of it as a JSON format string.
+ **/
+
+JSONObject
+
+/**
+ * An object that can be represented in a JSON structure
+ *
+ * If an object implements the JSONObject interface, then the object can be
+ * converted in a format that can be represented as a JSON structure (and can
+ * be further encoded as a JSON format string). The methods provided in the
+ * interface facilitate a bidirectional conversion flow to-and-from JSON.
+ **/
+
+JSONParser
+
+/**
+ * A JSON string to Eqela Object converter
+ *
+ * The JSONParser class converts a string of data in JSON format to an Eqela object
+ * represented either as a HashTable or a Collection. Various convenience methods 
+ * (parse_*) are provided to input the string data in various formats, each of them
+ * returning an Object instance (the actual type of which is either an Array or a
+ * HashTable, depending on the actual contents of the JSON data). The return value
+ * can then be typecasted appropriately, usually using the "as" operator.
+ **/
+
+*** eq.util.md5
+
+MD5Encoder
+
+/**
+ * An MD5 hash encoder
+ *
+ * The MD5Encoder class converts its input data into an MD5 hash. The class receives
+ * its input as an "Object" class, the type of which may vary to accommodate for
+ * different input types. In practice, input data in the format of a String class is
+ * supported on all platforms, with Buffer also included on most.
+ **/
+
+*** eq.util.mime
+
+MimeTypeRegistry
+
+/**
+ * A filename extension / mime type resolution facility
+ *
+ * The MimeTypeRegistry represents a database of mappings from common filename extensions
+ * (such as txt, eq, c, doc, xls, etc) to their corresponding mime types. The conversion
+ * can be conducted either from extension to mime type of mime type to extension.
+ *
+ * Note that upon construction (calling instance()), the database is first constructed and
+ * initialized in memory. Rather than doing this repeatedly, it is usually best practice to
+ * construct an instance once, and keep reusing the instance in order to best optimize
+ * computing resources.
+ **/
+
+*** eq.widget
+
+WidgetEngine
+
+/**
+ * The frame controller for widget applications
+ *
+ * All Eqela GUI applications must execute through a FrameController that is attached to
+ * a Frame. The Widget class is not a FrameController; the WidgetEngine class is, and is
+ * therefore the first widget class in an application that executes. The WidgetEngine is
+ * also a Scene, and can therefore be a part of a multi-scene application where other scenes
+ * may or may not use widgets.
+ *
+ * When creating a regular Widget based application, the WidgetEngine is automatically created
+ * for the application in the background. However, it is possible and acceptable to subclass
+ * WidgetEngine, and perform custom operations in the subclass. If so, the Main class of
+ * the application should be a subclass of WidgetEngine and the moduletype of the application
+ * should be set to "customguiapplication" instead of "widgetapplication". Alternatively,
+ * for a multi-scene application, you can subclass your WidgetEngine and switch to it using
+ * the switch_scene() mechanism.
+ **/
+
+Widget
+
+/**
+ * A graphical user interface element
+ *
+ * The Widget class is the base class for all graphical user interface elements in an
+ * Eqela application developed using widgets. The Widget class is not usually instantiated
+ * directly, but rather it is subclassed and the subclasses are instantiated. There are
+ * exceptions, however: Widget objects can exist, and are sometimes used as "empty"
+ * elements where a Widget must exist but it should have no appearance or behavior.
+ *
+ * For other uses, see one of the many Widget subclasses.
+ **/
+
+FixedGridWidget
+
+/**
+ * A fixed grid widget
+ *
+ * The FixedGridWidget is a container widget that can host other widgets as children.
+ * It will then lay out the child widgets in a grid with a FIXED number of columns and
+ * rows (the "fixed" in the class name means exactly that: Fixed number of rows and columns).
+ * As the FixedGridWidget is resized, it will retain the number of rows and columns, but the
+ * size of each cell in the grid will be changed accordingly. A short example:
+ *
+ * ---
+ * // Create a fixed grid with 2 rows and 2 columns
+ * var fgw = FixedGridWidget.instance(2, 2);
+ *
+ * // Add a text label in each column
+ * fgw.add(LabelWidget.for_string("1"));
+ * fgw.add(LabelWidget.for_string("2"));
+ * fgw.add(LabelWidget.for_string("3"));
+ * fgw.add(LabelWidget.for_string("4"));
+ *
+ * // The first row will now have "1" and "2", second row "3" and "4"
+ * ---
+ **/
+
+AbsoluteAlignWidget
+
+/**
+ * Alignment widget that positions its children in absolute coordinates
+ *
+ * The AbsoluteAlignWidget can have several children, each of them positioned in static
+ * x/y coordinates specified by the application.
+ **/
+
+AlignWidget
+
+/**
+ * A relative alignment container widget
+ *
+ * The AlignWidget is a container widget that arranges its children in proportion to itself. It
+ * can contain several children, and they can all be independently positioned. Examples:
+ *
+ * ---
+ * // Construct the AlignWidget itself
+ * var aw = AlignWidget.instance();
+ *
+ * // Add a text label to the top left corner
+ * aw.add_align(-1, -1, LabelWidget.for_string("Top left corner"));
+ *
+ * // Add a text label in the center
+ * aw.add_align(0, 0, LabelWidget.for_string("In the center"));
+ *
+ * // Add a text label at the bottom, between center and leftmost edge
+ * aw.add_align(0.5, 1, LabelWidget.for_string("Decimals are supported"));
+ *
+ * // Add the AlignWidget itself to its own container
+ * add(aw);
+ * ---
+ **/
+
+Animation
+
+/**
+ * A user interface animation
+ *
+ * The Animation class is used to handle transitions and other kinds of animations within the
+ * user interface. An Animation can be composed of several "items" (of type AnimationItem),
+ * each of which executes for the common duration of the animation. An animation will also have
+ * a "target" (of type AnimationTarget) that is notified of the beginning, progress and ending
+ * of the animation. Additionally, the animation may have a "listener" (of type AnimationListener)
+ * that is notified when the animation ends. Animations can be started with the start_animation()
+ * method of a Widget.
+ *
+ * For the "usual" animations (move, resize, fade in / out, etc.), the Widget class provides
+ * ready-made methods to achieve this (many of the transformation methods accept an optional
+ * parameter "duration" which, when supplied, is used as the animation duration).
+ **/
+
+AnimationItem
+
+/**
+ * A component of a user interface animation
+ *
+ * AnimationItem objects can be added to an Animation; once the animation runs,
+ * the update() method of each item is called once per tick. The item is free
+ * to perform any action it wills.
+ **/
+
+AnimationListener
+
+/**
+ * A listener to wait for an animation to end
+ *
+ * An AnimationListener object can be notified when an animation ends.
+ **/
+
+AnimationTarget
+
+/**
+ * A target object for an animation
+ *
+ * The AnimationTarget object is considered the "target" of an animation; one Animation object can
+ * only have one target. While the animation animates over multiple AnimationItem objects, after
+ * calling update() on each of them, the on_animation_update() method of AnimationTarget is called,
+ * in effect to "commit" the changes made in the items. Often the AnimationItem objects are used to
+ * change the values of variables, while in on_animation_update(), the new values of those variables
+ * will be translated to visual changes.
+ **/
+
+BoxWidget
+
+/**
+ * A linear-stacking container widget
+ *
+ * The BoxWidget, one of the most commonly used container widgets in the Eqela GUI framework,
+ * enables the stacking of widgets, one after the other, either horizontally or vertically.
+ * The child widgets can be sized either by their size request (which the BoxWidget attempts
+ * to grant) or by sizes relative to the size of the container and other children, by assigning
+ * "weight" values to the child widgets. More complex arrangements can be achieved by nesting
+ * BoxWidget objects inside other BoxWidgets. Some examples:
+ *
+ * ---
+ * // Create a box widget with two text labels. They will be arranged
+ * // at the top, one after the other
+ * var vb1 = BoxWidget.vertical();
+ * vb1.add(LabelWidget.for_string("First"));
+ * vb1.add(LabelWidget.for_string("Second"));
+ *
+ * // Create a box widget with two text labels, both of which are
+ * // added using the weight of "1" (equal). The total weight is 2,
+ * // therefore each label will consume 1/2 = 0.5 = 50% of the vertical
+ * // space allocated to the box. The "First" will cover the upper half
+ * // of the space, "Second" will cover the lower half.
+ * var vb2 = BoxWidget.vertical();
+ * vb2.add_box(1, LabelWidget.for_string("First"));
+ * vb2.add_box(1, LabelWidget.for_string("Second"));
+ *
+ * // Create a vertical box with two elements: (1) a horizontal box with
+ * // equally sized labels "1", "2" and "3", and (2) a green canvas that
+ * // fills the rest of the space.
+ * var vb3 = BoxWidget.vertical();
+ * var hb = BoxWidget.horizontal();
+ * hb.add_box(1, "1");
+ * hb.add_box(1, "2");
+ * hb.add_box(1, "3");
+ * vb3.add(hb);
+ * vb3.add_box(1, CanvasWidget.for_color(Color.instance("green")));
+ * ---
+ **/
+
+ChangerWidget
+
+/**
+ * A widget that can be used to switch between other widgets
+ *
+ * The ChangerWidget is a container widget that can contain many other widgets, but only one of them
+ * is active, or shown, at any given time. By calling the methods of the class, the widget can switch
+ * between the widgets so that the shown widgets becomes hidden and some other widget becomes shown.
+ * There are two common ways to use the ChangerWidget, both of which are shown below through examples:
+ *
+ * (1) Adding multiple widgets and switching between them. This way, you can create eg. a tab view or
+ * a text editor with multiple edit buffers, etc.
+ *
+ * ---
+ * // Create the ChangerWidget itself
+ * var changer = ChangerWidget.instance();
+ *
+ * // Create two text labels to be placed inside the changer
+ * var first = LabelWidget.for_string("First label");
+ * var second = LabelWidget.for_string("Second label");
+ *
+ * // Add the labels to the changer
+ * changer.add_changer(first);
+ * changer.add_changer(second);
+ *
+ * // Activate one of the labels.
+ * changer.activate(first);
+ *
+ * // Afterwards, you can call this to switch to the other label:
+ * changer.activate(second);
+ * ---
+ *
+ * (2) Using the ChangerWidget to hold a single widget at a time, always replacing the previous one.
+ * This could be used to create eg. an application with multiple screens, only one of which is
+ * being shown at any given time.
+ *
+ * ---
+ * // Create the ChangerWidget itself
+ * var changer = ChangerWidget.instance();
+ *
+ * // Set the currently active widget. The widget is immediately shown and activated.
+ * changer.replace_with(LabelWidget.for_string("First label"));
+ *
+ * // Later on, change the label. The original widget will be removed and unallocated.
+ * changer.replace_with(LabelWidget.for_string("Second label"));
+ * ---
+ **/
+
+ClipperContainerWidget
+
+/**
+ * A container widget that clips all of its child widgets
+ *
+ * Normally when you place widgets inside container widgets, they can freely move
+ * outside the bounds of their containers. However, sometimes it is necessary to
+ * make sure that widgets would not overlap with others. In such cases, placing widgets
+ * inside a class that derives from ClipperContainerWidget can be done to ensure the
+ * widgets remain within the given bounds.
+ **/
+
+ClipperWidget
+
+/**
+ * A widget that clips its children
+ *
+ * A widget that implements the ClipperWidget interface is treated specially when computing
+ * the placement of surfaces: A ClipperWidget would have its children placed inside the widget
+ * instead of on top of it.
+ *
+ * This class is used primarily in internal implementation, and is not expected to be used in
+ * application code.
+ **/
+
+ContainerWidget
+
+/**
+ * A base class for all widgets that can contain other widgets
+ *
+ * All widgets that can contain other widgets will usually inherit from this class.
+ * This class in itself cannot be used but rather one of its many subclasses.
+ **/
+
+FlexiGridWidget
+
+/**
+ * A flexible grid widget
+ *
+ * The FlexiGridWidget is a container widget that can host other widgets as children.
+ * It will then lay out the child widgets in a grid. The number of rows and columns in the
+ * grid will automatically adjust based on the size of the grid widget itself and the size
+ * requests of the child objects inside. The application can set a "column request" that affects
+ * the initial size request of the widget, effectively fixing the number of columns, in cases
+ * where there is enough space to fulfill the request. The FlexiGridWidget is very "smart" and
+ * easy to use, as follows:
+ *
+ * ---
+ * // Create a grid widget with 1 millimeter margin and 1 millimeter space in between cells
+ * var fgw = FlexiGridWidget.instance();
+ * fgw.set_spacing(px("1mm"));
+ * fgw.set_margin(px("1mm"));
+ *
+ * // Add 20 elements to the grid. The grid will automatically place the widgets and adjust their size
+ * int n;
+ * for(n=0 ;n<20; n++) {
+ * 	fgw.add(LabelWidget.for_string("Label%d".printf().add(n).to_string()));
+ * }
+ * ---
+ **/
+
+FocusFrameWidget
+
+/**
+ * A widget that can display the focus state of its children
+ *
+ * A focus frame widget is an interface that can be implemented by widgets that wish
+ * to graphically display the keyboard / text input focus state of one or more of
+ * their children. When a child widget of a FocusFrameWidget changes focus state, then
+ * the FocusFrameWidget is also notified of this, and can change its appearance
+ * appropriately.
+ **/
+
+HBoxWidget
+
+/**
+ * A horizontal box widget
+ *
+ * The HBoxWidget is a shortcut class to creating a horizontal BoxWidget. The following
+ * are functionally equivalent:
+ *
+ * ---
+ * var hb1 = BoxWidget.horizontal();
+ * var hb2 = HBoxWidget.instance();
+ * ---
+ *
+ * Likewise, the following are equivalent. Choose either option depending on your preference:
+ *
+ * ---
+ * class MyWidget : HBoxWidget
+ * {
+ * }
+ *
+ * class MyWidget : BoxWidget
+ * {
+ * 	public MyWidget() {
+ * 		set_direction(BoxWidget.HORIZONTAL);
+ * 	}
+ * }
+ * ---
+ **/
+
+LayerWidget
+
+/**
+ * A container widget that stacks its children on top of each other
+ *
+ * LayerWidget is a very commonly used container widget that can have several child widgets.
+ * Each child is given the same size as the layer widget itself (minus any margins that may
+ * have been configured), and they will be drawn on screen one on top of the other in the
+ * order in which they were added to the LayerWidget.
+ *
+ * Sample usage:
+ *
+ * ---
+ * // Create the layer widget
+ * var layer = LayerWidget.instance();
+ *
+ * // Create a white background
+ * layer.add(CanvasWidget.for_color(Color.instance("white")));
+ *
+ * // Set the default drawing color for children
+ * layer.set_draw_color(Color.instance("black"));
+ *
+ * // Add a text label on top of the white background. The label
+ * // by default draws using the default draw color (set above)
+ * layer.add(LabelWidget.for_string("Hello world"));
+ * ---
+ **/
+
+LinearAnimationItem
+
+/**
+ * An animation item that animates the value linearly
+ *
+ * A LinearAnimationItem is a convenience class that allows the programmer to create
+ * AnimationItem instances that manipulate a variable from the initial value to a 
+ * target value using a linear computation.
+ **/
+
+RelativeAlignWidget
+
+/**
+ * A container widget that aligns its children relative to some other widget
+ *
+ * A RelativeAlignWidget can be constructed with a reference to some other widget.
+ * It will then align all widgets added to itself so that they will be near to the
+ * original reference widget (called "master widget").
+ **/
+
+ScrollableWidget
+
+/**
+ * A widget that can be scrolled
+ *
+ * This is a base interface for scroller widgets, and enables other widgets
+ * to control the scroller.
+ **/
+
+Theme
+
+/**
+ * Theming functionality
+ *
+ * Many factors related to the appearance of an Eqela based application can
+ * be controlled through the Theme class. The usual colors, fonts and other
+ * appearance items can be set and retrieved through the theme class.
+ *
+ * For instance, an instance of a Font can be constructed in one of two ways:
+ *
+ * ---
+ * // One can create a font directly without going through the Theme class
+ * var font1 = Font.instance("bold");
+ *
+ * // The same effect can preferrably be achieved through the Theme class as follows.
+ * var font2 = Theme.font().modify("bold");
+ *
+ * // When using the latter approach consistently in our code, we can
+ * // change all the fonts in our applications this way:
+ * Theme.set("com.eqela.libwidget.default_font", "Verdana");
+ * ---
+ **/
+
+TimerAnimation
+
+/**
+ * A timer based animator
+ *
+ * This is a helper class for the purpose of running a user interface animation (of type Animation)
+ * by using the timer mechanism of the GUI engine. This is normally not used directly. To execute
+ * animations, it is best to use the start_animation() method of the Widget class.
+ **/
+
+VBoxWidget
+
+/**
+ * A vertical box widget
+ *
+ * The VBoxWidget is a shortcut class to creating a vertical BoxWidget. See the
+ * discussion under HBoxWidget for a detailed comparison between BoxWidget.vertical()
+ * and VBoxWidget.
+ **/
+
+WidgetApplication
+
+/**
+ * A helper class for executing widget applications
+ *
+ * For Eqela applications that are marked as "widget apps" (moduletype: widgetapplication),
+ * after the system specific initialization, the framework calls into the WidgetApplication class to
+ * continue execution. As an application developer, you should not call into this class.
+ **/
+
+WidgetDismisserAnimationListener
+
+/**
+ * An animation listener that removes a widget after animation ends
+ *
+ * This is a often used convenience class for removing a widget from its parent container
+ * after an animation ends. This provides for the commonly required use case where the widget
+ * animates away (eg. fades out), and needs to be removed once the animation has ended.
+ **/
+
+WidgetEngineCloseRequestHandler
+
+/**
+ * A close request handler for WidgetEngine
+ *
+ * If you implement this interface in your Main class that is a widget (or, more precisely,
+ * in the main widget of WidgetEngine), then the WidgetEngine will request permission from
+ * your class to check if it is OK to close the frame. This may happen, for example, in cases
+ * where the user clicks on the close button of the window. By implementing this interface,
+ * your application may prevent the window from closing, and/or do other activities prior to
+ * closing.
+ **/
+
+WidgetStack
+
+/**
+ * A stack of widgets
+ *
+ * Classes that implement the WidgetStack interface can be used in some sense to place widgets
+ * in a stack structure. These can be graphical in nature (eg. StackChangerWidget and NavigationWidget),
+ * allowing the application to move back and forth between widgets. Other uses can be non-graphical
+ * as well, however.
+ **/
+
+*** eq.widget.common
+
+CanvasWidget
+
+/**
+ * A solid color or color gradient
+ *
+ * Despite its name, the CanvasWidget is not meant for arbitrary drawing operations: Rather, it is to
+ * be used a a solid color element, or a solid color gradient element. CanvasWidget is often used as a
+ * background color or color gradient. CanvasWidget can also have an outline and can be specified to
+ * have either rounded or rectangular corners. Common examples:
+ *
+ * ---
+ * // Add a green canvas. If this is the first thing you do in a LayerWidget,
+ * // effectively this will give you a green background
+ * add(CanvasWidget.for_color(Color.instance("green")));
+ *
+ * // Same as above, but instead of a solid color, will create a canvas with
+ * // a gradient of different shades of red.
+ * add(CanvasWidget.for_color_gradient(Color.instance("red")));
+ *
+ * // Create a gradient canvas that transforms between red and green
+ * add(CanvasWidget.for_colors(Color.instance("red"), Color.instance("green")));
+ *
+ * // Create a solid green canvas with rounded corners and a red outline
+ * add(CanvasWidget.for_color(Color.instance("#00FF00")).set_rounded(true)
+ * 	.set_outline_color(Color.instance("red")));
+ * ---
+ **/
+
+ButtonWidget
+
+/**
+ * A graphical push button
+ *
+ * One of the most commonly used user interface elements, the ButtonWidget implements
+ * a graphical push button element. The button can be pushed, it can have a text label or
+ * various icons, and when clicked, it can emit an event.
+ *
+ * Example usage:
+ *
+ * ---
+ * public class Main : AlignWidget, EventReceiver
+ * {
+ * 	public void initialize() {
+ * 		base.initialize();
+ * 		add_align(0, 0, ButtonWidget.for_string("Click me")
+ * 			.set_icon(IconCache.get("myicon"))
+ * 			.set_event("button_click_event"));
+ * 	}
+ *
+ * 	public void on_event(Object o) {
+ * 		if("button_click_event".equals(o)) {
+ * 			Log.message("BUTTON CLICKED!");
+ * 		}
+ * 	}
+ * }
+ * ---
+ **/
+
+ButtonFrameWidget
+
+/**
+ * A widget that draws a button frame
+ *
+ * A button frame or border is drawn by this widget. The contents are not. The main
+ * purpose for this widget is to act as a base class for other widgets. If you intend
+ * to implement a button with customized contents (you can put any widgets your like),
+ * then subclass this widget and add the content in your subclass. If your intention
+ * is to create a usual button with text and/or icons, then use ButtonWidget instead.
+ **/
+
+BackgroundWidget
+
+/**
+ * A widget that can be used as a background
+ *
+ * This is a simple convenience widget that is intended to provide a background
+ * for any purpose. The widget can be configured with either a tiled background
+ * image, a background image that fills the entire widget, or with a solid color
+ * or with a gradient.
+ **/
+
+CheckBoxWidget
+
+/**
+ * A check box widget implementation
+ *
+ * A check box has two possible states: Either the box is selected or it is not. The
+ * state is reflected graphically by displaying a checkmark (if selected) or not (if not
+ * selected). The check box can be accompanied by either a text label (which is common),
+ * or any other widget that the programmer would want to use.
+ **/
+
+ClickWidget
+
+/**
+ * A base class for clickable (button-like) widgets
+ *
+ * The ClickWidget class is not intended to be used directly, but rather through
+ * subclassing. A commonly used implementation is the ButtonWidget. The ClickWidget
+ * itself provides the functionality to create button-like effects, and enables things
+ * like tracking the pointer, changing the appearance when pointer is hovering on the
+ * widget, changing appearance when pressed, and detecting when the widget is clicked
+ * (click = press and release).
+ *
+ * To use this class, create a new subclass and override any relevant virtual methods.
+ **/
+
+CloseAwareWidget
+
+/**
+ * A widget that can respond to close requests
+ *
+ * If a widget implements the CloseAwareWidget interface, certain other widgets
+ * may send it messages when the user requests to "close" the widget, and your
+ * widget may then react/respond appropriately.
+ **/
+
+CloseAwareWidgetListener
+
+/**
+ * Listener interface for CloseAwareWidget
+ *
+ * When CloseAwareWidget classes are informed of a close request, they will communicate
+ * their response through this interface.
+ **/
+
+CollageWidget
+
+/**
+ * A container widget for attractive display of other widgets
+ *
+ * A CollageWidget is meant to provide a nice, equally distributed presentation of several graphical
+ * elements (often images). CollageWidget attempts to display all its child widgets in a way that
+ * they are all visible, and nicely presented.
+ **/
+
+ComboButtonWidget
+
+/**
+ * A button widget that can be used to select a value out of several options
+ *
+ * A ComboButtonWidget is a ButtonWidget that, when clicked, displays a drop down
+ * menu that the user can use to select one of several options. The selected option
+ * then becomes the currently selected value, and is displayed in the button itself.
+ **/
+
+DynamicImageProvider
+
+/**
+ * An image provider for DynamicImageWidget
+ *
+ * Implementations of this interface are used by DynamicImageWidget to perform
+ * the actual fetching of the images.
+ **/
+
+DynamicImageResult
+
+/**
+ * The result of DynamicImageProvider
+ *
+ * DynamicImageProvider, once executed, is expected to return its response in the
+ * form of an instance of this class.
+ **/
+
+DynamicImageWidget
+
+/**
+ * A base class for an image widget with asynchronously loaded contents
+ *
+ * The DynamicImageWidget displays an image that may be loaded asynchronously. While
+ * the image itself is loading, the widget will display a progress indicator instead.
+ * This class in itself does not have any mechanism for the actual loading of the images.
+ * This is implemented by the DynamicImageProvider class and/or relevant subclasses.
+ *
+ * See also a commonly used subclass: com.eqela.libwebimagewidget.WebImageWidget
+ **/
+
+FaderSequenceWidget
+
+/**
+ * A widget that switches between specified widgets in a sequence
+ *
+ * The fader sequence widget receives a collection of images or image / text pairs
+ * as input, and then cycles through them graphically, cross fading between the
+ * different entires at specified intervals. Can be used to create slideshows.
+ **/
+
+FileAwareWidget
+
+/**
+ * A widget that contains or is related to a file
+ *
+ * Widgets that implement this interface are considered "file aware", and can be queried for
+ * the file that they contain. Container widgets can then act accordingly. Such widgets are
+ * used eg. in file editors that can switch between files and manage their child widgets based
+ * on the file that they contain.
+ **/
+
+FramelessButtonWidget
+
+/**
+ * A convenience class for implementing a button that has no frame
+ *
+ * This is a ButtonWidget that has its frame turned off: The only thing that can be
+ * seen is the button contents, ie. the text label and/or icons.
+ **/
+
+HorizontalLineWidget
+
+/**
+ * A widget that draws a horizontal line
+ *
+ * This is a simple widget that draws a thin horizontal line in a specified color.
+ * Can be used as a separator in UI designs, or for any other purpose where a
+ * horizontal line can be useful.
+ **/
+
+HSeparatorWidget
+
+/**
+ * A horizontal separator widget
+ *
+ * Draws a horizontal separator. See full description under SeparatorWidget
+ **/
+
+HyperLinkWidget
+
+/**
+ * A clickable URL / hyperlink
+ *
+ * A HyperLinkWidget can be initialized with a URL address. When clicked, the
+ * widget can automatically open the link using the URLHandler class, or it can
+ * signal other parts of the user interface by triggering an event.
+ **/
+
+ImageButtonWidget
+
+/**
+ * A button widget that is drawn using a bitmap image
+ *
+ * The ImageButtonWidget acts as a regular button, but its appearance is drawn using
+ * a bitmap image.
+ **/
+
+ImageWidget
+
+/**
+ * A widget that displays a graphical image
+ *
+ * The ImageWidget offers an easy way to display graphical images and icons within
+ * an application. The widget can display an image from a file, from an image resource
+ * or from a preloaded Image object. The image can be resized, tiled or stretched.
+ *
+ * Sample usage:
+ *
+ * ---
+ * public class Main : LayerWidget
+ * {
+ * 	public void initialize() {
+ * 		base.initialize();
+ * 		// displays the image "myimage" (either "myimage.jpg" or "myimage.png") from the
+ * 		// application source directory
+ * 		add(ImageWidget.for_icon("myimage"));
+ * 	}
+ * }
+ * ---
+ **/
+
+LabelWidget
+
+/**
+ * A widget that displays a text label
+ *
+ * LabelWidget is used to display text labels with various formatting options. Some usage examples:
+ *
+ * ---
+ * var lb1 = LabelWidget.for_string("This is a simple label using the default font");
+ * var lb2 = LabelWidget.for_string("With custom font").set_font(Theme.font().modify("bold 5mm"));
+ * var lb3 = LabelWidget.for_string("Very long label with text wrapping enabled").set_wrap(true);
+ * var lb4 = LabelWidget.for_string("With blue font with red outline").set_font(Theme.font().modify("color=blue outline-color=red"));
+ * ---
+ *
+ * Note: While the LabelWidget does have methods for setting the color and outline color, it is preferred
+ * to set them through the font. The set_color() and set_outline_color() methods in LabelWidget are
+ * retained for backward compatibility. Note, however, that shadow is a feature of the LabelWidget and
+ * cannot be sent through the Font (set_shadow()).
+ **/
+
+MasterDetailWidget
+
+/**
+ * A master / detail widget implementation
+ *
+ * The MasterDetailWidget implements the master / detail user interface paradigm: From a list of
+ * items, the user is given the option to choose (the "master"). When the user selects one item
+ * from the list, he is shown another widget that displays more information / detailed actions about
+ * the selected item (the "detail"). On this implementation, however, the master widget does not
+ * have to be a list; it can be any widget of the programmer's choosing.
+ *
+ * This implementation of the master / detail widget is screen size sensitive: On a larger screen,
+ * the list is shown on the left, with the detail shown on the right. On a more narrow screen, the
+ * master list consumes the entire screen; when an item is selected, the detail view will cover the
+ * master view, and will have an option to go "back".
+ *
+ * Sample usage:
+ *
+ * ---
+ * public class MyMasterDetailWidget : MasterDetailWidget, EventReceiver
+ * {
+ * 	class MyMasterWidget : ListSelectorWidget
+ * 	{
+ * 		public void initialize() {
+ * 			set_show_icon(false);
+ * 			set_show_desc(false);
+ * 			set_items(LinkedList.create().add("First").add("Second").add("Third"));
+ * 			base.initialize();
+ * 		}
+ * 	}
+ * 
+ * 	LabelWidget detail;
+ * 
+ * 	public void initialize() {
+ * 		set_master(new MyMasterWidget());
+ * 		set_detail(detail = LabelWidget.instance());
+ * 		base.initialize();
+ * 	}
+ * 
+ * 	public void cleanup() {
+ * 		base.cleanup();
+ * 		detail = null;
+ * 	}
+ * 
+ * 	public void on_event(Object o) {
+ * 		detail.set_text(String.as_string(o));
+ * 		show_detail_widget();
+ * 	}
+ * }
+ * ---
+ **/
+
+MenuWidget
+
+/**
+ * A general purpose menu widget
+ *
+ * The MenuWidget represents a list of items from which the user of the application can choose one
+ * entry. The MenuWidget class is commonly used for popup menus, but can also be used for other
+ * purposes. A common usage example:
+ *
+ * ---
+ * // This creates a button that, once clicked, displays a popup menu. You would still
+ * // need to add the popup to a container widget.
+ * var menu = MenuWidget.instance();
+ * menu.add_entry(IconCache.get("new"), "New ..", "Create a new document", "new_document");
+ * menu.add_entry(IconCache.get("open"), "Open ..", "Open an existing document", "open_document");
+ * menu.add_separator();
+ * menu.add_entry(IconCache.get("exit"), "Exit", "Exit the application", "exit_application");
+ * var menubutton = ButtonWidget.for_string("Click me to show the menu");
+ * menubutton.set_popup(menu);
+ * ---
+ **/
+
+MultiLineLabelWidget
+
+/**
+ * A label that can show multiple lines of text
+ *
+ * While a LabelWidget is intended to show a "single line" of text either all on
+ * one line or wrapped across multiple lines, the MultiLineLabelWidget is intended
+ * to show text buffers that are themselves composed of multiple lines of text, each
+ * line separated with a newline. The MultiLineLabelWidget does not just wrap the
+ * lines, but will also insert newlines where they are encountered in the text.
+ **/
+
+ProgressBarWidget
+
+/**
+ * A progress bar widget
+ *
+ * The progress bar widget is used to indicate the progress or completion status of
+ * an operation. The ProgressBarWidget displays this graphically as a horizontal bar.
+ * The widget can also contain a text label that is placed on top of the actual bar.
+ **/
+
+ProgressOverlayWidget
+
+/**
+ * An overlay widget used to indicate an operation in progress
+ *
+ * The ProgressOverlayWidget is intended to be used as a progress indicator
+ * in an application to show that an operation is ongoing. This widget can be
+ * placed on top of any other widget, as long as there is a LayerWidget to place
+ * the overlay in. A short sample:
+ *
+ * ---
+ * // This widget presents a button that, when clicked, enables a progress overlay
+ * // widget to be placed on top of the widget.
+ *
+ * class MyWidget : LayerWidget, EventReceiver
+ * {
+ * 	public void initialize() {
+ * 		base.initialize();
+ * 		add(AlignWidget.instance().add(ButtonWidget.for_string("Click me")));
+ * 	}
+ *
+ * 	public void on_event(Object o) {
+ * 		ProgressOverlayWidget.show(this, "Waiting forever ..");
+ * 	}
+ * }
+ * ---
+ **/
+
+SeparatorWidget
+
+/**
+ * A separator widget
+ *
+ * The SeparatorWidget draws either a vertical or horizontal separator line
+ * that can be used to separate logically distinct widgets from each other.
+ * The separator must be either horizontal or vertical (and never both at the
+ * same time): For this purpose, either set the horizontal / vertical property
+ * values, or use one of the supplied subclasses: VSeparatorWidget or HSeparatorWidget.
+ * Example usage:
+ *
+ * ---
+ * // The following two lines do the same thing
+ * var hs1 = SeparatorWidget.instance().set_horizontal(true);
+ * var hs2 = HSeparatorWidget.instance();
+ *
+ * // The following two lines do the same thing
+ * var vs1 = SeparatorWidget.instance().set_vertical(true);
+ * var vs2 = VSeparatorWidget.instance();
+ * ---
+ **/
+
+ShadowContainerWidget
+
+/**
+ * A container widget that draws a shadow around its child
+ *
+ * Any widget can be placed inside a ShadowContainerWidget and, as a result, a shadow will be
+ * drawn around the widget inside the shadow container.
+ **/
+
+SplashWidget
+
+/**
+ * A widget to show a logo or text
+ *
+ * The SplashWidget is meant to be used as a way to create a splash scene that
+ * can show the logo of the application, vendor, or other such branding. This is
+ * usually shown in the beginning of the application execution. Sample usage:
+ *
+ * ---
+ * public class Main : LayerWidget
+ * {
+ * 	public void initialize() {
+ * 		base.initialize();
+ * 		add(new SplashWidget().add_image(IconCache.get("splash")).set_next(LabelWidget.for_string("Started")));
+ * 	}
+ * }
+ * ---
+ **/
+
+StackChangerWidget
+
+/**
+ * A changer widget that organizes widgets as a stack
+ *
+ * The StackChangerWidget presents a special case of the ChangerWidget, where the
+ * child widgets are organized as a stack that can be pushed into and popped out of.
+ * This can be used to eg. construct user interfaces where the user moves back and
+ * forward in a linear set of screens / forms (a "navigation widget").
+ **/
+
+TableWidget
+
+/**
+ * A container widget where the child widgets are organized as a columnar table
+ *
+ * A TableWidget has several rows organized into columns, each of which can be given a
+ * specific size or weight (relative size). All child widgets in the table are organized
+ * within the rows and columns.
+ **/
+
+URLButtonWidget
+
+/**
+ * A clickable URL button
+ * 
+ * The URLButtonWidget is a convenience button that can be used to open a URL (web) address).
+ * When clicked, the button automatically calls URLHandler.open() on the specified URL.
+ **/
+
+VerticalLineWidget
+
+/**
+ * A widget that draws a vertical line
+ *
+ * This is a simple widget that draws a thin vertical line in a specified color.
+ * Can be used as a separator in UI designs, or for any other purpose where a
+ * vertical line can be useful.
+ **/
+
+VSeparatorWidget
+
+/**
+ * A vertical separator widget
+ *
+ * Draws a vertical separator. See full description under SeparatorWidget
+ **/
+
+WaitAnimationWidget
+
+/**
+ * An animating widget to indicate operation in progress
+ *
+ * The WaitAnimationWidget is used in many places to indicate that an operation is in progress.
+ * This is usually contained in a square shaped area, and is represented by a circle rotation inside
+ * a bigger circle. In itself, this is not considered a "progress dialog", but can be used as a
+ * component of such.
+ **/
+
+*** eq.widget.desktopapplication
+
+DesktopApplicationWindowWidget
+
+/**
+ * A window representing a common desktop application
+ *
+ * This class is used to represent a single window in a complete desktop application,
+ * with the potential to have a custom menubar and toolbar.
+ **/
+
+DesktopWindowMenubar
+
+/**
+ * A menubar class
+ *
+ * When constructing menus through the DesktopApplicationScreenWidget mechanism, the
+ * actual content of the menus must also be included. The DesktopWindowMenuBar class
+ * can be used to transit the current as well as proposed information about menubars
+ * that also contain the menus.
+ **/
+
+*** eq.widget.dialog
+
+AboutDialog
+
+/**
+ * An about dialog popup
+ *
+ * The AboutDialog class can be used to create a dialog popup window that displays
+ * essential information about the running application, including the name, version
+ * and copyright.
+ **/
+
+AboutDialogWidget
+
+/**
+ * A dialog widget representing an about dialog
+ *
+ * The AboutDialogWidget class can be used to create a dialog widget that displays
+ * essential information about the running application, including the name, version
+ * and copyright.
+ **/
+
+BackgroundTaskDialogWidget
+
+/**
+ * A dialog widget for executing background tasks
+ * 
+ * The BackgroundTaskDialogWidget represents a dialog widget that provides the user
+ * with progress information while a background task is executing.
+ **/
+
+ButtonSet
+
+/**
+ * A set of buttons
+ *
+ * Button sets represent the common configurations of buttons that are used in many
+ * dialog implementations.
+ **/
+
+DialogWidget
+
+/**
+ * A common base class for different kinds of dialog widgets
+ *
+ * A dialog widget is a special kind of widget that represents a transient user interface
+ * that is commonly used to ask something from the user. In the case of dialog widgets,
+ * these are widgets that appear as "windows", and are popped up on top of the regular
+ * user interface.
+ **/
+
+ErrorDialog
+
+/**
+ * A dialog to display an error message
+ *
+ * The ErrorDialog class can be used to display an error message to the user.
+ **/
+
+ErrorFlash
+
+/**
+ * A facility to quickly display an error message
+ *
+ * The ErrorFlash class can be used to pop up an error message that stays on the
+ * screen briefly and then disappears.
+ **/
+
+FlashDialog
+
+/**
+ * A facility to quickly display a message
+ *
+ * The FlashDialog class can be used to pop up a message that stays on the
+ * screen briefly and then disappears.
+ **/
+
+InfoDialogWidget
+
+/**
+ * A dialog widget to display key / value pairs
+ *
+ * The InfoDialogWidget can be supplied with a KeyValueList, which it will then display
+ * in a scrollable list of key / value pairs.
+ **/
+
+MessageDialog
+
+/**
+ * A dialog to display a message
+ *
+ * The MessageDialog class can be used to display a message to the user.
+ **/
+
+MessageDialogWidget
+
+/**
+ * A dialog widget to display a message
+ *
+ * The MessageDialogWidget class can be used to display a message to the user.
+ **/
+
+MessageFlash
+
+/**
+ * A facility to quickly display a message
+ *
+ * The MessageFlash class can be used to pop up a message that stays on the
+ * screen briefly and then disappears.
+ **/
+
+MultiLineTextDialogWidget
+
+/**
+ * A dialog widget displaying multiple lines of text
+ *
+ * The MultiLineTextDialogWidget displays text that can span multiple lines.
+ **/
+
+OKCancelDialogWidget
+
+/**
+ * A dialog representing an OK / Cancel question
+ *
+ * From the dialog, the user can select either "OK" or "Cancel".
+ **/
+
+TextDialogWidget
+
+/**
+ * A dialog widget that displays text
+ *
+ * The dialog takes in a strig, which it will then display graphically.
+ **/
+
+TextInputDialogWidget
+
+/**
+ * A dialog widget used to ask the user to input text
+ *
+ * The TextInputDialogWidget is a widget geared to gain input in text format from the user.
+ **/
+
+WaitDialogWidget
+
+/**
+ * A dialog used to show that an operation is ongoing
+ *
+ * A WaitDialogWidget would be usually used to indicate that an operation is ongoing,
+ * and that the user needs to wait for it to end.
+ **/
+
+YesNoDialogWidget
+
+/**
+ * A dialog representing a Yes / Nol question
+ *
+ * From the dialog, the user can select either "Yes" or "No".
+ **/
+
+*** eq.widget.file
+
+SaveFileDialog
+
+/**
+ * A dialog used to save a file
+ *
+ * The SaveFileDialog represents user interface elements that enable the user to
+ * save a file.
+ **/
+
+CreateNewDirectoryDialogWidget
+
+/**
+ * A dialog widget for creating a new directory
+ *
+ * Prompts the user for the name of a directory to create, and creates it.
+ * Includes validation of the name of the new directory.
+ **/
+
+CreateNewFileDialogWidget
+
+/**
+ * A dialog widget for creating a new file
+ *
+ * Prompts the user for the name of a file to create, and creates it.
+ * Includes validation of the name of the file.
+ **/
+
+DefaultIconProvider
+
+/**
+ * A generic icon provider for file icons
+ *
+ * This class provides a default "theme" for displaying icons that represent files
+ * or file types.
+ **/
+
+DirectorySelectorButtonWidget
+
+/**
+ * A button widget used to select a directory
+ *
+ * This widget is a button that displays a directory that has been selected. Clicking
+ * the button would cause additional user interface to appear where the user can select
+ * another directory.
+ **/
+
+FileDialog
+
+/**
+ * Utilities for executing file related dialogs
+ *
+ * Contains methods for executing dialogs that are related to file operations.
+ **/
+
+FileIconProvider
+
+/**
+ * An object that provides icons for files
+ *
+ * Instances of FileIconProvider provide icon images for files.
+ **/
+
+FileListWidget
+
+/**
+ * A list selector that is used to select a file
+ *
+ * This special instance of a ListSelectorWidget is used to display a list of files,
+ * and to allow the user to choose one or several of them.
+ **/
+
+OpenFileDialog
+
+/**
+ * A dialog used to open a file
+ *
+ * The OpenFileDialog represents user interface elements that enable the user to
+ * select a file for opening.
+ *
+ * NOTE: This class may use the native file open dialog of the current platform, if
+ * one is available.
+ **/
+
+OpenFileDialogListener
+
+/**
+ * A listener type for the file open dialog
+ *
+ * Once the file open dialog has successfully executed, an instance of this class can
+ * be used to communicate back the result of the file open operation.
+ **/
+
+OpenFileDialogWidget
+
+/**
+ * A generic implementation of an open file dialog
+ *
+ * The OpenFileDialogWidget is a custom implementation of an "open file" dialog,
+ * and can be used to present a dialog for that purpose on any platform, whether or
+ * not the platform itself offers a file open dialog.
+ **/
+
+SaveFileDialogListener
+
+/**
+ * A listener type for the file save dialog
+ *
+ * Once the file save dialog has successfully executed, an instance of this class can
+ * be used to communicate back the result of the operation.
+ **/
+
+SaveFileDialogWidget
+
+/**
+ * A generic implementation of a save file dialog
+ *
+ * The SaveFileDialogWidget is a custom implementation of a "save file" dialog,
+ * and can be used to present a dialog for that purpose on any platform, whether or
+ * not the platform itself offers a file save dialog.
+ **/
+
+*** eq.widget.formdialog
+
+FormDialogWidget
+
+/**
+ * A dialog widget that includes a form
+ *
+ * A FormDialogWidget is a small wrapper class that allows a programmer to use a
+ * FormWidget as part of a dialog.
+ **/
+
+*** eq.widget.form
+
+FormWidget
+
+/**
+ * A widget that asks for user input for multiple data fields
+ *
+ * A form is composed of several entries or data fields, to which the user is asked
+ * to provide answers.
+ **/
+
+FormButtonWidget
+
+/**
+ * A button widget for forms
+ *
+ * The FormButtonWidget implements a button that is used as the button in forms.
+ **/
+
+*** eq.widget.popup
+
+Popup
+
+/**
+ * A facility to open widgets as popup windows within a WidgetEngine
+ *
+ * The Popup widget facility offers the ability for applications to open popup windows
+ * within an existing WidgetEngine (not opening new windows). This provides a completely
+ * platform independent facility to open popup windows, even on platforms that wouldn't
+ * otherwise support any kind of popup functionality.
+ *
+ * For popup functionality that behaves in more platform specific ways (creating a more
+ * "native" look and feel), the Frame.open_as_popup() mechanism can be used instead.
+ **/
+
+PopupSettings
+
+/**
+ * Settings for popups
+ *
+ * The PopupSettings class provides a facility for an application to specify various configuration
+ * settings for opening a popup.
+ **/
+
+*** eq.widget.scroller
+
+ScrollerWidget
+
+/**
+ * A scroller widget that scrolls in all directions
+ *
+ * The ScrollerWidget can be used to provide additional space (both horizontally and
+ * vertically) for a user interface, where the user can scroll up, down, left or right
+ * to reveal more user interface in cases where the user interfaces does not fit on screen
+ * all at once.
+ **/
+
+HScrollerWidget
+
+/**
+ * A horizontal scroller widget
+ *
+ * The HScrollerWidget can be used to provide additional horizontal space for the user
+ * interface, where the user can scroll left and right to reveal more user interface in
+ * case it does not all fit on screen at once.
+ **/
+
+ScrollBarWidget
+
+/**
+ * A graphical scroll bar widget
+ *
+ * The ScrollBarWidget draws a graphical indicator of the current position within a scrollable
+ * widget, as well as the ability to scroll / move around in the widget. This widget is used
+ * as part of the ScrollerWidget implementation to provide scroll bar functionality. However, the
+ * widget can also be used separately, as a standalone widget, if needed.
+ **/
+
+ScrollerContainerWidget
+
+/**
+ * A container for a ScrollerWidget
+ *
+ * The ScrollerContainerWidget acts as an "inner" container for a ScrollerWidget, and
+ * providers the actual functionality for scrolling around in a widget. Most applications
+ * would not deal directly with this class, but would use a ScrollerWidget, VScrollerWidget
+ * or a HScrollerWidget instead.
+ **/
+
+VScrollerWidget
+
+/**
+ * A vertical scroller widget
+ *
+ * The VScrollerWidget can be used to provide additional vertical space for the user
+ * interface, where the user can scroll up and down to reveal more user interface in
+ * case it does not all fit on screen at once.
+ **/
+
+*** eq.widget.selector
+
+ListSelectorWidget
+
+/**
+ * A selector widget that allows the user to select entries from a scrollable list
+ *
+ * The ListSelectorWidget implements a scrollable list of entries that the user can
+ * browse, and from which the user can select one or several entries. The selection
+ * can then be handled by the application in several different ways.
+ *
+ * For example:
+ *
+ * ---
+ * // A list of strings
+ * var items = LinkedList.create();
+ * items.add("First entry");
+ * items.add("Second entry");
+ * items.add("Third entry");
+ * add(ListSelectorWidget.for_items(items));
+ * ---
+ *
+ * ---
+ * // A list of items with name, icon and description
+ * var items = LinkedList.create();
+ * items.add(ActionItem.instance(IconCache.get("first"), "First entry", "This is the first entry"));
+ * items.add(ActionItem.instance(IconCache.get("second"), "Second entry", "This is the second entry"));
+ * items.add(ActionItem.instance(IconCache.get("third"), "Third entry", "This is the third entry"));
+ * add(ListSelectorWidget.for_items(items));
+ * ---
+ **/
+
+ListItemWidget
+
+/**
+ * A widget that represents one item in a ListSelectorWidget
+ *
+ * Since a ListSelectorWidget is composed of a collection of rows, each of them is
+ * represented by an instance of a ListItemWidget.
+ **/
+
+GridSelectorWidget
+
+/**
+ * A selector widget that allows the user to select entries from a grid
+ *
+ * The GridSelectorWidget implements a scrollable list of entries, organized in a grid
+ * layoutm that the user can browse, and from which the user can select one or several
+ * entries. The selection can then be handled by the application in several different ways.
+ **/
+
+DynamicListSelectorWidget
+
+/**
+ * A list selector widget that can dynamically update its own contents
+ *
+ * A special kind of a ListSelectorWidget that has the ability to update its own
+ * content (items) dynamically by executing a background task. Can be used by
+ * subclassing the class and implementing the necessary functionality to retrieve
+ * or generate the entries.
+ **/
+
+ListSelectorSearchBarWidget
+
+/**
+ * The search bar for a list selector widget
+ *
+ * ListSelectorWidget instances are searchable, and can include a search bar where
+ * the user can type to automatically filter the contents of the list. This class
+ * implements the search bar widget where the user would type their search. The class
+ * is used by ListSelectorWidget, and is rarely accessed directly by application programs.
+ **/
+
+*** eq.widget.textinput
+
+TextInputWidget
+
+/**
+ * A user interface control for text input
+ *
+ * The TextInputWidget represents a user interface control that can be used to ask
+ * the user to input text. The TextInputWidget supports many features, such as specifying
+ * the input type (and restricting the input to the selected type), customizing the color
+ * and font of the input, adding an icon to the widget, selecting and unselecting text, etc.
+ * The widget has platform-native implementations that integrate well with the virtual
+ * keyboards and other platform specific text input features, as well as a generic, platform
+ * independent implementation that controls all look and feel aspects on its own.
+ **/
+
+TextInputWidgetFrame
+
+/**
+ * The graphical frame around a text input widget
+ *
+ * Often, a text input widget would have a graphical frame (such as a white box inside
+ * which the black inputted text can fit). This class represents that frame. If needed,
+ * the frame can be removed, allowing a text input widget to be placed on top of any kind
+ * of a graphical backdrop.
+ **/
+
+TextInputWidgetAdapter
+
+/**
+ * Adapter class for the implementation of a TextInputWidget
+ *
+ * The TextInputWidget interface has many methods that can have common implementations.
+ * Where the common implementations make sense, a TextInputWidgetAdapter can be used
+ * as a base class of a TextInputWidget implementation in order to facilitate code reuse
+ * and lessen the work and size of the newly created text input widget class.
+ **/
+
+ComboBoxWidget
+
+/**
+ * A widget that allows input either via typing or by selecting from a list
+ *
+ * The ComboBoxWidget is essentially a text input widget that also has a button on its
+ * right side that, when clicked, presents the user with a list of possible options that
+ * the user can choose from instead of typing them.
+ *
+ * For example:
+ *
+ * ---
+ * // presents a combo box where the user can either type or choose one of the three
+ * // pre-selected options.
+ * var combo = ComboBoxWidget.instance();
+ * combo.set_entries(LinkedList.create()
+ * 	.add("First entry")
+ * 	.add("Second entry")
+ * 	.add("Third entry")
+ * );
+ * add(combo);
+ * ---
+ **/
+
+CustomTextInputWidget
+
+/**
+ * A generic, system independent implementation of a text input widget
+ *
+ * The CustomTextInputWidget is a text input widget implemented completely in
+ * Eqela that does not use the native text input widget of any underlying operating
+ * system or platform. The widget looks the same on all platforms, and can be
+ * customized by the developer as necessary.
+ **/
+
+TextInputResult
+
+/**
+ * The result of a text input operation
+ *
+ * The TextInputResult is used as a return value or signal that is emitted by a
+ * text input widget, indicating the status of the text input widget or operation.
+ **/
+
+TextInputWidgetEvent
+
+/**
+ * An event triggered by a text input widget
+ *
+ * When the value of a text input widget changes, or other significant things happen
+ * to it (such as gain or loss of focus), the widget can emit event objects of this
+ * class, notifying other objects of the changes.
+ **/
+
+*** eq.widget.windowframe
+
+WindowFrameCloseEvent
+
+/**
+ * An event signifying that the window frame is closing
+ *
+ * This event is emitted by a WindowFrameWidget when the close button in the titlebar
+ * of the window frame is clicked. The listener may then take any appropriate actions
+ * to handle the close request of the user.
+ **/
+
+WindowFrameCloseHandler
+
+/**
+ * A handler for window close request events
+ *
+ * A WindowFrameCloseHandler can be used to communciate the closing of a window
+ * frame.
+ **/
+
+WindowFrameWidget
+
+/**
+ * A widget that represents the graphical representation of a window frame
+ *
+ * This widget implements the complete functionality of a window frame as commonly
+ * used in computer operating systems. The window can include a title, an icon, and
+ * close, minimize and maximize buttons, and other elements of the window frame. The
+ * window contents are inside the frame.
+ *
+ * This class can be used to implement a custom look for window frames or popups as
+ * needed. In many applications it is best to use the native look and feel of windows,
+ * however, and as such the use of this class is usually discouraged.
+ **/
+
+*** eq.ext.facebook
+
+FacebookShareDialog
+
+/**
+ * Share content on Facebook
+ *
+ * The FacebookShareDialog class enables a graphical user interface that enables the application
+ * user to share content on Facebook using his/her own Facebook user account.
+ **/
+
+*** eq.audio.player
+
+AudioPlayerManager
+
+/**
+ * A class for managing audio streams
+ *
+ * In order to play back audio streams, they must first be loaded into memory, and proper
+ * instances of classes of type AudioPlayer must be created. The AudioPlayerManager is meant
+ * to facilitate those things. The class receives string IDs, pointing to resource files
+ * (distributed as part of the application installer). Once prepared, the audio player will
+ * be loaded into memory, an object representing the stream exists, and it can be played
+ * back. Note that in most cases, the audio file itself is NOT read into memory, as in many
+ * cases it can be very large. Rather, upon playback, the sound is streamed from the originating
+ * file. For example:
+ *
+ * ---
+ * // Prepares an audio stream for future playback. In this case, the resource ID of the
+ * // desired stream is "mysound", which could indicate a file named "mysound.wav",
+ * // "mysound.mp3", etc.
+ * AudioPlayerManager.prepare("mymusic");
+ *
+ * // Start playing the music
+ * AudioPlayerManager.play("mymusic");
+ *
+ * // Stop playing the music
+ * AudioPlayerManager.stop("mymusic");
+ *
+ * // The same thing can be accomplished alternatively this way:
+ * var stream = AudioPlayerManager.get("mymusic");
+ * if(stream != null) {
+ * 	stream.play();
+ * 	stream.stop();
+ * }
+ * ---
+ *
+ * NOTE: An audio stream / player MUST first be prepared before it can be played. Trying to play back an
+ * unprepared audio stream results in silence.
+ * 
+ * NOTE: Since an AudioPlayer object controls the playback of every stream, a single instance of an
+ * audio player can only be played back once. Playing the same stream twice results in the original
+ * stream starting playback from the beginning. To play back multiple short sound clips at the same time,
+ * use com.eqela.libaudioclip instead.
+ **/
+
+AudioPlayer
+
+/**
+ * A music / stream playback controller
+ *
+ * The AudioPlayer type represents an audio stream that can be either short, long or very
+ * long. An AudioPlayer object can be used to play back the stream, pause, stop, fast forward
+ * or rewind, and to get information about the current location within the stream.
+ **/
+
+*** eq.ext.admob
+
+Admob
+
+/**
+ * Support for Google Admob ads
+ *
+ * The AdMob class provides an easy way to apply Google Admob ads to an instance of a Frame
+ * (a graphical window). The ads will then occupy the bottom of the screen. The functionality
+ * is implemented for Android, iOS and Windows Phone. On other platforms, calling the
+ * methods is safe, and does absolutely nothing (there is no need to check in application code
+ * if the current platform supports Admob or not).
+ **/
+
+*** eq.audio.clip
+
+AudioClip
+
+/**
+ * A short audio clip
+ *
+ * The AudioClip type represents a short audio clip that can be played back on a playback
+ * device. Many different actual implementations can (and do) exist, most of them platform
+ * dependent. From an application perspective, to play a sound, simply call the play()
+ * method.
+ **/
+
+AudioClipManager
+
+/**
+ * A class for managing audio clips
+ *
+ * In order to play back audio clips, they must first be loaded into memory, and proper
+ * instances of classes of type AudioClip must be created. The AudioClipManager is meant
+ * to facilitate those things. The class receives string IDs, pointing to resource files
+ * (distributed as part of the application installer). Once prepared, the audio clip will
+ * be loaded into memory, an object representing the clip exists, and it can be played
+ * back. For example:
+ *
+ * ---
+ * // Prepares an audio clip for future playback. In this case, the resource ID of the
+ * // desired clip is "mysound", which could indicate a file named "mysound.wav",
+ * // "mysound.mp3", etc.
+ * AudioClipManager.prepare("mysound");
+ *
+ * // Then play the audio clip. Note that below we show two ways that are functionally
+ * // equivalent. However, for performance tuning, take note that the first method involves
+ * // a hashtable lookup, so in cases where the same sound is played back repeatedly eg. in
+ * // a high speed game environment, the latter method offers better performance.
+ *
+ * // The first way
+ * AudioClipManager.play("mysound");
+ *
+ * // The second way
+ * var clip = AudioClipManager.get("mysound");
+ * if(clip != null) {
+ * 	clip.play();
+ * }
+ * ---
+ *
+ * NOTE: An audio clip MUST first be prepared before it can be played. Trying to play back an
+ * unprepared audio clip results in silence.
+ *
+ * NOTE: Multiple instances of the same audio clip can be played back even if the previous one
+ * has not yet stopped playing. This is expected to result in the same sound being played back
+ * twice at the same time (the exact functionality, and how many sounds can play simultaneously
+ * is hardware and system dependent).
+ **/
+
+*** eq.widget.twitter
+
+TwitterShareDialog
+
+/**
+ * Share content on Twitter
+ *
+ * The TwitterShareDialog class enables a graphical user interface that enables the application
+ * user to share content on Twitter using his/her own Twitter user account.
+ **/
+
+*** eq.gui.social
+
+SocialShareDialog
+
+/**
+ * Social sharing dialog
+ *
+ * This class is intended to be used as a base class for social sharing. The actual sharing
+ * is implemented in a subclass that targets a specific social network.
+ **/
+
+SocialShareDialogListener
+
+/**
+ * Callback listener for social sharing
+ *
+ * Classes that implement the SocialShareDialogListener will be notified of the progress / status
+ * of social sharing tasks to social networks.
+ **/
+
+*** eq.ext.adbuddiz
+
+AdBuddiz
+
+/**
+ * Support for AdBuddiz ads
+ *
+ * The Adbuddiz service provides full screen interstitial ads that can be easily integrated with Eqela applications
+ * by using this module. The AdBuddiz service is currently only available for Android and iOS; on other platforms,
+ * using this class does nothing.
+ **/
+
+*** eq.util.dummycipher
+
+DummyCipher
+
+/**
+ * A trivial implementation of a block cipher algorithm
+ *
+ * The dummy cipher offers a trivial implementation of a cipher protocol that can be used
+ * for testing of encryption and the block cipher mechanism in Eqela. Do not use this for
+ * "real encryption": Any data encrypted with the dummy cipher is easily restored.
+ **/

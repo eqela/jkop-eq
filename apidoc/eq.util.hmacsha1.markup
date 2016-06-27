@@ -1,0 +1,3 @@
+= HMAC SHA1 support =
+
+The module implements support for the HMAC SHA1 encryption mechanism.

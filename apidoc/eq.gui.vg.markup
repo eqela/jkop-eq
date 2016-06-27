@@ -1,0 +1,5 @@
+= 2D vector graphics rendering =
+
+Provides an immediate mode 2D vector graphics rendering API that can be
+used in connection with either live drawing surfaces (eg. application
+windows), and / or off-screen memory buffers.

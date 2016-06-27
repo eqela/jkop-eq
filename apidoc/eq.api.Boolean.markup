@@ -1,0 +1,24 @@
+= An object that represents a boolean value =
+
+A class that implements the Boolean interface provides a to_boolean() method that
+can be used to get a boolean value representation of the object.
+
+== Sample: Converting a string to boolean ==
+
+The Boolean type also provides static method that can be used to convert
+other data types to boolean. For example:
+
+--- code ---
+bool b = Boolean.as_boolean("true");
+--- code ---
+
+= as_boolean =
+
+Converts the specified object instance to a boolean (bool) variable, if
+possible. If there is no known way of converting the object to a bool,
+then a default value can be returned (by default, true). To specify a custom
+default value, use the last parameter.
+
+= to_boolean =
+
+Express / convert the representation of the object as a bool variable.

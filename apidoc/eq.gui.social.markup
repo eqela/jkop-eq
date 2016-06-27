@@ -1,0 +1,4 @@
+= Common implementation for social sharing =
+
+This module implements common functionality that is shared between the
+GUI implementations for the various social networks.

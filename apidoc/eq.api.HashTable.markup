@@ -1,0 +1,197 @@
+= A key / value container optimized for access based on the key =
+
+HashTable provides a data structure that can store various objects that are indexed
+(and are searchable) by using hashable key values. The data structure is optimized for
+quick searching using the key (and not numerical index, such as eg. an Array). This
+implementation uses strings as keys.
+
+== Sample: Creating a hashtable ==
+
+As shown below, HashTable objects are usually created by using the static create()
+method. The HashTable can then be added to by using the set*() methods, of which
+there are several versions for different data types.
+
+--- code ---
+HashTable ht = HashTable.create();
+ht.set("first", "First value");
+ht.set_int("second", 100);
+ht.set_bool("third", false);
+ht.set_double("fourth", 3.141);
+--- code ---
+
+== Sample: Reading HashTable entries ==
+
+Likewise, HashTable entries can be retrieved in several data types:
+
+--- code ---
+String first = ht.get_string("first");
+int second = ht.get_int("second");
+bool third = ht.get_bool("third");
+double fourth = ht.get_double("fourth");
+--- code ---
+
+Note that the HashTable uses the standard Primitive classes internally, and can
+therefore also perform type conversions on the values where necessary. As such,
+the types can be mixed, eg. as follows:
+
+--- code ---
+// Set the value as a string, but with contents that represent other data types
+ht.set("fifth", "true");
+ht.set("sixth", "100");
+
+// Even though the values were set as strings, we can retrieve them as other
+// data types:
+bool fifth = ht.get_bool("fifth"); // the value will be true
+int sixth = ht.get_int("sixth");   // the value will be 100
+--- code ---
+
+== Sample: Iterating over a HashTable ==
+
+The following will print all of the keys in the HashTable. In the context of the
+above examples, this would be six lines, including "first", "second", "third",
+"fourth", "fifth" and "sixth":
+
+--- code ---
+foreach(String key in ht.iterate_keys()) {
+	Log.message(key);
+}
+--- code ---
+
+The following will likewise iterate over the HashTable, but will iterate the values,
+not the keys. Again, in the context of the above example, this would also print
+six lines, including "First value", "100", "false", "3.141", "true" and "100":
+
+--- code ---
+foreach(String value in ht.iterate_values()) {
+	Log.message(value);
+}
+--- code ---
+
+NOTE: When iterating over a HashTable, the ORDER of the elements is not guaranteed at
+all, and the elements will frequently appear to be in "random" order. Do not expect
+them to appear in the order in which they were added. If the ordering is important
+to your application, consider using a KeyValueList instead.
+
+A common requirement would be to iterate over all keys AND values, which could be
+done roughly as follows:
+
+--- code ---
+foreach(String key in ht.iterate_keys()) {
+	Log.message("Value of `%s' = `%s'".printf().add(key)
+		.add(ht.get(key)));
+}
+--- code ---
+
+NOTE: Since the HashTable also implements the Iterateable interface, it also
+provides a generic iterate() method, which is equivalent to the iterate_keys()
+method (by default, the iteration is done over the keys). Therefore, the following
+code does EXACTLY the same thing as the previous example:
+
+--- code ---
+foreach(String key in ht) {
+	Log.message("Value of `%s' = `%s'".printf().add(key)
+		.add(ht.get(key)));
+}
+--- code ---
+
+= dup =
+
+Creates a new HashTable object, then iterates over all of the contents of the current
+one and adds all elements to the newly created object, effectively creating a duplicate
+object that contains the same contents. Note that only the HashTable is duplicated, and
+not the contents: The elements inside the two HashTable objects will represent the same
+objects (and if modified, the modifications will be reflected on the objects in both
+HashTable objects).
+
+= allocate =
+
+If the number of elements to be added to this HashTable is known in advance or can
+be anticipated, the underlying data structure can be preallocated to match the
+projected size by calling the allocate() method. This can be done in order to enhance
+the performance of the process of adding the elements, as there will then be no need
+to grow the allocated size of the data structure when adding the elements. If this
+method is not called, then the HashTable will automatically allocate itself and will
+grow its size as needed.
+
+= set =
+
+Set the value of the given key to the given value. Any subclass of Object can be added,
+specifically including a String (note that there is no "set_string" method, since there is
+also no need for such). As with all set methods, if an element with the given key
+already exists, it will be overwritten with the new value.
+
+= set_int =
+
+Set the value of the given key to the given integer value. As with all set methods,
+if an element with the given key already exists, it will be overwritten with the new
+value.
+
+= set_bool =
+
+Set the value of the given key to the given boolean value. As with all set methods,
+if an element with the given key already exists, it will be overwritten with the new
+value.
+
+= set_double =
+
+Set the value of the given key to the given double value. As with all set methods,
+if an element with the given key already exists, it will be overwritten with the new
+value.
+
+= get =
+
+Get the value currently set for the given key. A resulting Object will be returned
+if an element of ANY of the supported data types has been previously set. A null
+value will be returned if the key has not been set.
+
+= get_string =
+
+Get the value currently set for the given key, and return it as a String representation
+of the value, if possible. If no value has been set for the given key, or if the
+value cannot be represented as a String, then a default value (configurable through
+the "def" parameter, by default null) will be returned instead.
+
+= get_int =
+
+Get the value currently set for the given key, and return it as an integer representation
+of the value, if possible. If no value has been set for the given key, or if the
+value cannot be represented as an integer, then a default value (configurable through
+the "def" parameter, by default 0) will be returned instead.
+
+= get_bool =
+
+Get the value currently set for the given key, and return it as a boolean representation
+of the value, if possible. If no value has been set for the given key, or if the
+value cannot be represented as a boolean, then a default value (configurable through
+the "def" parameter, by default true) will be returned instead.
+
+= get_double =
+
+Get the value currently set for the given key, and return it as a double representation
+of the value, if possible. If no value has been set for the given key, or if the
+value cannot be represented as a double, then a default value (configurable through
+the "def" parameter, by default 0.0) will be returned instead.
+
+= iterate_values =
+
+Returns an iterator that will return all of the VALUEs that have been inserted to
+the HashTable, one at a time. Note that the values should not be expected to be found
+in the order in which they were added.
+
+= iterate_keys =
+
+Returns an iterator that will return all of the KEYs that have been inserted to
+the HashTable, one at a time. Note that the keys should not be expected to be found
+in the order in which they were added.
+
+= remove =
+
+Remove the element with the specified key from this HashTable.
+
+= clear =
+
+Remove all elements from this HashTable.
+
+= count =
+
+Return the current number of elements found in this HashTable.

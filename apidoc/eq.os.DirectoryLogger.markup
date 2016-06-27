@@ -1,0 +1,34 @@
+= A logger implementations that saves all output to files =
+
+While by default all log messages are printed out in a manner suitable for the given platform,
+a DirectoryLogger object can be used as the logger in an application that wants to save all log
+output to a file. The DirectoryLogger is constructed with a directory reference; the logger will
+then print log output to files inside the given directory, with a unique file for each date
+(and the files are named according to the date).
+
+= for_directory =
+
+Create a new directory logger, and use the specified directory as the output for all the logs.
+The directory may or may not exist, and/or may or may not be writable to the current process,
+but a valid directory logger will be returned in any case.
+
+= reopen =
+
+Close the current logfile and open a new one.
+
+= set_logdir =
+
+Set the currently used output directory for the logs.
+
+= get_logdir =
+
+Get the currently used output directory for the logs.
+
+= set_filename_prefix =
+
+For all logfiles, a prefix can be placed in front of the filename (by default this is "messages_"). Change
+the value of the filename prefix to customize.
+
+= get_filename_prefix =
+
+Get the currently configured filename prefix.

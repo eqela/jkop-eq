@@ -1,0 +1,24 @@
+= An object that represents a double-precision floating point number value =
+
+A class that implements the Double interface provides a to_double() method that can be
+used to get a floating point value representation of the object
+
+== Sample: Converting a string to a double ==
+
+The Double type also provides static method that can be used to convert
+other data types to double values. For example:
+
+--- code ---
+double d = Double.as_double("0.51");
+--- code ---
+
+= as_double =
+
+Converts the specified object instance to a double variable, if
+possible. If there is no known way of converting the object to a double,
+then a default value can be returned (by default, 0.0). To specify a custom
+default value, use the last parameter.
+
+= to_double =
+
+Express / convert the representation of the object as a double variable.

@@ -1,0 +1,4 @@
+= Embedded web browser widget =
+
+The web widget library implements support for embedded web browser controls
+within applications, providing HTML rendering support for any application.

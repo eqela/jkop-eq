@@ -1,0 +1,4 @@
+= Support for handling of compressed archives =
+
+This module provides the necessary functionality for implementing extraction
+or compression of files to/from compressed archive files, such as ZIP, tar.gz, tar.bz2, etc.

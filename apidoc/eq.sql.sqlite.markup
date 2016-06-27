@@ -1,0 +1,3 @@
+= Support for the SQLite database engine =
+
+Functionality for embedding the popular SQLite database engine within Eqela applications.

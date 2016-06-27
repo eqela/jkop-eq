@@ -1,0 +1,110 @@
+= A pointer to a memory buffer =
+
+A pointer points to a specific location in a memory buffer, and can be
+used to get or set the data / content of the buffer. The Pointer class
+is really a "thin" wrapper around the underlying pointer type of whatever
+platform the program is running on. This underlying pointer type is
+represented by the native type "ptr", and depending on the platform, this may
+mean different things (eg. on C, ptr is "void*", on Java, it is a byte[], etc.).
+
+== Sample: Constructing a pointer object ==
+
+In the following sample (valid for Java and C for purposes of illustration),
+we allocate some memory, and create a Pointer object to wrap it. Note that
+the actual allocated memory may come from various sources (eg. native libraries
+that allocate buffers, etc.).
+
+--- code ---
+ptr nativeptr;
+IFDEF("target_java") {
+	embed {{{
+		nativeptr = new byte[64];
+	}}}
+}
+ELSE IFDEF("target_c") {
+	embed {{{
+		nativeptr = (void*)malloc(64);
+	}}}
+}
+Pointer mypointer = Pointer.create(nativeptr);
+--- code ---
+
+== Sample: Constructing Buffer objects ==
+
+Continuing from the previous sample, we can also then create a Buffer
+object using the pointer:
+
+--- code ---
+var buffer = Buffer.for_pointer(mypointer, 64);
+--- code ---
+
+In a Java environment (or any other where the underlying memory management
+is done automatically), this will be sufficient. However, note that in a C
+environment, if we code the program this way, the memory would still need to
+be unallocated somewhere. For convenience, there is an alternative way to
+construct a buffer:
+
+--- code ---
+var buffer = Buffer.for_owned_pointer(mypointer, 64);
+--- code ---
+
+On platforms other than C, both for_pointer() and for_owned_pointer() are
+equivalent. However, in a C environment, the for_owned_pointer() causes the
+Buffer object to take "ownership" of the buffer, and will then also automatically
+unallocate the memory when the Buffer object is destroyed.
+
+== Sample: Performing memory operations ==
+
+The Pointer class supports several basic operations such as set_byte(), get_byte()
+and cpyfrom(). Thus, you could use the following kind of code:
+
+--- code ---
+int n;
+var ptr = buffer.get_pointer();
+if(ptr != null) {
+    for(n=0; n<mybuffer.get_size(); n++) {
+        ptr.set_byte(n, n);
+    }
+}
+--- code ---
+
+= create =
+
+Create a new Pointer object based on an instance of a native pointer (primitive
+type ptr). The native pointer can be obtained in any platform specific manner.
+
+= dup =
+
+Duplicate an existing Pointer object and create a new one. The new Pointer will
+be initialized to point to the same exact memory address as the original, but
+can be moved and operated on independently after the duplication.
+
+= move =
+
+Move the pointer by the specified amount of bytes so that it will point to a
+new memory location. Note that no boundary checks of any kind are guaranteed
+to be done, and should you move a pointer beyond the actual allocated memory,
+the results are undefined or system/backend specific.
+
+= cpyfrom =
+
+Copy data to the memory pointed to by this object, from the memory pointed to
+be the other given Pointer object (src). The "soffset" represents the source
+offset to the memory of the "src" pointer, and "doffset" represents the destination
+offset, in relation to the memory pointed to by this Pointer. The "size" parameter
+specifies the number of bytes to copy.
+
+= set_byte =
+
+Sets the byte at offset "n" (relative to the current pointed position of the Pointer),
+to the specified value.
+
+= get_byte =
+
+Get the byte at offset "n", relative to the current position of this Pointer, and
+return the value.
+
+= get_native_pointer =
+
+Return the primitive "ptr" type object that represents the pointer type of the
+underlying platform.

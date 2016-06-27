@@ -1,0 +1,67 @@
+= Mathematical functions =
+
+The Math class provides commonly used mathematical functions.
+
+= abs =
+
+Calculate the absolute value of integer n.
+
+= fabs =
+
+Calculate the absolute value of the floating pointer number n.
+
+= ceil =
+
+Calculate the ceiling value of n.
+
+= floor =
+
+Calculate the floor value of n.
+
+= rint =
+
+Rounds the value of n to the nearest integer.
+
+= sin =
+
+The sin function for parameter n.
+
+= asin =
+
+The asin function for parameter n.
+
+= cos =
+
+The cos function for parameter n.
+
+= acos =
+
+The acos function for parameter n.
+
+= tan =
+
+The tan function for parameter n.
+
+= atan =
+
+The atan function for parameter n.
+
+= sqrt =
+
+Get the square root of n.
+
+= cbrt =
+
+Get the cubic foor of n.
+
+= log =
+
+Natural logarithm for n.
+
+= log10 =
+
+Base-10 logarithm for n.
+
+= random =
+
+Get a random integer between values ''min'' (inclusive) and ''max'' (exclusive).

@@ -1,0 +1,3 @@
+= Command line engine =
+
+The shell library implements a text based command line environment that can be embedded within applications.

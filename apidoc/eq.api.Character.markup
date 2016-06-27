@@ -1,0 +1,23 @@
+= Character utility functions =
+
+The Character class provides some useful and commonly needed functionalities
+to operate on characters. All methods are static, and can be called anywhere.
+
+= is_digit =
+
+Returns true if the given character is a digit (a character between '0' and '9').
+
+= is_hex_digit =
+
+Returns true if the given character is a valid hexadecimal digit (either
+a number between '0' and '9' or a letter between 'a' and 'f').
+
+= is_alnum =
+
+Returns true if the character is alphanumeric (either between '0' and '9' or
+between 'a' and 'z').
+
+= is_alpha =
+
+Returns true if the character is a part of the western alphabet (between
+'a' and 'z').

@@ -1,0 +1,3 @@
+= JSON encoding format support =
+
+Enables the encoding and decoding of data structures using the JSON format.

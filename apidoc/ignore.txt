@@ -1,0 +1,5 @@
+# Classes and modules to ignore (when it comes to API documentation)
+
+eq.gui.sysdep.*
+eq.ext.*
+eq.audio.sysdep.*

@@ -1,0 +1,22 @@
+= An object encapsulation of a double precision floating point primitive value =
+
+A DoubleValue object allows the encapsulation of a double precision floating point (double)
+primitive into an object type (a subclass of Object).
+
+== Sample: Using a DoubleValue ==
+
+Using a DoubleValue is simple:
+
+--- code ---
+var dv = new DoubleValue();
+dv.set_value(0.0);
+Log.message("DV: %f".printf().add(dv.get_value()));
+--- code ---
+
+= set_value =
+
+Set the current double value of the object.
+
+= get_value =
+
+Get the current double value of the object.

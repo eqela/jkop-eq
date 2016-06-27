@@ -1,0 +1,102 @@
+= Represents and and handles integer values =
+
+A class that implements the Integer interface provides a to_integer()
+method that can be used to get an integer value representation of the
+object.
+
+The Integer interface also provides a number of static methods that
+are useful in order to perform integer-related operations.
+
+== Sample: Convert a string to an integer ==
+
+--- code ---
+var mystring = "155";
+int myint = Integer.as_integer(mystring);
+// myint is now 155
+--- code ---
+
+== Sample: Fail to convert a string to an integer ==
+
+--- code ---
+var mystring = "Hello World";
+int myint = Integer.as_integer(mystring, 789);
+// myint is 789 (default value, since conversion fails)
+--- code ---
+
+= to_integer =
+
+Express / convert the representation of the object as an int variable.
+
+= as_integer =
+
+Converts the specified object instance to an integer (int) variable, if
+possible. If there is no known way of converting the object to an int,
+then a default value can be returned (by default, 0). To specify a custom
+default value, use the last parameter.
+
+= int_to_buffer =
+
+Make a direct copy of the contents of the int variable as a buffer object.
+The exact size and byte ordering of the resulting buffer will be the same
+as the original variable and, therefore, system and platform dependent.
+For more consistent and predictable result, use one of the to_buffer* methods instead.
+
+= long_to_buffer =
+
+Make a direct copy of the contents of the long variable as a buffer object.
+The exact size and byte ordering of the resulting buffer will be the same
+as the original variable and, therefore, system and platform dependent.
+For more consistent and predictable result, use one of the to_buffer* methods instead.
+
+= to_buffer8 =
+
+Converts the given integer to an 8 bit (one byte) buffer, truncating the
+contents if the original integer contains more than 8 bits of significant data.
+
+= to_buffer16 =
+
+Converts the given integer to a 16 bit (two byte) buffer, truncating the
+contents if the original integer contains more than 16 bits of significant data.
+The resulting buffer will store the content in network byte order (big endian),
+regardless of what the native byte ordering of the current system or platform
+may be.
+
+= to_buffer32 =
+
+Converts the given integer to a 32 bit (four byte) buffer, truncating the
+contents if the original integer contains more than 32 bits of significant data.
+The resulting buffer will store the content in network byte order (big endian),
+regardless of what the native byte ordering of the current system or platform
+may be.
+
+= from_buffer8 =
+
+Convert the contents of an 8 bit (one byte) buffer to an integer variable.
+
+= from_buffer16 =
+
+Convert the contents of a 16 bit (two byte) buffer to an integer variable. The
+incoming buffer is assumed to be in network byte order (big endian), regardless
+of what the native byte ordering of the current system or platform may be.
+
+= from_buffer32 =
+
+Convert the contents of a 32 bit (four byte) buffer to an integer variable. The
+incoming buffer is assumed to be in network byte order (big endian), regardless
+of what the native byte ordering of the current system or platform may be.
+
+= int_from_buffer =
+
+Convert the contents of a buffer object to an integer variable. The exact expected
+size and byte ordering of the given buffer are assumed to be native to the
+current system and are, therefore, platform and operating system dependent. For
+more consistent and predictable results, use one of the from_buffer* methods
+instead.
+
+= long_from_buffer =
+
+Convert the contents of a buffer object to a long integer variable. The exact expected
+size and byte ordering of the given buffer are assumed to be native to the
+current system and are, therefore, platform and operating system dependent. For
+more consistent and predictable results, use one of the from_buffer* methods
+instead.

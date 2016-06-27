@@ -1,0 +1,74 @@
+# Class group definitions
+
+eq.api.Array, eq.api.Collection, eq.api.LinkedList, eq.api.HashTable, eq.api.KeyValueList, eq.api.Queue, eq.api.Stack, eq.api.Iterator, eq.api.Iterateable, eq.api.OptionList
+eq.api.Boolean, eq.api.BooleanValue, eq.api.BooleanArray, eq.api.Integer, eq.api.IntegerValue, eq.api.IntegerArray, eq.api.Double, eq.api.DoubleValue, eq.api.DoubleArray, eq.api.Primitive
+eq.api.Buffer, eq.api.DynamicBuffer, eq.api.Pointer, eq.api.MimeBuffer, eq.api.SubBuffer
+eq.api.String, eq.api.EditableString, eq.api.Stringable, eq.api.StringBuffer, eq.api.StringSplitter, eq.api.StringIterator, eq.api.StringFormatter
+eq.api.Log, eq.api.Logger, eq.api.LoggerObject, eq.os.DirectoryLogger, eq.api.NullLogger
+eq.api.LinkedList, eq.api.LinkedListNode
+eq.api.KeyValueList, eq.api.KeyValuePair
+eq.api.BooleanOperationListener, eq.api.BufferOperationListener, eq.api.CollectionOperationListener, eq.api.OperationListener, eq.api.StringOperationListener
+eq.api.Math, eq.api.MathConstant
+
+eq.gui.Clipboard, eq.gui.ClipboardData, eq.gui.ClipboardDataProvider
+eq.gui.CircleShape, eq.gui.CustomShape, eq.gui.CustomShapeElement, eq.gui.RectangleShape, eq.gui.RoundedRectangleShape, eq.gui.Shape
+eq.gui.ClearOperation, eq.gui.ClipClearOperation, eq.gui.ClipOperation, eq.gui.DrawObjectOperation, eq.gui.FillColorOperation, eq.gui.FillGradientOperation, eq.gui.StrokeOperation, eq.gui.Renderable, eq.gui.RenderableImage
+eq.gui.CapabilityFrame, eq.gui.ClosableFrame, eq.gui.ColoredFrame, eq.gui.CursorFrame, eq.gui.DesktopWindowFrame, eq.gui.FocusAwareFrame, eq.gui.Frame, eq.gui.HidableFrame, eq.gui.ResizableFrame, eq.gui.StrutsFrame, eq.gui.TitledFrame
+eq.gui.Frame, eq.gui.FrameCloseRequestEvent, eq.gui.FrameController, eq.gui.FrameResizeEvent
+eq.gui.KeyEvent, eq.gui.KeyPressEvent, eq.gui.KeyReleaseEvent
+eq.gui.PointerCancelEvent, eq.gui.PointerEvent, eq.gui.PointerLeaveEvent, eq.gui.PointerMoveEvent, eq.gui.PointerPressEvent, eq.gui.PointerReleaseEvent
+eq.gui.sceneapplication.Scene, eq.gui.sceneapplication.SceneApplication, eq.gui.sceneapplication.SceneController, eq.gui.sceneapplication.SceneEndListener, eq.gui.sceneapplication.TransferrableScene
+eq.gui.Surface, eq.gui.SurfaceContainer, eq.gui.SurfaceOptions, eq.gui.SurfaceWithId
+eq.gui.ImageTextLayout, eq.gui.TextImage, eq.gui.TextLayout, eq.gui.TextProperties
+eq.gui.Position, eq.gui.Size, eq.gui.Rectangle
+
+eq.gui.vg.VgPath, eq.gui.vg.VgPathCircle, eq.gui.vg.VgPathCustom, eq.gui.vg.VgPathElement, eq.gui.vg.VgPathRectangle, eq.gui.vg.VgPathRoundedRectangle
+
+eq.io.Reader, eq.io.SizedReader, eq.io.Seekable, eq.io.BufferReader, eq.io.ReaderWriter, eq.io.StringReader
+eq.io.BufferWriter, eq.io.ReaderWriter, eq.io.Writer
+eq.io.Reader, eq.io.Writer, eq.io.ReaderWriter, eq.io.ConnectedSocket
+
+eq.io.console.Command, eq.io.console.CommandLineApplication, eq.io.console.UsageInfo
+eq.io.console.CommandLineApplicationAction, eq.io.console.MultiActionCommandLineApplication
+eq.io.console.Stdin, eq.io.console.Stdout, eq.io.console.Stderr
+
+eq.net.http.HTTPClientBufferReceiver, eq.net.http.HTTPClientBufferResponse
+eq.net.http.HTTPClientStringReceiver, eq.net.http.HTTPClientStringResponse
+eq.net.http.HTTPClientDataEvent, eq.net.http.HTTPClientEndEvent, eq.net.http.HTTPClientErrorEvent, eq.net.http.HTTPClientResponseEvent, eq.net.http.HTTPClientStartEvent, eq.net.http.HTTPClientListener
+eq.net.http.HTTPClientFileWriter, eq.net.http.HTTPClientOutputStreamWriter, eq.net.http.HTTPClientFileResponse, eq.net.http.HTTPClientResponseHeader
+
+eq.os.BufferPipeHandler, eq.os.StringPipeHandler, eq.os.LogPipeHandler, eq.os.ProcessLauncher
+eq.os.DateTime, eq.os.SystemClock, eq.os.eq.api.TimeVal
+eq.os.File, eq.os.FileAdapter, eq.os.FileExtender, eq.os.FileInfo, eq.util.encryptedfile.EncryptedFile
+eq.os.Mutex, eq.os.Thread, eq.os.Runnable
+eq.os.Tmpdir, eq.os.TemporaryDirectory, eq.os.TemporaryFile
+
+eq.os.task.BackgroundTask, eq.os.task.BackgroundTaskAdapter, eq.os.task.BackgroundTaskManager, eq.os.task.RunnableTask, eq.os.task.TimerHandler
+eq.os.task.ProgressListener, eq.os.task.ProgressTimer
+eq.os.task.RunnableTask, eq.os.task.StartableTask
+
+eq.util.aes128.AES128Cipher, eq.util.blockcipher.BlockCipher, eq.util.dummycipher.DummyCipher
+
+eq.util.archive.ArchiveReader, eq.util.archive.ArchiveWriter
+
+eq.util.cachedfile.CachedFile, eq.util.cachedfile.CachedJSONFile, eq.util.cachedfile.CachedTextFile
+
+eq.widget.Animation, eq.widget.AnimationItem, eq.widget.AnimationListener, eq.widget.AnimationTarget, eq.widget.LinearAnimationItem, eq.widget.TimerAnimation
+eq.widget.AbsoluteAlignWidget, eq.widget.AlignWidget, eq.widget.BoxWidget, eq.widget.ChangerWidget, eq.widget.ContainerWidget, eq.widget.FixedGridWidget, eq.widget.FlexiGridWidget, eq.widget.LayerWidget, eq.widget.RelativeAlignWidget
+eq.widget.BoxWidget, eq.widget.VBoxWidget, eq.widget.HBoxWidget
+
+eq.widget.common.ClickWidget, eq.widget.common.ButtonWidget, eq.widget.common.ButtonFrameWidget
+eq.widget.common.DynamicImageWidget, eq.widget.common.DynamicImageProvider, eq.widget.common.DynamicImageResult
+eq.widget.common.SeparatorWidget, eq.widget.common.HSeparatorWidget, eq.widget.common.VSeparatorWidget
+eq.widget.common.MenuWidget, eq.widget.common.MenuWidgetItem
+eq.widget.common.LabelWidget, eq.widget.common.MultiLineLabelWidget
+eq.widget.ChangerWidget, eq.widget.common.StackChangerWidget
+eq.widget.common.WaitAnimationWidget, eq.widget.common.ProgressOverlayWidget
+
+eq.widget.scroller.ScrollerWidget, eq.widget.scroller.HScrollerWidget, eq.widget.scroller.VScrollerWidget
+
+eq.widget.selector.ListSelectorWidget, eq.widget.selector.GridSelectorWidget
+
+eq.audio.player.AudioPlayer, eq.audio.player.AudioPlayerManager
+
+eq.audio.clip.AudioClip, eq.audio.clip.AudioClipManager

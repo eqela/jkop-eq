@@ -1,0 +1,4 @@
+= Implementation of cached web content =
+
+A simple directory based cache that retrieves content from the web as it is needed,
+storing the content and redisplaying cached versions as appropriate.

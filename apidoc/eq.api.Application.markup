@@ -1,0 +1,93 @@
+= Current application / process information =
+
+The Application class represents the current application, and provides essential information about the
+application, such as the name, version, copyright, url, etc, of the running program.
+
+== Sample: Print application information ==
+
+--- code ---
+class AboutThisApp
+{
+	public static void print_app_information() {
+		Log.message("%s %s".printf().add(Application.get_name())
+			.add(Application.get_version()));
+		Log.message(Application.get_description());
+		Log.message(Application.get_copyright());
+		Log.message(Application.get_license());
+		Log.message("Find more information at %s".printf()
+			.add(Application.get_url()));
+	}
+}
+--- code ---
+
+= get_instance_command =
+
+Returns the command that was used to launch this application process. The
+exact meaning is somewhat system dependent, but generally this represents
+the equivalent value of the first element of "argv", as expressed in C programs. On some
+platforms, notably mobile platforms, this value may be empty.
+
+= set_instance_command =
+
+Set the value of the instance command variable to any desired value.
+
+= get_instance_args =
+
+Returns a collection of strings that represent the complete command line
+arguments that were given the the application process when it was started.
+This is roughly equivalent to the contents of the "argv" array in C (but with
+the first element removed), or the "args" array in Java applications. On some
+platforms, notably mobile operatin systems, this may be null.
+
+= set_instance_args =
+
+Set the value of the instance args variable to any desired value.
+
+= get_version =
+
+Get the full version number of the currently running application. In common
+Eqela applications, this is the version determined by the compiler through
+eqela.version, or through eqela.config
+
+= get_name =
+
+Get the short name, or ID (module id) of the current application. This would
+generally be equivalent to the Eqela module id, when compiled with the usual
+Eqela compiler.
+
+= get_main =
+
+Get the main object of the application. This would usually be represented
+by the class named "Main" in the primary module of the application.
+
+= get_display_name =
+
+A short one-line / one-statement description or sentence that briefly describes
+the current application. When compiled with regular Eqela compilers, this
+represents the "displayname" value of the main module.
+
+= get_description =
+
+A longer, up to one paragraph description of the currently running application.
+
+= get_copyright =
+
+Get the copyright / ownership information of the currently running application.
+
+= get_license =
+
+Get licensing information for the currently running application.
+
+= get_url =
+
+Get the URL / home page address of the currently running application.
+
+= set_main =
+
+Set the value of the main object of the application.
+
+= initialize =
+
+Initialize the application and set the values for the various variables. This
+is usually called automatically by the framework upon initialization of the
+application, and cannot be called again. Any subsequent calls will be ignored.

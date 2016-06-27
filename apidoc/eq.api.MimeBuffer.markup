@@ -1,0 +1,19 @@
+= A buffer that can store binary data and also has a MIME type =
+
+A MIME buffer contains a Buffer object that can store an arbitrary amount of bytes,
+representing binary data of any kind, together with a String that identifies the MIME
+type of the data.
+
+= create =
+
+Creates a new MimeBuffer object and sets the MIME type ''type'' and
+the Buffer data ''buffer'' of the newly created object to the specified
+values.
+
+= get_mimetype =
+
+Get the current MIME type of this object.
+
+= get_buffer =
+
+Get the contents of this object as a Buffer.

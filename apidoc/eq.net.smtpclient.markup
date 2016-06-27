@@ -1,0 +1,5 @@
+= SMTP Internet email protocol implementation =
+
+SMTP (Simple Mail Transfer Protocol) is the standard protocol used to
+transfer Internet email. The SMTP library provides an implementation
+of this protocol for the purpose of sending email from Eqela applications.

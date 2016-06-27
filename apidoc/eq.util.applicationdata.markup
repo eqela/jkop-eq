@@ -1,0 +1,4 @@
+= Saving application specific data =
+
+The application data module enables the saving and retrieval of data on a
+per application basis, commonly used to store transient application data.

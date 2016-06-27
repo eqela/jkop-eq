@@ -1,0 +1,348 @@
+= A reference to an entity on a file system =
+
+The File interface is the primary means through which applications will access
+files and/or directories. A File object, despite its name, is also used to access
+directories, and contains methods to manipulate both.
+
+File objects are usually constructed using the system specific pathname string as
+the parameter to the method `for_native_path', eg. File.for_native_path("C:\\") on
+Windows or File.for_native_path("/usr/bin") on Linux. In both cases, a file object
+pointing to a directory is constructed. Note that these methods will return a valid
+File object even if the file or directory in question does not yet exist. The File
+object can then be used to create a new file / directory.
+
+Application developers can freely implement the File interface to construct different
+(virtual) file systems or file wrappers or extensions. Any created class can then be
+used all across the different APIs and frameworks (note that some functions do call the
+get_native_path() method, which may not have usable implementations on virtual file systems).
+
+== Sample: Constructing File objects ==
+
+--- code ---
+// A file or directory in a temporary directory
+var tempfile = File.for_temporary_directory("tempfile");
+
+// A file in the user's personal directory
+var myfile = File.for_home_directory("myfile.txt");
+
+// A file from the same directory as the application executable
+var appfile = File.for_app_directory("resource.png");
+--- code ---
+
+== Sample: Reading an existing text file ==
+
+--- code ---
+var file = File.for_native_path("/tmp/testing.txt");
+if(file.is_file() == false) {
+	Log.error("Not a file: `%s'".printf().add(file));
+	return;
+}
+var contents = file.get_contents_string();
+if(contents == null) {
+	Log.error("Failed to read file: `%s'".printf().add(file));
+	return;
+}
+Log.message("Contents of the file: `%s'".printf().add(contents));
+--- code ---
+
+== Sample: Iterating all files in a directory ==
+
+--- code ---
+var dir = File.for_native_path("/tmp");
+foreach(File file in dir.entries()) {
+	Log.message("Found file: `%s'".printf().add(file));
+}
+--- code ---
+
+== Sample: Reading a text file line by line ==
+
+--- code ---
+var file = File.for_home_directory("myfile.txt);
+foreach(String line in file.lines()) {
+	Log.message("Found line: `%s'".printf().add(line));
+}
+--- code ---
+
+== Sample: Reading a binary file ==
+
+--- code ---
+var data = File.for_home_directory("myfile.bin").get_contents_buffer();
+--- code ---
+
+= set_full_path_to_string =
+
+Sets the value for the "full path to string" flag. This is an application-global flag
+that controls whether of the the to_string() method of File will return the full path
+of the file / directory (with a complete directory structure). If the flag is set to
+false, only the name of the actual file or directory is returned, and NONE of the
+directory structure (effectively, basename()). If set to true, then the complete path
+with all directories is returned. Default is true.
+
+= get_full_path_to_string =
+
+Get the current value of the "full path to string" flag (see above).
+
+= for_eqela_path =
+
+Create a new file object for "Eqela path". This concept is deprecated, and should not
+be used. This method will be removed in a future version.
+
+= for_temporary_directory =
+
+Return a file object that is within a temporary directory. If no "path" parameter is
+given (or if null is supplied), then the temporary directory itself is returned. If the
+parameter is given and non-null, then a file or directory within the temporary directory
+will be represented by the returned File object.
+
+= for_home_directory =
+
+Return a file or directory within the user's personal (or home) directory. If no parameter
+is given, or if null object is supplied, then the home directory itself is returned.
+
+= for_app_directory =
+
+Return a file or directory within the same directory as this application's executable
+binary file. If no parameter is given or null is supplied, then the directory itself is
+returned.
+
+= for_native_path =
+
+Create a new file object pointing to a file that is represented by the given string. The
+string is in the format in which file names are usually given on the current platform,
+eg. "/home/user/something.txt" on Unix/Linux/OSX, or "C:\Users\user\something.txt" on
+Windows based platforms.
+
+= get_eqela_path =
+
+Get the "Eqela path" for this File. This method (and the concept of "Eqela path")
+is deprecated, and will be removed in a future version.
+
+= entry =
+
+Get a new file object that refers to a "child" file or directory within this directory.
+
+= as_executable =
+
+Return a File object that refers to the current path, but as an "executable". The exact
+meaning of this is platform dependent: On Unix-like systems (such as Linux and OS X),
+this generally returns the same file path: On Windows, however, this will ensure that
+the path of the current file includes the ".exe" extension.
+
+= get_parent =
+
+Return the parent directory of the current file or directory.
+
+= get_sibling =
+
+Return another file in the same directory as this object, with the given name.
+
+= has_extension =
+
+Returns true if this file has the given file extension.
+
+= extension =
+
+Returns the file extension of this file as a String.
+
+= strip_extension =
+
+Returns the file name of this object, but with the file extension removed.
+
+= entries =
+
+Returns an Iterator that iterates through all entries contained within the directory
+referred to by the current object.
+
+= remove =
+
+Remove this file. (NOTE: This only works for files. For directories, use remove_directory()).
+
+= move =
+
+Move this file or directory to become the "dest". If dest already exists, then it will be replaced
+if replace == true. If replace == false, then the operation fails if dest is pre-existing.
+
+= rename =
+
+Change the name of this file / directory, but retain it in the same directory as before. If a
+file or directory with the new name already exists, it will be replaced if the replace parameter
+is true.
+
+= touch =
+
+Create this file if it does not exist, or update its "modified timestamp" to the current time
+if it already exists.
+
+= read =
+
+Start reading the contents of this file.
+
+= write =
+
+Start writing to this file, truncating any content that may be currently present.
+
+= append =
+
+Start writing to the end of this file. If the file does not exist, it will be created.
+
+= set_mode =
+
+Set the file permissions mode (POSIX style). This may not be implemented on all (non-Posix)
+platforms, in which the operation fails (false is returned).
+
+= set_owner_user =
+
+Set the UID that owns this file. On non-Posix platforms, this may be unimplemented, and will
+return false.
+
+= set_owner_group =
+
+Set the GID that owns this file. On non-Posix platforms, this may be unimplemented, and will
+return false.
+
+= stat =
+
+Gather information about the file and return the details in a FileInfo object.
+
+= get_size =
+
+Returns the size of this file, in bytes.
+
+= exists =
+
+Returns true if a file, directory, or any other kind of filesystem entry exists in the current
+path of this File object.
+
+= is_executable =
+
+Returns true if this File is a file that can be executed.
+
+= is_file =
+
+Returns true if this File exists and is a file.
+
+= is_directory =
+
+Returns true if this File exists and is a directory.
+
+= is_link =
+
+Returns true if this File exists and is a symbolic link (where the concept is applicable).
+
+= create_fifo =
+
+Create a FIFO filesystem object in the current path of this File. On non-Posix platforms, this may
+be unimplemented, and will return false.
+
+= create_directory =
+
+Create a directory in the current path of this File. Returns true if successful.
+
+= remove_directory =
+
+Remove the directory pointed to by this File object. If there are any entries in the directory,
+the operation will fail. To delete recursively, use delete_recursive() instead.
+
+= get_native_path =
+
+Get the full filename path using the native notation of the current operating system.
+
+= is_same =
+
+Returns true if this and the given file object point to the exact same filesystem entry.
+
+= delete_recursive =
+
+Delete this file or directory, and any entries contained within this file, and in any subdirectories.
+
+= mkdir_recursive =
+
+Create the current file path as a directory, creating any parent directories along the way if they
+do not yet exist.
+
+= write_from_reader =
+
+Read from the given reader, and write all contents to this File. If append == true, then all contents
+will be appended; if false, the file will be truncated if it has any previous contents.
+
+= match_pattern =
+
+Receives a Collection of String objects; each of the strings is interpreted as a filename pattern,
+which may contain wildcards (*). If the pattern matches the **basename** (the filename itself, with
+all the directories excluded) of this file, then the method returns true.
+
+= copy_to =
+
+Copy this file to become ''dest''. When copying directories, the parameter ''excludes'' is treated
+as a collection of strings, each of which represents a filename pattern that can contain wildcards (*).
+If any of the files-to-be-copied were to match any of the patterns, then they would not be copied.
+
+NOTE: This method works slightly differently, depending on if the current File (this) is pointing to a file
+or a directory. If it is a file, then the file is copied, and the file ''dest'' will be a file that
+contains identical data as the original. However, if the current File is a directory, then the entire
+directory is copied recursively (taking into account the excludes Collection), and ''dest'' will then
+be a directory that contains all the same content as the original.
+
+= compare_modification_time =
+
+Take the modification time (a) of the current file and that of the file ''bf'' (b) supplied as a parameter.
+If a < b, return -1. If b > a, return 1. Otherwise 0 (modification times are equal).
+
+= is_newer_than =
+
+A shortcut method for compare_modification_time() above: Return true if the modification time of the
+current file is more recent than that of the given file.
+
+= is_older_than =
+
+A shortcut method for compare_modification_time() above: Return true if the modification time of the
+current file is NOT more recent than that of the given file.
+
+= dirname =
+
+Return the full directory path to this current file or directory (with the actual name of this file or
+directory excluded).
+
+= basename =
+
+Return the file or directory name, with all parent directory paths excluded.
+
+= idname =
+
+Get the basename(), and remove any file extension that might be present.
+
+= is_identical =
+
+Compares two files by their contents, and returns true if both files contain exactly the same amount
+of data, and if each byte of both files is exactly the same as that of the other. Only works on files,
+not directories.
+
+= get_contents_buffer =
+
+Read this file, and place all of the data in the returned Buffer object. Returns null if reading of
+the file fails.
+
+= get_contents_string =
+
+Read this file as a UTF8 formatted text file, and place all of the data in the returned String object.
+Returns null if reading of the file fails.
+
+= set_contents_buffer =
+
+Truncate this file, and replace its contents with the given Buffer.
+
+= set_contents_string =
+
+Truncate this file, and replace its contents with the given String.
+
+= lines =
+
+Read this file as a UTF8 formatted text file, and split the resulting content at newline characters.
+This method returns an Iterator that can then be used to iterate the contents of the file, one line
+at a time.
+
+= realpath =
+
+Returns a File object that points directly to the actual location of the currently referenced file,
+following any symbolic links or other temporary references to the file. The functionality is equivalent
+to the realpath() POSIX system call.

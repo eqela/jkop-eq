@@ -1,0 +1,23 @@
+<script>
+function onFacebookLogin() {
+	<% if ${FacebookLoginButtonPadget.redirect_url} != "" %>
+		FB.getLoginStatus(function(response) {
+			var token = response.authResponse.accessToken;
+			if(token) {
+				var url = "<%= FacebookLoginButtonPadget.redirect_url %>?facebook_token=" +
+					encodeURIComponent(token);
+				window.location = url;
+			}
+		});
+	<% end %>
+}
+</script>
+<fb:login-button
+	size="<%= FacebookLoginButtonPadget.size %>"
+	max-rows="<%= FacebookLoginButtonPadget.max_rows %>"
+	show-faces="<%= FacebookLoginButtonPadget.show_faces %>"
+	auto-logout-link="<%= FacebookLoginButtonPadget.show_logout %>"
+	scope="<%= FacebookLoginButtonPadget.scope %>"
+	onlogin="onFacebookLogin();">
+<%= FacebookLoginButtonPadget.button_text %>
+</fb:login-button>

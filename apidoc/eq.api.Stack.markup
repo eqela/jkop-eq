@@ -1,0 +1,54 @@
+= A Last-In-First-Out (LIFO) data structure =
+
+The Stack class provides a data structure implementation that
+represents a last-in-first-out (LIFO) approach.
+
+== Sample: Adding (pushing) to a stack ==
+
+--- code ---
+var s = Stack.instance();
+s.push("First");
+s.push("Second");
+--- code ---
+
+== Sample: Getting (popping) from a stack ==
+
+--- code ---
+Log.message(q.peek()); // "Second"
+Log.message(q.pop()); // "Second"
+Log.message(q.pop()); // "First"
+--- code ---
+
+= instance =
+
+Create a new instance of a Stack object.
+
+= create =
+
+Create a new instance of a Stack object.
+
+= push =
+
+Push to the top of the stack.
+
+= pop =
+
+Get the top element, and remove it from the stack.
+
+= pop_under =
+
+Get the bottom element, and remove it from the stack.
+
+= peek =
+
+Get the top element, but do not remove it from the stack. Subsequent
+calls to peek() will render the same result, and a subsequent call to pop() will
+also return the same object again.
+
+= count =
+
+Return the number of elements in this stack.
+
+= clear =
+
+Remove all elements from this stack.

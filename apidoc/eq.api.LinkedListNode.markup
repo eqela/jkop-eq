@@ -1,0 +1,37 @@
+= A data structure that implements a node in a linked list =
+
+Internally, a linked list (LinkedList) stores each entry in the list
+by using a node that contains pointers to the previous and next nodes.
+In practice, a LinkedList object implements this by using LinkedListNode
+instances.
+
+(See documentation of LinkedList for further information and code samples)
+
+= create =
+
+Create a new LinkedListNode, and set the value of the node to the specified
+Object.
+
+= value =
+
+The current value of this node.
+
+= next =
+
+Pointer to the next node in the list.
+
+= prev =
+
+Pointer to the previous node in the list.
+
+= get_previous_node =
+
+Get the previous node in the list.
+
+= get_next_node =
+
+Get the next node in the list.
+
+= get_node_value =
+
+Get the value object of this node.

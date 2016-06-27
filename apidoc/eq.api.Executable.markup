@@ -1,0 +1,9 @@
+= An executable object =
+
+An executable object can be "executed" in some sense. The interface
+requires the implementation of an "execute()" method that can be implemented
+in the implementing class to perform the actual functionality.
+
+= execute =
+
+The method that performs the actual work.

@@ -1,0 +1,3 @@
+= Base64 content encoding support =
+
+This module provides the necessary classes for encoding and decoding data using the Base64 content encding format.

@@ -1,0 +1,6 @@
+= Graphical user interface support =
+
+Provides fundamental classes, components and interfaces for the construction of applications
+that provide a graphical user interface (GUI), including window management, rendering, text
+drawing, image reading / drawing, etc. All graphical applications developed using the standard
+frameworks use libgui for low level access to the GUI system.

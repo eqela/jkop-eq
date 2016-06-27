@@ -1,0 +1,5 @@
+= The operating system support library =
+
+Provides the necessary components for fundamental operating system
+integration, such as filesystem access, threading, current date /
+time handling and process management.

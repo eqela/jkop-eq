@@ -1,0 +1,29 @@
+= A logger that discards all messages =
+
+The NullLogger can be used as the logger for an application or an object
+in order to discard / hide all log messages. The null logger simply does
+not do anything with the log messages that are passed to it.
+
+== Sample: Using the NullLogger ==
+
+Discard all log messages from the entire application:
+
+--- code ---
+class SampleClass
+{
+	public SampleClass() {
+		Log.set_logger(new NullLogger());
+	}
+}
+--- code ---
+
+Discard all log messages for this LoggerObject:
+
+--- code ---
+class SampleClass : LoggerObject
+{
+	public SampleClass() {
+		set_logger(new NullLogger());
+	}
+}
+--- code ---

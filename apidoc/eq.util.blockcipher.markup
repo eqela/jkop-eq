@@ -1,0 +1,4 @@
+= Block based encryption support =
+
+The block cipher library implements generic functionality and base classes
+for the implementation of encryption algorithms that encrypt data block by block.

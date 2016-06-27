@@ -1,0 +1,38 @@
+= An object that can receive an event / object =
+
+Classes that implement the EventReceiver interface can be used as generic
+event handlers that can receive "events", which are effectively classes
+that subclass the Object type. EventReceiver objects are heavily used in
+various Eqela APIs to provide event handling / receiving functionality.
+
+== Sample: Using EventReceiver to communicate ==
+
+--- code ---
+class ReceiverClass : EventReceiver
+{
+	public void on_event(Object o) {
+		Log.message("RECEIVED EVENT: `%s'".printf().add(o));
+	}
+}
+
+class SenderClass
+{
+	public void do_something(EventReceiver e) {
+		EventReceiver.event(e, "This is my message");
+	}
+}
+--- code ---
+
+= event =
+
+The method takes two parameters: First, the object that is to receive the
+message, and secondly, the object that is to be sent as the message. If the
+first parameter (the receiver) is null or is not an instance of EventReceiver,
+then the method does nothing. If the object is a valid instance of EventReceiver,
+however, then the on_event() method of that object will be called with the
+Object submitted in the second parameter as the argument.
+
+= on_event =
+
+The method that will be called in order to submit the message: Implement this
+in the class that implements EventReceiver.

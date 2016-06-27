@@ -1,0 +1,25 @@
+<div class="menubar">
+	<a href="/"><img src="/public/mklogowhite.png" /></a>
+	<div id="links">
+		<% if ${site.twitter_id} != "" %>
+			<a href="https://twitter.com/<%= site.twitter_id %>" target="_blank">&#xf099;</a>
+		<% end %>
+		<% if ${site.facebook_id} != "" %>
+			<a href="http://www.facebook.com/<%= site.facebook_id %>" target="_blank">&#xf09a;</a>
+		<% end %>
+		<% if ${site.linkedin_id} != "" %>
+			<a href="https://www.linkedin.com/in/<%= site.linkedin_id %>" target="_blank">&#xf0e1;</a>
+		<% end %>
+		<% if ${site.slideshare_id} != "" %>
+			<a href="http://www.slideshare.net/<%= site.slideshare_id %>" target="_blank">&#xf1e7;</a>
+		<% end %>
+	</div>
+</div>
+<div class="banner">
+<img src="/public/cover.jpg" />
+</div>
+<% if ${page_tagline} != "" %>
+	<div class="tagline"><%= page_tagline %></div>
+<% end %>
+<div class="maincontainer">
+<div id="articles">

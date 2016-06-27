@@ -1,0 +1,36 @@
+= Common mathematical constants =
+
+The MathConstant class provides a number of static integer values that represent
+commonly used constants needed in many mathematical computations.
+
+= M_PI =
+
+Value of PI (~ 3.14159265358979323846...).
+
+= M_PI_2 =
+
+Value of PI / 2.
+
+= M_PI_4 =
+
+Value of PI / 4.
+
+= M_1_PI =
+
+Value of 1 / PI.
+
+= M_2_PI =
+
+Value of 2 / PI.
+
+= M_2_SQRTPI =
+
+Value of 2 / sqrt(PI).
+
+= M_SQRT2 =
+
+Value of sqrt(2).
+
+= M_SQRT1_2 =
+
+Value of 1 / sqrt(2).

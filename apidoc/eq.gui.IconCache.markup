@@ -1,0 +1,63 @@
+= A caching mechanism for loading small images =
+
+Often in a GUI application, many user interface elements will contain icons, and often
+those icons are repeatedly reused (the same icon image would be used several times in
+different user interface elements). It would be wasteful to read and decode the same image
+every time it is used in the user interface. The IconCache class facilitates this, and
+provides a mechanism to read images only ones, and then retain copies of them in memory
+for subsequent access.
+
+Generally, all access to small images or icons in an Eqela GUI application should be done
+through this class.
+
+On platforms where images are always loaded asynchronously (eg. HTML5), the use of this
+class for image access is practically mandatory, since the semantics of loading images
+directly are very different from other platforms (ie. the image reading methods will
+return with an Image object, but it can only be rendered sometime later when it is
+loaded). Using IconCache guarantess consistent behavior.
+
+Example:
+
+--- code ---
+// Read an image named either "myimage", which could usually be either "myimage.png" or "myimage.jpg"
+var img1 = IconCache.get("myimage");
+
+// Read an image named "otherimage", resizing it to 200 pixels wide. The height is resized
+// in proportion (preserving the aspect ratio)
+var img2 = IconCache.get("otherimage", 200);
+
+// Read an image named "thirdimage" and make it 64x64 pixels in size
+var img3 = IconCache.get("thirdimage", 64x64);
+--- code ---
+
+NOTE: When getting the images in custom sizes, the image is resized upon every call to the
+get() method. In other words, the resizing is not cached. The image is always cached in its
+original size, as the image file is saved. Therefore, if you frequently find yourself resizing
+the image, you may wish to cache the result yourself to increase performance.
+
+= get =
+
+Get an image from the cache, loading it if necessary (if the image is being accessed from the
+first time). When loading the image, IconCache attempts to load the image as a resource,
+using the for_resource() method of eq.gui.Image. Once loaded, the image is then returned
+successfully. All access to the same image anywhere within the process will share the same
+image and same memory.
+
+If the size parameters for this method are given (sizewa > 0 || sizeha > 0), then the resulting
+image will be scaled to the desired size, and a new image is returned. Either one of the two
+parameters may be < 0 while the other one is > 0, in which case the image is scaled
+proportionally.
+
+If allow_null == false, then the class will attempt to return an instance of an image with
+id "_missing_image" if no image with the given ID was found.
+
+= load =
+
+Load the image to the cache if it has not yet been loaded. You can use this to force-load
+or preload images that you know will need to be accessed later.
+
+= is_loaded =
+
+Check if all the images in the cache have finished loading. On some platforms (notably
+HTML), image loading is done asynchronously: Using the is_loaded method, the caller can find out
+if the asynchronous loading of all the currently cached images has been completed.

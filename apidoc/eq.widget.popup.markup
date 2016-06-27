@@ -1,0 +1,3 @@
+= Popup widget support =
+
+Provides an implementation of popup widgets that can be shown on top of other widgets, capturing user attention.

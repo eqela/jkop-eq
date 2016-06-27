@@ -1,0 +1,79 @@
+= A string that can be modified =
+
+By default, all strings (= String objects) are immutable: The contents of a
+string cannot be changed after the string has been allocated. An EditableString, in
+contrast, allows itself to be modified, and can be converted to a String object upon
+request.
+
+== Sample: Editing a string ==
+
+--- code ---
+var es = EditableString.for_string("Hello"); // Hello
+es.append_char('!');                         // Hello!
+es.prepend_char('$');                        // $Hello!
+es.insert_char('X', 2);                      // $HXello!
+es.remove_char(0);                           // HXello!
+var str1 = es.to_string();                   // HXello!
+var str2 = es.to_string_range(1,2);          // Xe
+--- code ---
+
+= for_string =
+
+Create a new EditableString object, and initialize it with the given String
+instance as its initial contents. The original String is ''copied'', so any
+changes made will NOT have any effect on the original String object.
+
+= get_length =
+
+Returns the current length of the string.
+
+= get_char =
+
+Returns the character in the given index position within the string.
+
+= append_char =
+
+Adds a single character to the end of this string.
+
+= append =
+
+Adds an entire string to the end of this string.
+
+= prepend_char =
+
+Adds a single character to the beginning of this string.
+
+= prepend =
+
+Adds an entire string to the beginning of this string.
+
+= insert_char =
+
+Inserts a character (c) into the specified position (pos) in the middle
+of this string.
+
+= insert =
+
+Inserts a String (s) into the specified position (pos) in the middle of
+this string.
+
+= remove_char =
+
+Remove a single character from this string. The parameter specifies the index
+of the character to remove (see above for the example).
+
+= remove =
+
+Removes a range of characters, starting from ''pos'', removing a total of ''len''
+characters.
+
+= to_string_range =
+
+Constructs a copy of a substring of this string as a String object. The contents
+are defined by the ''start'' parameter (indicating the beginning index to start
+from), and ''len'' (indicating how many characters to include).
+
+= iterate =
+
+Returns an iterator that can be used to iterate through this string, one character
+at a time.

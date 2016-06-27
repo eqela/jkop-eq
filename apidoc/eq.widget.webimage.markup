@@ -1,0 +1,4 @@
+= User interface elements for images loaded over the internet =
+
+The web image widget module enables widgets that can be added to a user interface,
+but that will retrieve their contents dynamically from the Internet.

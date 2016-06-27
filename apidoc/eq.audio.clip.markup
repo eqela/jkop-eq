@@ -1,0 +1,7 @@
+= Support for short audio clips =
+
+The audio clip library provides support for the playback of short audio clips,
+commonly used for sound effects. The audio clips used here should be short and
+small enough that they can be loaded and maintained in memory. For longer audio
+clips (such as music playback), please look at com.eqela.libaudioplayer, which
+can be used together with this module.

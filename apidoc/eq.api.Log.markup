@@ -1,0 +1,100 @@
+= A facility for logging / console text output =
+
+An application can use the Log facility to print messages, errors, warnings and debug
+statements to the "application log". The logged messages will be printed in a system
+dependent manner, which can be the text console where such is available, or a system
+logging facility where available, or a text file, where requested. The user can also
+specify custom logger implementations by implementing new classes that derive from
+Logger.
+
+For convenience, all methods in the Log class are static, and can readily be called
+from anywhere:
+
+== Sample: Logging messages ==
+
+--- code ---
+// A regular message
+Log.message("This is a message");
+
+// A warning message
+Log.message("This is a warning");
+
+// An error message
+Log.message("This is an error message");
+
+// A debug message
+Log.message("This is a debug message");
+--- code ---
+
+== Sample: Specify a custom logger ==
+
+Using this kind of code, one can route all the logging messages from the application
+to a specific logger object:
+
+--- code ---
+// Causes all log output to be redirected to files under the user's home
+// directory (subdirectory "logs")
+Log.set_logger(DirectoryLogger.for_directory(File.for_home_directory("logs")));
+--- code ---
+
+== Logging levels ==
+
+The Log class defines several constant variables named LOG_LEVEL_*. These can be
+used to specify the "logging level", that logging implementations can use to route
+different kinds of messages appropriately. (see the descriptions of the logging level
+constants below)
+
+= LOG_LEVEL_QUIET =
+
+Set the logging level to QUIET to suppress and ignore all logging output.
+
+= LOG_LEVEL_ERROR =
+
+Set the logging level to ERROR to show only error messages.
+
+= LOG_LEVEL_WARNING =
+
+Set the logging level to WARNING in order to show both errors and warning messages.
+
+= LOG_LEVEL_MESSAGE =
+
+This is the default logging level: Normal MESSAGEs, ERRORs and WARNINGs will be
+displayed.
+
+= LOG_LEVEL_DEBUG =
+
+All messages, including debug information, will be displayed.
+
+= set_logger =
+
+Set the current default Logger object instance being used within this application.
+
+= get_logger =
+
+Get the current default Logger object instance being used within this application.
+
+= set_log_level =
+
+Call to set the current logging level. See above for the description of the
+possible levels.
+
+= get_log_level =
+
+Call to get the current logging level. See above for the description of the
+possible levels.
+
+= message =
+
+Log a message using the currently active logger, using the "message" logging level.
+
+= error =
+
+Log a message using the currently active logger, using the "error" logging level.
+
+= warning =
+
+Log a message using the currently active logger, using the "warning" logging level.
+
+= debug =
+
+Log a message using the currently active logger, using the "debug" logging level.

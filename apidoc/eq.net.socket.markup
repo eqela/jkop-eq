@@ -1,0 +1,5 @@
+= TCP/IP networking support =
+
+Provides the necessary functionality for network socket programming using
+the TCP/IP family of network protocols. Essentially enables applications
+to connect to other hosts on the Internet.
