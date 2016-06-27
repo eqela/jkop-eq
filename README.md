@@ -2,7 +2,7 @@ Jkop EQ - A multi-platform, multi-language software application framework
 =========================================================================
 
 Copyright (c) 2016 Job and Esther Technologies, Inc.
-Licensed under the MIT license (see LICENSE.txt for complete information).
+Licensed under the MIT license (see LICENSE for complete information).
 
 Jkop EQ is an open source software development framework and class library
 that targets multiple platforms, operating systems and programming languages,
