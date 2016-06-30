@@ -71,7 +71,7 @@ public class HTTPRequestParser
 			return;
 		}
 		hdr_req = HTTPRequest.for_details(method, uri, version, headers);
-		if("POST".equals(method) || "PUT".equals(method) || "PATCH".equals(method)) {
+		if("POST".equals(method) || "PUT".equals(method) || "PATCH".equals(method) || content_length > 0 || body_is_chunked) {
 			HTTPResponse error;
 			body = get_request_body_handler(hdr_req);
 			if(body != null) {
