@@ -24,18 +24,18 @@
 
 public class NullLogger : Logger
 {
-	public void log(String prefix, String msg, String ident) {
+	public override void log(String prefix, String msg, String ident) {
 	}
 
-	public void log_message(Object o, String ident) {
+	public override void log_message(Object o, String ident) {
 	}
 
-	public void log_error(Object o, String ident) {
+	public override void log_error(Object o, String ident) {
 	}
 
-	public void log_warning(Object o, String ident) {
+	public override void log_warning(Object o, String ident) {
 	}
 
-	public void log_debug(Object o, String ident) {
+	public override void log_debug(Object o, String ident) {
 	}
 }

@@ -34,13 +34,13 @@ class ArrayImpl : ArrayBase
 		}}}
 	}
 
-	public void clear() {
+	public override void clear() {
 		embed "cs" {{{
 			list.Clear();
 		}}}
 	}
 
-	public bool allocate(int size) {
+	public override bool allocate(int size) {
 		embed "cs" {{{
 			if(list.Count < size) {
 				while(list.Count < size) {
@@ -54,13 +54,13 @@ class ArrayImpl : ArrayBase
 		return(true);
 	}
 
-	public int count() {
+	public override int count() {
 		int v = 0;
 		embed "cs" {{{ v = list.Count; }}}
 		return(v);
 	}
 
-	public Object get_index(int n) {
+	public override Object get_index(int n) {
 		if(n >= 0 && n < count()) {
 			embed "cs" {{{
 				return(list[n] as eq.api.Object);
@@ -69,7 +69,7 @@ class ArrayImpl : ArrayBase
 		return(null);
 	}
 
-	public bool set_index(int n, Object o) {
+	public override bool set_index(int n, Object o) {
 		if(n >= 0 && n < count()) {
 			embed "cs" {{{ list[n] = o; }}}
 			return(true);
@@ -77,26 +77,26 @@ class ArrayImpl : ArrayBase
 		return(false);
 	}
 
-	public Collection add(Object o) {
+	public override Collection add(Object o) {
 		embed "cs" {{{ list.Add(o); }}}
 		return(this);
 	}
 
-	public Collection insert(Object o, int i) {
+	public override Collection insert(Object o, int i) {
 		if(i >= 0 && i <= count()) {
 			embed "cs" {{{ list.Insert(i, o); }}}
 		}
 		return(this);
 	}
 
-	public void remove_index(int n) {
+	public override void remove_index(int n) {
 		if(n < 0 || n >= count()) {
 			return;
 		}
 		embed "cs" {{{ list.RemoveAt(n); }}}
 	}
 
-	public void remove_range(int first, int last) {
+	public override void remove_range(int first, int last) {
 		if(last < first || last < 0 || first >= count()) {
 			return;
 		}
@@ -104,7 +104,7 @@ class ArrayImpl : ArrayBase
 		embed "cs" {{{ list.RemoveRange(first, c); }}}
 	}
 
-	public bool remove(Object o) {
+	public override bool remove(Object o) {
 		bool v = false;
 		embed "cs" {{{ v = list.Remove(o); }}}
 		return(v);

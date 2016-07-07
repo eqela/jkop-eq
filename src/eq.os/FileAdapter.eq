@@ -24,85 +24,85 @@
 
 public class FileAdapter : File, Stringable
 {
-	public File entry(String name) {
+	public virtual File entry(String name) {
 		return(null); // TBI
 	}
 
-	public File get_parent() {
+	public virtual File get_parent() {
 		return(null); // TBI
 	}
 
-	public Iterator entries() {
+	public virtual Iterator entries() {
 		return(null); // TBI
 	}
 
-	public bool remove() {
+	public virtual bool remove() {
 		return(false); // TBI
 	}
 
-	public bool move(File dest, bool replace = true) {
+	public virtual bool move(File dest, bool replace = true) {
 		return(false); // TBI
 	}
 
-	public SizedReader read() {
+	public virtual SizedReader read() {
 		return(null); // TBI
 	}
 
-	public Writer write() {
+	public virtual Writer write() {
 		return(null); // TBI
 	}
 
-	public Writer append() {
+	public virtual Writer append() {
 		return(null); // TBI
 	}
 
-	public bool set_mode(int mode) {
+	public virtual bool set_mode(int mode) {
 		return(false); // TBI
 	}
 
-	public bool set_owner_user(int uid) {
+	public virtual bool set_owner_user(int uid) {
 		return(false); // TBI
 	}
 
-	public bool set_owner_group(int gid) {
+	public virtual bool set_owner_group(int gid) {
 		return(false); // TBI
 	}
 
-	public FileInfo stat() {
+	public virtual FileInfo stat() {
 		return(FileInfo.for_file(this)); // TBI
 	}
 
-	public bool create_fifo() {
+	public virtual bool create_fifo() {
 		return(false); // TBI
 	}
 
-	public bool create_directory() {
+	public virtual bool create_directory() {
 		return(false); // TBI
 	}
 
-	public bool remove_directory() {
+	public virtual bool remove_directory() {
 		return(false); // TBI
 	}
 
-	public bool touch() {
+	public virtual bool touch() {
 		return(false); // TBI // FIXME: There is probably a generic implementation using write()
 	}
 
-	public File as_executable() {
+	public virtual File as_executable() {
 		return(this); // TBI ?
 	}
 
-	public String get_native_path() {
+	public virtual String get_native_path() {
 		return(null); // TBI
 	}
 
 	///
 
-	public String get_eqela_path() {
+	public virtual String get_eqela_path() {
 		return("/native".append(get_native_path()));
 	}
 
-	public bool is_same(File f) {
+	public virtual bool is_same(File f) {
 		if(f == null) {
 			return(false);
 		}
@@ -113,15 +113,15 @@ public class FileAdapter : File, Stringable
 		return(false);
 	}
 
-	public String to_string() {
+	public virtual String to_string() {
 		return(get_native_path());
 	}
 
-	public File realpath() {
+	public virtual File realpath() {
 		return(this);
 	}
 
-	public File get_sibling(String name) {
+	public virtual File get_sibling(String name) {
 		var pp = get_parent();
 		if(pp == null) {
 			return(null);
@@ -129,22 +129,22 @@ public class FileAdapter : File, Stringable
 		return(pp.entry(name));
 	}
 
-	public bool has_extension(String ext) {
+	public virtual bool has_extension(String ext) {
 		if(String.is_empty(ext)) {
 			return(true);
 		}
 		return(ext.equals_ignore_case(extension()));
 	}
 
-	public String extension() {
+	public virtual String extension() {
 		return(Path.extension(basename()));
 	}
 
-	public String strip_extension() {
+	public virtual String strip_extension() {
 		return(Path.strip_extension(basename()));
 	}
 
-	public bool rename(String newname, bool replace = true) {
+	public virtual bool rename(String newname, bool replace = true) {
 		if(newname == null || newname.chr((int)'/') >= 0) {
 			return(false);
 		}
@@ -159,7 +159,7 @@ public class FileAdapter : File, Stringable
 		return(move(dp, replace));
 	}
 
-	public int get_size() {
+	public virtual int get_size() {
 		int v = 0;
 		var st = stat();
 		if(st != null) {
@@ -168,7 +168,7 @@ public class FileAdapter : File, Stringable
 		return(v);
 	}
 
-	public bool exists() {
+	public virtual bool exists() {
 		var s = stat();
 		if(s == null) {
 			return(false);
@@ -179,7 +179,7 @@ public class FileAdapter : File, Stringable
 		return(false);
 	}
 
-	public bool is_executable() {
+	public virtual bool is_executable() {
 		var st = stat();
 		if(st == null) {
 			return(false);
@@ -187,7 +187,7 @@ public class FileAdapter : File, Stringable
 		return(st.is_file() && st.get_executable());
 	}
 
-	public bool is_file() {
+	public virtual bool is_file() {
 		var st = stat();
 		if(st == null) {
 			return(false);
@@ -195,7 +195,7 @@ public class FileAdapter : File, Stringable
 		return(st.is_file());
 	}
 
-	public bool is_directory() {
+	public virtual bool is_directory() {
 		var st = stat();
 		if(st == null) {
 			return(false);
@@ -203,7 +203,7 @@ public class FileAdapter : File, Stringable
 		return(st.is_directory());
 	}
 
-	public bool is_link() {
+	public virtual bool is_link() {
 		var st = stat();
 		if(st == null) {
 			return(false);
@@ -211,7 +211,7 @@ public class FileAdapter : File, Stringable
 		return(st.is_link());
 	}
 
-	public bool delete_recursive() {
+	public virtual bool delete_recursive() {
 		var finfo = stat();
 		if(finfo == null) {
 			return(true);
@@ -227,7 +227,7 @@ public class FileAdapter : File, Stringable
 		return(remove_directory());
 	}
 
-	public bool mkdir_recursive() {
+	public virtual bool mkdir_recursive() {
 		if(is_directory() == false) {
 			var pp = get_parent();
 			if(pp != null && pp != this) {
@@ -242,7 +242,7 @@ public class FileAdapter : File, Stringable
 		return(true);
 	}
 
-	public bool write_from_reader(Reader reader, bool append = false) {
+	public virtual bool write_from_reader(Reader reader, bool append = false) {
 		if(reader == null) {
 			return(false);
 		}
@@ -276,7 +276,7 @@ public class FileAdapter : File, Stringable
 		return(v);
 	}
 
-	public bool match_pattern(Collection patterns) {
+	public virtual bool match_pattern(Collection patterns) {
 		if(patterns == null) {
 			return(false);
 		}
@@ -295,7 +295,7 @@ public class FileAdapter : File, Stringable
 		return(false);
 	}
 
-	public bool copy_to(File dest, Collection excludes = null) {
+	public virtual bool copy_to(File dest, Collection excludes = null) {
 		if(this.is_file()) {
 			return(copy_file_to(dest, excludes));
 		}
@@ -378,7 +378,7 @@ public class FileAdapter : File, Stringable
 		return(v);
 	}
 
-	public int compare_modification_time(File bf) {
+	public virtual int compare_modification_time(File bf) {
 		if(bf == null) {
 			return(1);
 		}
@@ -405,21 +405,21 @@ public class FileAdapter : File, Stringable
 		return(v);
 	}
 
-	public bool is_newer_than(File bf) {
+	public virtual bool is_newer_than(File bf) {
 		if(compare_modification_time(bf) > 0) {
 			return(true);
 		}
 		return(false);
 	}
 
-	public bool is_older_than(File bf) {
+	public virtual bool is_older_than(File bf) {
 		if(compare_modification_time(bf) < 0) {
 			return(true);
 		}
 		return(false);
 	}
 
-	public String dirname() {
+	public virtual String dirname() {
 		var pp = get_parent();
 		if(pp != null) {
 			return(pp.to_string());
@@ -439,11 +439,11 @@ public class FileAdapter : File, Stringable
 		return(_basename);
 	}
 
-	public String idname() {
+	public virtual String idname() {
 		return(Path.strip_extension(basename()));
 	}
 
-	public bool is_identical(File file) {
+	public virtual bool is_identical(File file) {
 		if(is_file() == false || file == null || file.is_file() == false) {
 			return(false);
 		}
@@ -482,7 +482,7 @@ public class FileAdapter : File, Stringable
 		return(true);
 	}
 
-	public Buffer get_contents_buffer() {
+	public virtual Buffer get_contents_buffer() {
 		var st = stat();
 		if(st == null || st.is_file() == false) {
 			return(null);
@@ -505,7 +505,7 @@ public class FileAdapter : File, Stringable
 		return(v);
 	}
 
-	public String get_contents_string() {
+	public virtual String get_contents_string() {
 		var st = stat();
 		if(st == null || st.is_file() == false) {
 			return(null);
@@ -533,7 +533,7 @@ public class FileAdapter : File, Stringable
 		return(String.for_utf8_buffer(v));
 	}
 
-	public bool set_contents_buffer(Buffer buf) {
+	public virtual bool set_contents_buffer(Buffer buf) {
 		var w = write();
 		if(w == null) {
 			return(false);
@@ -552,7 +552,7 @@ public class FileAdapter : File, Stringable
 		return(true);
 	}
 
-	public bool set_contents_string(String str) {
+	public virtual bool set_contents_string(String str) {
 		if(str == null) {
 			return(set_contents_buffer(null));
 		}
@@ -574,7 +574,7 @@ public class FileAdapter : File, Stringable
 		}
 	}
 
-	public Iterator lines() {
+	public virtual Iterator lines() {
 		var ins = InputStream.create(read());
 		if(ins == null) {
 			return(null);

@@ -96,7 +96,7 @@ class FileImpl : FileAdapter
 		return(complete_path);
 	}
 
-	public File as_executable() {
+	public override File as_executable() {
 		if(SystemEnvironment.is_os("windows")) {
 			var fpath = get_native_path();
 			if(String.is_empty(fpath)) {
@@ -135,14 +135,14 @@ class FileImpl : FileAdapter
 		return(this);
 	}
 
-	public String get_native_path() {
+	public override String get_native_path() {
 		if(complete_path == null) {
 			return(null);
 		}
 		return(String.for_strptr(complete_path));
 	}
 
-	public bool set_mode(int mode) {
+	public override bool set_mode(int mode) {
 		bool v = false;
 		embed {{{
 			if(complete_path != null && System.Type.GetType("Mono.Runtime") != null) {
@@ -217,7 +217,7 @@ class FileImpl : FileAdapter
 		}
 	}
 
-	public FileInfo stat() {
+	public override FileInfo stat() {
 		var v = new MyFileInfo();
 		v.set_file(this);
 		v.set_owner_user(0);
@@ -255,7 +255,7 @@ class FileImpl : FileAdapter
 		return(v);
 	}
 
-	public File entry(String path) {
+	public override File entry(String path) {
 		if(path == null) {
 			return(this);
 		}
@@ -266,7 +266,7 @@ class FileImpl : FileAdapter
 		return(FileImpl.for_path(v.to_string()));
 	}
 
-	public String determine_basename() {
+	public override String determine_basename() {
 		var path = get_native_path();
 		if(path == null) {
 			return(null);
@@ -310,7 +310,7 @@ class FileImpl : FileAdapter
 		}
 	}
 
-	public Iterator entries() {
+	public override Iterator entries() {
 		if(complete_path == null) {
 			return(null);
 		}
@@ -328,7 +328,7 @@ class FileImpl : FileAdapter
 		return(v);
 	}
 
-	public bool touch() {
+	public override bool touch() {
 		if(complete_path == null) {
 			return(false);
 		}
@@ -351,7 +351,7 @@ class FileImpl : FileAdapter
 		return(v);
 	}
 
-	public File get_parent() {
+	public override File get_parent() {
 		strptr v;
 		embed {{{
 			if(complete_path != null) {
@@ -367,7 +367,7 @@ class FileImpl : FileAdapter
 		return(new FileImpl().set_complete_path(v));
 	}
 
-	public bool create_directory() {
+	public override bool create_directory() {
 		bool v = false;
 		embed {{{
 			try {
@@ -382,7 +382,7 @@ class FileImpl : FileAdapter
 		return(v);
 	}
 
-	public bool mkdir_recursive() {
+	public override bool mkdir_recursive() {
 		return(create_directory());
 	}
 
@@ -446,7 +446,7 @@ class FileImpl : FileAdapter
 		}
 	}
 
-	public SizedReader read() {
+	public override SizedReader read() {
 		MyFileReader v = new MyFileReader();
 		embed {{{
 			if(v.initialize(complete_path) == false) {
@@ -519,7 +519,7 @@ class FileImpl : FileAdapter
 		}
 	}
 
-	public Writer write() {
+	public override Writer write() {
 		var v = new MyFileWriter();
 		embed {{{
 			if(v.initialize(complete_path) == false) {
@@ -529,7 +529,7 @@ class FileImpl : FileAdapter
 		return(v);
 	}
 
-	public Writer append() {
+	public override Writer append() {
 		var v = new MyFileWriter().set_append(true);
 		embed {{{
 			if(v.initialize(complete_path) == false) {
@@ -539,7 +539,7 @@ class FileImpl : FileAdapter
 		return(v);
 	}
 
-	public bool remove() {
+	public override bool remove() {
 		bool v = true;
 		embed {{{
 			try {
@@ -559,7 +559,7 @@ class FileImpl : FileAdapter
 		return(v);
 	}
 
-	public bool remove_directory() {
+	public override bool remove_directory() {
 		bool v = true;
 		embed {{{
 			try {
@@ -579,7 +579,7 @@ class FileImpl : FileAdapter
 		return(v);
 	}
 
-	public bool move(File dest, bool replace) {
+	public override bool move(File dest, bool replace) {
 		if(dest == null) {
 			return(false);
 		}

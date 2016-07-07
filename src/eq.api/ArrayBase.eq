@@ -24,22 +24,22 @@
 
 public class ArrayBase : Collection, Array, Iterateable
 {
-	public void clear() {
+	public virtual void clear() {
 	}
 
-	public bool allocate(int size) {
+	public virtual bool allocate(int size) {
 		return(false);
 	}
 
-	public int count() {
+	public virtual int count() {
 		return(0);
 	}
 
-	public Object get_index(int n) {
+	public virtual Object get_index(int n) {
 		return(null);
 	}
 
-	public Object get_first() {
+	public virtual Object get_first() {
 		return(get_index(0));
 	}
 
@@ -55,11 +55,11 @@ public class ArrayBase : Collection, Array, Iterateable
 		return(get_index(n));
 	}
 
-	public bool set_index(int n, Object o) {
+	public virtual bool set_index(int n, Object o) {
 		return(false);
 	}
 
-	public bool set(int n, Object o) {
+	public virtual bool set(int n, Object o) {
 		return(set_index(n, o));
 	}
 
@@ -69,50 +69,50 @@ public class ArrayBase : Collection, Array, Iterateable
 	}
 	*/
 
-	public Collection add(Object o) {
+	public virtual Collection add(Object o) {
 		return(this);
 	}
 
-	public Collection insert(Object o, int i) {
+	public virtual Collection insert(Object o, int i) {
 		return(this);
 	}
 
-	public Collection append(Object o) {
+	public virtual Collection append(Object o) {
 		return(add(o));
 	}
 
-	public Collection prepend(Object o) {
+	public virtual Collection prepend(Object o) {
 		insert(o, 0);
 		return(this);
 	}
 
-	public bool remove(Object o) {
+	public virtual bool remove(Object o) {
 		return(false);
 	}
 
-	public void remove_index(int index) {
+	public virtual void remove_index(int index) {
 	}
 
-	public void remove_first() {
+	public virtual void remove_first() {
 		remove_index(0);
 	}
 
-	public void remove_last() {
+	public virtual void remove_last() {
 		remove_index(count()-1);
 	}
 
-	public void remove_range(int first, int last) {
+	public virtual void remove_range(int first, int last) {
 	}
 
-	public Iterator iterate_from_index(int n) {
+	public virtual Iterator iterate_from_index(int n) {
 		return(ArrayIterator.create(this, n));
 	}
 
-	public Iterator iterate() {
+	public virtual Iterator iterate() {
 		return(iterate_from_index(0));
 	}
 
-	public Iterator iterate_reverse(int n) {
+	public virtual Iterator iterate_reverse(int n) {
 		return(ReverseArrayIterator.create(this, n));
 	}
 }

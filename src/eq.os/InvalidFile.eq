@@ -24,15 +24,15 @@
 
 public class InvalidFile : FileAdapter
 {
-	public File entry(String name) {
+	public override File entry(String name) {
 		return(this);
 	}
 
-	public File get_parent() {
+	public override File get_parent() {
 		return(this);
 	}
 
-	public FileInfo stat() {
+	public override FileInfo stat() {
 		return(new FileInfo());
 	}
 }

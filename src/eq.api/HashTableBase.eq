@@ -24,7 +24,7 @@
 
 class HashTableBase : HashTable, Iterateable
 {
-	public HashTable dup() {
+	public virtual HashTable dup() {
 		var v = new HashTableBackend();
 		foreach(String key in this) {
 			v.set(key, get(key));
@@ -32,35 +32,35 @@ class HashTableBase : HashTable, Iterateable
 		return(v);
 	}
 
-	public bool allocate(int size) {
+	public virtual bool allocate(int size) {
 		return(false);
 	}
 
-	public HashTable set(String k, Object v) {
+	public virtual HashTable set(String k, Object v) {
 		return(null);
 	}
 
-	public HashTable set_strptr(strptr k, strptr v) {
+	public virtual HashTable set_strptr(strptr k, strptr v) {
 		return(set(String.for_strptr(k), String.for_strptr(v)));
 	}
 
-	public HashTable set_int(String k, int v) {
+	public virtual HashTable set_int(String k, int v) {
 		return(set(k, Primitive.for_integer(v)));
 	}
 
-	public HashTable set_bool(String k, bool v) {
+	public virtual HashTable set_bool(String k, bool v) {
 		return(set(k, Primitive.for_boolean(v)));
 	}
 
-	public HashTable set_double(String k, double v) {
+	public virtual HashTable set_double(String k, double v) {
 		return(set(k, Primitive.for_double(v)));
 	}
 
-	public Object get(String k) {
+	public virtual Object get(String k) {
 		return(null);
 	}
 
-	public String get_string(String k, String def = null) {
+	public virtual String get_string(String k, String def = null) {
 		String v = null;
 		var vo = get(k);
 		if(vo != null) {
@@ -81,7 +81,7 @@ class HashTableBase : HashTable, Iterateable
 		return(v);
 	}
 
-	public int get_int(String k, int def = 0) {
+	public virtual int get_int(String k, int def = 0) {
 		int v = def;
 		var vo = get(k) as Integer;
 		if(vo != null && vo is String) {
@@ -95,7 +95,7 @@ class HashTableBase : HashTable, Iterateable
 		return(v);
 	}
 
-	public bool get_bool(String k, bool def = false) {
+	public virtual bool get_bool(String k, bool def = false) {
 		bool v = def;
 		var vo = get(k) as Boolean;
 		if(vo != null && vo is String) {
@@ -109,7 +109,7 @@ class HashTableBase : HashTable, Iterateable
 		return(v);
 	}
 
-	public double get_double(String k, double def = 0.0) {
+	public virtual double get_double(String k, double def = 0.0) {
 		double v = def;
 		var vo = get(k) as Double;
 		if(vo != null && vo is String) {
@@ -123,25 +123,25 @@ class HashTableBase : HashTable, Iterateable
 		return(v);
 	}
 
-	public Iterator iterate_values() {
+	public virtual Iterator iterate_values() {
 		return(null);
 	}
 
-	public Iterator iterate_keys() {
+	public virtual Iterator iterate_keys() {
 		return(null);
 	}
 
-	public Iterator iterate() {
+	public virtual Iterator iterate() {
 		return(iterate_keys());
 	}
 
-	public void remove(String k) {
+	public virtual void remove(String k) {
 	}
 
-	public void clear() {
+	public virtual void clear() {
 	}
 
-	public int count() {
+	public virtual int count() {
 		return(0);
 	}
 }

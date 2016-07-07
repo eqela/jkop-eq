@@ -38,21 +38,21 @@ public class XMLKeyValueParser
 			return(result);
 		}
 
-		public void on_cdata(String cdata) {
+		public override void on_cdata(String cdata) {
 			var sb = elements.peek() as StringBuffer;
 			if(sb != null) {
 				sb.append(cdata);
 			}
 		}
 
-		public void on_comment(String comment) {
+		public override void on_comment(String comment) {
 		}
 
-		public void on_start_element(String element, HashTable params) {
+		public override void on_start_element(String element, HashTable params) {
 			elements.push(StringBuffer.create());
 		}
 
-		public void on_end_element(String element) {
+		public override void on_end_element(String element) {
 			var sb = elements.pop() as StringBuffer;
 			if(sb != null && element != null) {
 				var e = result.get(element);

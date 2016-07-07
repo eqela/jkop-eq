@@ -34,13 +34,13 @@ class HashTableBackend : HashTableBase
 		}}}
 	}
 
-	public bool allocate(int size) {
+	public override bool allocate(int size) {
 		// not supported
 		clear();
 		return(true);
 	}
 
-	public HashTable set(String k, Object v) {
+	public override HashTable set(String k, Object v) {
 		if(k == null) {
 			return(null);
 		}
@@ -52,7 +52,7 @@ class HashTableBackend : HashTableBase
 		return(this);
 	}
 
-	public Object get(String k) {
+	public override Object get(String k) {
 		if(k == null) {
 			return(null);
 		}
@@ -64,7 +64,7 @@ class HashTableBackend : HashTableBase
 		return(null);
 	}
 
-	public void clear() {
+	public override void clear() {
 		embed "cs" {{{	
 			if(hashtable!=null) {
 				hashtable.Clear();
@@ -72,7 +72,7 @@ class HashTableBackend : HashTableBase
 		}}}
 	}
 
-	public void remove(String k) {
+	public override void remove(String k) {
 		if(k == null) {
 			return;
 		}
@@ -83,7 +83,7 @@ class HashTableBackend : HashTableBase
 		}}}
 	}
 
-	public Iterator iterate_keys() {
+	public override Iterator iterate_keys() {
 		var keyarr = Array.create();
 		if(keyarr == null) {
 			return(null);
@@ -106,7 +106,7 @@ class HashTableBackend : HashTableBase
 		return(keyarr.iterate());
 	}
 
-	public Iterator iterate_values() {
+	public override Iterator iterate_values() {
 		var valarr = Array.create();
 		if(valarr == null) {
 			return(null);
@@ -123,7 +123,7 @@ class HashTableBackend : HashTableBase
 		return(valarr.iterate());
 	}
 
-	public int count() {
+	public override int count() {
 		embed "cs" {{{
 			if(hashtable!=null) {
 				return(hashtable.Count);
