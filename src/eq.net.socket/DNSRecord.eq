@@ -31,7 +31,7 @@ public class DNSRecord : Stringable
 		return("UNKNOWN");
 	}
 
-	public virtual String to_string() {
+	public String to_string() {
 		return("type=%s ttl=%d address=`%s'".printf().add(get_type()).add(ttl).add(address).to_string());
 	}
 }
