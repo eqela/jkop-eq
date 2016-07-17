@@ -82,8 +82,8 @@ public class RichTextReferenceParagraph : RichTextParagraph
 		}
 		var xclassh = "";
 		if(String.is_empty(xclass) == false) {
-			xclassh = " ".append(xclass);
+			xclassh = " ".append(HTMLString.sanitize(xclass));
 		}
-		return("<p class=\"_rtd_reference%s\"><a href=\"%s\">%s</a></p>\n".printf().add(xclassh).add(href).add(reftitle).to_string());
+		return("<p class=\"_rtd_reference%s\"><a href=\"%s\">%s</a></p>\n".printf().add(xclassh).add(HTMLString.sanitize(href)).add(HTMLString.sanitize(reftitle)).to_string());
 	}
 }

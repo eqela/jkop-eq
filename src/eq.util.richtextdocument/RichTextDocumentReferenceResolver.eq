@@ -26,4 +26,5 @@ public interface RichTextDocumentReferenceResolver
 {
 	public String get_reference_href(String refid);
 	public String get_reference_title(String refid);
+	public String get_content_string(String cid);
 }

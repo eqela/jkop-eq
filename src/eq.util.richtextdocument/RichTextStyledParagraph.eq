@@ -87,7 +87,7 @@ public class RichTextStyledParagraph : RichTextParagraph
 		}
 		var xclassh = "";
 		if(String.is_empty(xclass) == false) {
-			xclassh = " ".append(xclass);
+			xclassh = " ".append(HTMLString.sanitize(xclass));
 		}
 		sb.append("<%s class=\"_rtd_%s%s\">".printf().add(tag).add(style).add(xclassh).to_string());
 		foreach(RichTextSegment sg in segments) {
@@ -97,14 +97,14 @@ public class RichTextStyledParagraph : RichTextParagraph
 			if(String.is_empty(link) == false) {
 				if(sg.get_is_inline()) {
 					// FIXME: Should allow other content types as well, not just images
-					sb.append("<img src=\"%s\" />".printf().add(link).to_string());
+					sb.append("<img src=\"%s\" />".printf().add(HTMLString.sanitize(link)).to_string());
 				}
 				else {
 					var targetblank = "";
 					if(sg.get_link_popup()) {
 						targetblank = " target=\"_blank\"";
 					}
-					sb.append("<a%s href=\"%s\">".printf().add(targetblank).add(link).to_string());
+					sb.append("<a%s href=\"%s\">".printf().add(targetblank).add(HTMLString.sanitize(link)).to_string());
 					a_open = true;
 				}
 			}
@@ -121,7 +121,7 @@ public class RichTextStyledParagraph : RichTextParagraph
 					if(String.is_empty(text)) {
 						text = ref;
 					}
-					sb.append("<a href=\"%s\">".printf().add(href).to_string());
+					sb.append("<a href=\"%s\">".printf().add(HTMLString.sanitize(href)).to_string());
 					a_open = true;
 				}
 			}
@@ -139,12 +139,12 @@ public class RichTextStyledParagraph : RichTextParagraph
 					sb.append(" text-decoration: underline;");
 				}
 				if(String.is_empty(sg.get_color()) == false) {
-					sb.append(" color: %s".printf().add(sg.get_color()).to_string());
+					sb.append(" color: %s".printf().add(HTMLString.sanitize(sg.get_color())).to_string());
 				}
 				sb.append("\">");
 			}
 			if(sg.get_is_inline() == false) {
-				sb.append(text);
+				sb.append(HTMLString.sanitize(text));
 			}
 			if(span) {
 				sb.append("</span>");

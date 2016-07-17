@@ -62,7 +62,7 @@ public class RichTextImageParagraph : RichTextParagraph
 		else {
 			sb.append("<div class=\"_rtd_img25\">");
 		}
-		sb.append("<img src=\"%s\" />".printf().add(filename).to_string());
+		sb.append("<img src=\"%s\" />".printf().add(HTMLString.sanitize(filename)).to_string());
 		sb.append("</div>\n");
 		return(sb.to_string());
 	}

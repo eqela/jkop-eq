@@ -62,11 +62,11 @@ public class RichTextBlockParagraph : RichTextParagraph
 	public override String to_html(RichTextDocumentReferenceResolver refs, String xclass) {
 		var ids = "";
 		if(String.is_empty(id) == false) {
-			ids = " ".append(id);
+			ids = " ".append(HTMLString.sanitize(id));
 		}
 		var xclassh = "";
 		if(String.is_empty(xclass) == false) {
-			xclassh = " ".append(xclass);
+			xclassh = " ".append(HTMLString.sanitize(xclass));
 		}
 		var content = RichTextStyledParagraph.for_string(text);
 		return("<div class=\"_rtd_block%s%s\">%s</div>".printf().add(xclassh).add(ids).add(content.to_html(refs, "")).to_string());

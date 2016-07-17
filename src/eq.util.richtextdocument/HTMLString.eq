@@ -22,8 +22,35 @@
  * SOFTWARE.
  */
 
-public class WikiDocumentAttachmentHeader
+class HTMLString
 {
-	property String name;
-	property int size;
+	public static String sanitize(String str) {
+		if(str == null) {
+			return(null);
+		}
+		if(str.chr('<') < 0 && str.chr('>') < 0 && str.chr('&') < 0) {
+			return(str);
+		}
+		var it = str.iterate();
+		if(it == null) {
+			return(null);
+		}
+		var sb = StringBuffer.for_initial_size(str.get_length());
+		int c;
+		while((c = it.next_char()) > 0) {
+			if(c == '<') {
+				sb.append("&lt;");
+			}
+			else if(c == '>') {
+				sb.append("&gt;");
+			}
+			else if(c == '&') {
+				sb.append("&amp;");
+			}
+			else {
+				sb.append_c(c);
+			}
+		}
+		return(sb.to_string());
+	}
 }

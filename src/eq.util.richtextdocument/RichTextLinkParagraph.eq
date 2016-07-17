@@ -60,7 +60,7 @@ public class RichTextLinkParagraph : RichTextParagraph
 	}
 
 	public override String to_html(RichTextDocumentReferenceResolver refs, String xclass) {
-		var href = link;
+		var href = HTMLString.sanitize(link);
 		var tt = text;
 		if(String.is_empty(tt)) {
 			tt = href;
@@ -70,7 +70,7 @@ public class RichTextLinkParagraph : RichTextParagraph
 		}
 		var xclassh = "";
 		if(String.is_empty(xclass) == false) {
-			xclassh = " ".append(xclass);
+			xclassh = " ".append(HTMLString.sanitize(xclass));
 		}
 		var targetblank = "";
 		if(popup) {
