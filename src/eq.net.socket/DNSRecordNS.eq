@@ -24,7 +24,7 @@
 
 public class DNSRecordNS : DNSRecord
 {
-	public String get_type() {
+	public override String get_type() {
 		return("NS");
 	}
 }

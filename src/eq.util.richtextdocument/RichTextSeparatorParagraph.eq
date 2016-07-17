@@ -24,19 +24,19 @@
 
 public class RichTextSeparatorParagraph : RichTextParagraph
 {
-	public String to_markup() {
+	public override String to_markup() {
 		return("-");
 	}
 
-	public String to_text() {
+	public override String to_text() {
 		return("----------");
 	}
 
-	public HashTable to_json() {
+	public override HashTable to_json() {
 		return(HashTable.create().set("type", "separator"));
 	}
 
-	public String to_html(RichTextDocumentReferenceResolver refs, String xclass) {
+	public override String to_html(RichTextDocumentReferenceResolver refs, String xclass) {
 		return("<hr />\n");
 	}
 }

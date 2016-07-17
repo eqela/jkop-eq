@@ -26,11 +26,11 @@ public class DNSRecordMX : DNSRecord
 {
 	property int priority;
 
-	public String get_type() {
+	public override String get_type() {
 		return("MX");
 	}
 
-	public String to_string() {
+	public override String to_string() {
 		return("%s priority=%d ".printf().add(base.to_string()).add(priority).to_string());
 	}
 }

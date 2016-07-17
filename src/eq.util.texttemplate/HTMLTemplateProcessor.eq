@@ -32,7 +32,7 @@ public class HTMLTemplateProcessor : TemplateProcessor
 		cache = HashTable.create();
 	}
 
-	public void on_custom_tag(HashTable vars, StringBuffer result, Collection include_dirs, String tagname, Collection words) {
+	public override void on_custom_tag(HashTable vars, StringBuffer result, Collection include_dirs, String tagname, Collection words) {
 		if("link?".equals(tagname)) {
 			var path = substitute_variables(words.get(1) as String, vars);
 			var text = substitute_variables(words.get(2) as String, vars);

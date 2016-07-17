@@ -28,7 +28,7 @@ public class RichTextLinkParagraph : RichTextParagraph
 	property String text;
 	property bool popup = false;
 
-	public String to_markup() {
+	public override String to_markup() {
 		var sb = StringBuffer.create();
 		sb.append("@link ");
 		sb.append(link);
@@ -44,7 +44,7 @@ public class RichTextLinkParagraph : RichTextParagraph
 		return(sb.to_string());
 	}
 
-	public String to_text() {
+	public override String to_text() {
 		var v = text;
 		if(String.is_empty(v)) {
 			v = link;
@@ -52,14 +52,14 @@ public class RichTextLinkParagraph : RichTextParagraph
 		return(v);
 	}
 
-	public HashTable to_json() {
+	public override HashTable to_json() {
 		return(HashTable.create()
 			.set("type", "link")
 			.set("link", link)
 			.set("text", text));
 	}
 
-	public String to_html(RichTextDocumentReferenceResolver refs, String xclass) {
+	public override String to_html(RichTextDocumentReferenceResolver refs, String xclass) {
 		var href = link;
 		var tt = text;
 		if(String.is_empty(tt)) {

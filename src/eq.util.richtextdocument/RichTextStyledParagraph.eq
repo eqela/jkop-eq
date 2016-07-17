@@ -46,7 +46,7 @@ public class RichTextStyledParagraph : RichTextParagraph
 		return(sb.to_string());
 	}
 
-	public HashTable to_json() {
+	public override HashTable to_json() {
 		var segs = LinkedList.create();
 		foreach(RichTextSegment segment in segments) {
 			var segj = segment.to_json();
@@ -61,7 +61,7 @@ public class RichTextStyledParagraph : RichTextParagraph
 		);
 	}
 
-	public String to_text() {
+	public override String to_text() {
 		var sb = StringBuffer.create();
 		foreach(RichTextSegment sg in segments) {
 			sb.append(sg.get_text());
@@ -77,7 +77,7 @@ public class RichTextStyledParagraph : RichTextParagraph
 		return(sb.to_string());
 	}
 
-	public String to_html(RichTextDocumentReferenceResolver refs, String xclass) {
+	public override String to_html(RichTextDocumentReferenceResolver refs, String xclass) {
 		var sb = StringBuffer.create();
 		var tag = "p";
 		var style = "text";
@@ -379,7 +379,7 @@ public class RichTextStyledParagraph : RichTextParagraph
 		return(this);
 	}
 
-	public String to_markup() {
+	public override String to_markup() {
 		String ident;
 		if(heading == 1) {
 			ident = "=";
