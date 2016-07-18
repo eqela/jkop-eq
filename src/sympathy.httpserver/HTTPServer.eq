@@ -103,11 +103,18 @@ public class HTTPServer : LoggerObject
 
 	public bool on_timeout_timer() {
 		var now = SystemClock.seconds();
+		Collection cfc;
 		foreach(HTTPServerConnection wsc in connections) {
 			if(wsc.get_responses() >= wsc.get_requests() && now - wsc.get_last_activity() >= timeout) {
 				wsc.log_debug("Connection timed out.");
-				wsc.close();
+				if(cfc == null) {
+					cfc = LinkedList.create();
+				}
+				cfc.add(wsc);
 			}
+		}
+		foreach(HTTPServerConnection wsc in cfc) {
+			wsc.close();
 		}
 		return(true);
 	}
