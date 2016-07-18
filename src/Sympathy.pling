@@ -43,4 +43,3 @@ modules += "sympathy.recordstore";
 modules += "sympathy.recordstore.handler";
 modules += "sympathy.recordstore.sql";
 modules += "sympathy.userdb";
-modules += "sympathy.wiki";

@@ -255,11 +255,14 @@ public class EventLoopEpoll : LoggerObject, EventLoop, BackgroundTaskManager
 				embed {{{
 					int x;
 					for (x=0; x<r; x++) {
+						if(events[x].data.ptr != NULL) {
+							ref_eq_api_Object(events[x].data.ptr);
+						}
+					}
+					for (x=0; x<r; x++) {
 						if(events[x].events & EPOLLERR || events[x].events & EPOLLHUP) {
 							if(events[x].data.ptr != NULL) {
-								ref_eq_api_Object(events[x].data.ptr);
 								eq_os_eventloop_EventLoopEpoll_MyEventLoopEntry_on_epoll_error(events[x].data.ptr);
-								unref_eq_api_Object(events[x].data.ptr);
 							}
 						}
 						if(events[x].events & EPOLLIN) {
@@ -268,14 +271,15 @@ public class EventLoopEpoll : LoggerObject, EventLoop, BackgroundTaskManager
 								read(pipes[0], b, 16);
 							}
 							else {
-								ref_eq_api_Object(events[x].data.ptr);
 								eq_os_eventloop_EventLoopEpoll_MyEventLoopEntry_on_read_ready(events[x].data.ptr);
-								unref_eq_api_Object(events[x].data.ptr);
 							}
 						}
 						if(events[x].events & EPOLLOUT) {
-							ref_eq_api_Object(events[x].data.ptr);
 							eq_os_eventloop_EventLoopEpoll_MyEventLoopEntry_on_write_ready(events[x].data.ptr);
+						}
+					}
+					for (x=0; x<r; x++) {
+						if(events[x].data.ptr != NULL) {
 							unref_eq_api_Object(events[x].data.ptr);
 						}
 					}

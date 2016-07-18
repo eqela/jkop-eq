@@ -30,7 +30,7 @@ IFDEF("target_dotnetgeneric")
 			set_log_level(3);
 		}
 
-		public void log(String prefix, String amsg, String ident) {
+		public override void log(String prefix, String amsg, String ident) {
 			var msg = amsg;
 			if(msg == null) {
 				msg = "";
@@ -74,7 +74,7 @@ ELSE {
 			set_log_level(4);
 		}
 
-		public void log(String prefix, String amsg, String ident) {
+		public override void log(String prefix, String amsg, String ident) {
 			var msg = amsg;
 			if(msg == null) {
 				msg = "";

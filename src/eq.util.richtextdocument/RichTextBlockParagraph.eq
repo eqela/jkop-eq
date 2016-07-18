@@ -27,7 +27,7 @@ public class RichTextBlockParagraph : RichTextParagraph
 	property String id;
 	property String text;
 
-	public String to_markup() {
+	public override String to_markup() {
 		var sb = StringBuffer.create();
 		String delim;
 		if(String.is_empty(id)) {
@@ -48,25 +48,25 @@ public class RichTextBlockParagraph : RichTextParagraph
 		return(sb.to_string());
 	}
 
-	public String to_text() {
+	public override String to_text() {
 		return(text);
 	}
 
-	public HashTable to_json() {
+	public override HashTable to_json() {
 		return(HashTable.create()
 			.set("type", "block")
 			.set("id", id)
 			.set("text", text));
 	}
 
-	public String to_html(RichTextDocumentReferenceResolver refs, String xclass) {
+	public override String to_html(RichTextDocumentReferenceResolver refs, String xclass) {
 		var ids = "";
 		if(String.is_empty(id) == false) {
-			ids = " ".append(id);
+			ids = " ".append(HTMLString.sanitize(id));
 		}
 		var xclassh = "";
 		if(String.is_empty(xclass) == false) {
-			xclassh = " ".append(xclass);
+			xclassh = " ".append(HTMLString.sanitize(xclass));
 		}
 		var content = RichTextStyledParagraph.for_string(text);
 		return("<div class=\"_rtd_block%s%s\">%s</div>".printf().add(xclassh).add(ids).add(content.to_html(refs, "")).to_string());

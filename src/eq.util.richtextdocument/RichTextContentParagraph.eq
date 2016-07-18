@@ -22,16 +22,30 @@
  * SOFTWARE.
  */
 
-public interface WikiDocument
+public class RichTextContentParagraph : RichTextParagraph
 {
-	public String get_title();
-	public String get_slogan();
-	public String get_intro();
-	public String get_author();
-	public String get_date();
-	public String get_banner_name();
-	public Array get_markup_strings();
-	public Array get_html_strings();
-	public Collection get_attachment_headers();
-	public Reader get_attachment(String name);
+	property String content_id;
+
+	public override String to_markup() {
+		return("@content %s\n".printf().add(content_id).to_string());
+	}
+
+	public override String to_text() {
+		return("[content:%s]\n".printf().add(content_id).to_string());
+	}
+
+	public override HashTable to_json() {
+		return(HashTable.create().set("type", "content").set("id", content_id));
+	}
+
+	public override String to_html(RichTextDocumentReferenceResolver refs, String xclass) {
+		String cc;
+		if(refs != null && content_id != null) {
+			cc = refs.get_content_string(content_id);
+		}
+		if(cc == null) {
+			cc = "";
+		}
+		return(cc);
+	}
 }

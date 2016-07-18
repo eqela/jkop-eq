@@ -27,7 +27,7 @@ public class RichTextPreformattedParagraph : RichTextParagraph
 	property String id;
 	property String text;
 
-	public String to_markup() {
+	public override String to_markup() {
 		var sb = StringBuffer.create();
 		String delim;
 		if(String.is_empty(id)) {
@@ -48,52 +48,25 @@ public class RichTextPreformattedParagraph : RichTextParagraph
 		return(sb.to_string());
 	}
 
-	public String to_text() {
+	public override String to_text() {
 		return(text);
 	}
 
-	public HashTable to_json() {
+	public override HashTable to_json() {
 		return(HashTable.create()
 			.set("type", "preformatted")
 			.set("id", id)
 			.set("text", text));
 	}
 
-	String escape_html(String str) {
-		if(str == null) {
-			return(null);
-		}
-		var it = str.iterate();
-		if(it == null) {
-			return(null);
-		}
-		var sb = StringBuffer.for_initial_size(str.get_length());
-		int c;
-		while((c = it.next_char()) > 0) {
-			if(c == '<') {
-				sb.append("&lt;");
-			}
-			else if(c == '>') {
-				sb.append("&gt;");
-			}
-			else if(c == '&') {
-				sb.append("&amp;");
-			}
-			else {
-				sb.append_c(c);
-			}
-		}
-		return(sb.to_string());
-	}
-
-	public String to_html(RichTextDocumentReferenceResolver refs, String xclass) {
+	public override String to_html(RichTextDocumentReferenceResolver refs, String xclass) {
 		var ids = "";
 		if(String.is_empty(id) == false) {
-			ids = " id=\"_rtd_%s\"".printf().add(id).to_string();
+			ids = " id=\"_rtd_%s\"".printf().add(HTMLString.sanitize(id)).to_string();
 		}
 		var xclassh = "";
 		if(String.is_empty(xclass) == false) {
-			xclassh = " ".append(xclass);
+			xclassh = " ".append(HTMLString.sanitize(xclass));
 		}
 		var codeo = "";
 		var codec = "";
@@ -101,6 +74,6 @@ public class RichTextPreformattedParagraph : RichTextParagraph
 			codeo = "<code>";
 			codec = "</code>";
 		}
-		return("<pre class=\"_rtd_pre%s\"%s>%s%s%s</pre>".printf().add(xclassh).add(ids).add(codeo).add(escape_html(text)).add(codec).to_string());
+		return("<pre class=\"_rtd_pre%s\"%s>%s%s%s</pre>".printf().add(xclassh).add(ids).add(codeo).add(HTMLString.sanitize(text)).add(codec).to_string());
 	}
 }

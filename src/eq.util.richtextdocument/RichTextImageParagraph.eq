@@ -27,7 +27,7 @@ public class RichTextImageParagraph : RichTextParagraph
 	property String filename;
 	property int width = 100;
 
-	public String to_markup() {
+	public override String to_markup() {
 		if(width >= 100) {
 			return("@image %s\n".printf().add(filename).to_string());
 		}
@@ -40,15 +40,15 @@ public class RichTextImageParagraph : RichTextParagraph
 		return("@image25 %s\n".printf().add(filename).to_string());
 	}
 
-	public String to_text() {
+	public override String to_text() {
 		return("[image:%s]\n".printf().add(filename).to_string());
 	}
 
-	public HashTable to_json() {
+	public override HashTable to_json() {
 		return(HashTable.create().set("type", "image").set("width", width).set("filename", filename));
 	}
 
-	public String to_html(RichTextDocumentReferenceResolver refs, String xclass) {
+	public override String to_html(RichTextDocumentReferenceResolver refs, String xclass) {
 		var sb = StringBuffer.create();
 		if(width >= 100) {
 			sb.append("<div class=\"_rtd_img100\">");
@@ -62,7 +62,7 @@ public class RichTextImageParagraph : RichTextParagraph
 		else {
 			sb.append("<div class=\"_rtd_img25\">");
 		}
-		sb.append("<img src=\"%s\" />".printf().add(filename).to_string());
+		sb.append("<img src=\"%s\" />".printf().add(HTMLString.sanitize(filename)).to_string());
 		sb.append("</div>\n");
 		return(sb.to_string());
 	}

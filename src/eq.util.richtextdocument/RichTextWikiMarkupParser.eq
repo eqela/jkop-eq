@@ -106,6 +106,14 @@ public class RichTextWikiMarkupParser
 			doc.add_paragraph(new RichTextSeparatorParagraph());
 			return(true);
 		}
+		if(line.has_prefix("@content ")) {
+			var id = line.substring(9);
+			if(id != null) {
+				id = id.strip();
+			}
+			doc.add_paragraph(new RichTextContentParagraph().set_content_id(id));
+			return(true);
+		}
 		if(line.has_prefix("@image ")) {
 			var ref = line.substring(7);
 			if(ref != null) {

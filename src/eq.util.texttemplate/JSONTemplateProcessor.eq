@@ -44,7 +44,7 @@ public class JSONTemplateProcessor : TemplateProcessor
 		}
 	}
 
-	public void on_custom_tag(HashTable vars, StringBuffer result, Collection include_dirs, String tagname, Collection words) {
+	public override void on_custom_tag(HashTable vars, StringBuffer result, Collection include_dirs, String tagname, Collection words) {
 		if("quotedstring".equals(tagname)) {
 			var string = substitute_variables(words.get(1) as String, vars);
 			encode_string(string, result);

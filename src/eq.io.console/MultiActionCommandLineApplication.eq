@@ -64,7 +64,7 @@ public class MultiActionCommandLineApplication : CommandLineApplication
 		return(null);
 	}
 
-	public bool on_command_line_flag(String flag) {
+	public override bool on_command_line_flag(String flag) {
 		if(action != null) {
 			if(action.on_command_line_flag(flag)) {
 				return(true);
@@ -86,7 +86,7 @@ public class MultiActionCommandLineApplication : CommandLineApplication
 		return(base.on_command_line_flag(flag));
 	}
 
-	public bool on_command_line_option(String key, String value) {
+	public override bool on_command_line_option(String key, String value) {
 		if(action != null) {
 			if(action.on_command_line_option(key, value)) {
 				return(true);
@@ -95,7 +95,7 @@ public class MultiActionCommandLineApplication : CommandLineApplication
 		return(base.on_command_line_option(key, value));
 	}
 
-	public bool on_command_line_parameter(String param) {
+	public override bool on_command_line_parameter(String param) {
 		if(action == null) {
 			set_action(create_action(param));
 			if(action == null) {
@@ -128,7 +128,7 @@ public class MultiActionCommandLineApplication : CommandLineApplication
 		ui.add_parameter("-help | -h", "Help / usage information");
 	}
 
-	public void on_usage(UsageInfo ui) {
+	public override void on_usage(UsageInfo ui) {
 		ui.set_param_desc("<action> [parameters]");
 		ui.add_section("General parameters");
 		insert_general_usage_parameters(ui);
@@ -145,7 +145,7 @@ public class MultiActionCommandLineApplication : CommandLineApplication
 	public virtual void add_usage_actions(UsageInfo ui) {
 	}
 
-	public bool execute() {
+	public override bool execute() {
 		var lg = Log.get_logger();
 		lg.set_log_level(myloglevel);
 		var lg2 = get_logger();
@@ -166,7 +166,7 @@ public class MultiActionCommandLineApplication : CommandLineApplication
 		return(action.execute());
 	}
 
-	public void cleanup() {
+	public override void cleanup() {
 		action = null;
 	}
 }

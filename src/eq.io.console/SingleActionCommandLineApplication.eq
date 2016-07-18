@@ -41,13 +41,13 @@ public class SingleActionCommandLineApplication : CommandLineApplication
 		return(action);
 	}
 
-	public void on_usage(UsageInfo ui) {
+	public override void on_usage(UsageInfo ui) {
 		if(action != null) {
 			action.on_usage(ui);
 		}
 	}
 
-	public bool on_command_line_flag(String flag) {
+	public override bool on_command_line_flag(String flag) {
 		if(action != null) {
 			if(action.on_command_line_flag(flag)) {
 				return(true);
@@ -56,28 +56,28 @@ public class SingleActionCommandLineApplication : CommandLineApplication
 		return(base.on_command_line_flag(flag));
 	}
 
-	public bool on_command_line_option(String key, String value) {
+	public override bool on_command_line_option(String key, String value) {
 		if(action != null) {
 			return(action.on_command_line_option(key, value));
 		}
 		return(base.on_command_line_option(key, value));
 	}
 
-	public bool on_command_line_parameter(String param) {
+	public override bool on_command_line_parameter(String param) {
 		if(action != null) {
 			return(action.on_command_line_parameter(param));
 		}
 		return(base.on_command_line_parameter(param));
 	}
 
-	public bool execute() {
+	public override bool execute() {
 		if(action != null) {
 			return(action.execute());
 		}
 		return(base.execute());
 	}
 
-	public void cleanup() {
+	public override void cleanup() {
 		action = null;
 	}
 }

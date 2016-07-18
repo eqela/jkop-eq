@@ -71,7 +71,7 @@ public class DirectoryLogger : Logger
 		output = OutputStream.create(ff.append());
 	}
 
-	public void log(String prefix, String msg, String ident) {
+	public override void log(String prefix, String msg, String ident) {
 		mutex.lock();
 		var now = DateTime.for_now();
 		var lfn = get_logfile_name(now);
