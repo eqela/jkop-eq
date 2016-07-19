@@ -28,7 +28,7 @@ class HTMLString
 		if(str == null) {
 			return(null);
 		}
-		if(str.chr('<') < 0 && str.chr('>') < 0 && str.chr('&') < 0) {
+		if(str.chr((int)'<') < 0 && str.chr((int)'>') < 0 && str.chr((int)'&') < 0) {
 			return(str);
 		}
 		var it = str.iterate();
