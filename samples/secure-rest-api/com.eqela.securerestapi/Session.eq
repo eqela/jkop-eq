@@ -22,35 +22,46 @@
  * SOFTWARE.
  */
 
-class HTMLString
+public class Session : JSONObject
 {
-	public static String sanitize(String str) {
-		if(str == null) {
+	public static Session for_username(String username) {
+		return(new Session()
+			.initialize(username));
+	}
+
+	property String username;
+	property String session_id;
+
+	public Session initialize(String username) {
+		if(String.is_empty(username)) {
 			return(null);
 		}
-		if(str.chr((int)'<') < 0 && str.chr((int)'>') < 0 && str.chr((int)'&') < 0) {
-			return(str);
+		session_id = SHAEncoder.encode("%s%d%d".printf()
+			.add(username)
+			.add(SystemClock.seconds())
+			.add(Math.random(0, 10000000))
+			.to_string(), SHAEncoder.SHA256);
+		return(this);
+	}
+
+	public bool from_json_object(Object o) {
+		var h = o as HashTable;
+		if(h == null) {
+			return(false);
 		}
-		var it = str.iterate();
-		if(it == null) {
-			return(null);
+		session_id = h.get_string("session_id");
+		username = h.get_string("username");
+		if(String.is_empty(session_id) || String.is_empty(username)) {
+			session_id = null;
+			username = null;
+			return(false);
 		}
-		var sb = StringBuffer.for_initial_size(str.get_length());
-		int c;
-		while((c = it.next_char()) > 0) {
-			if(c == '<') {
-				sb.append("&lt;");
-			}
-			else if(c == '>') {
-				sb.append("&gt;");
-			}
-			else if(c == '&') {
-				sb.append("&amp;");
-			}
-			else {
-				sb.append_c(c);
-			}
-		}
-		return(sb.to_string());
+		return(true);
+	}
+
+	public Object to_json_object() {
+		return(HashTable.create()
+			.set("session_id", session_id)
+			.set("username", username));
 	}
 }
