@@ -174,16 +174,8 @@ public class Main : SympathyWebServerApplication
 		if(base.initialize() == false) {
 			return(false);
 		}
-		var datadir = get_datadir();
-		if(datadir == null) {
-			return(false);
-		}
-		if(datadir.exists() == false) {
-			if(datadir.mkdir_recursive() == false) {
-				return(false);
-			}
-		}
-		var db = SQLiteDatabase.for_file(datadir.entry("mydb.sqlite"));
+		var db = SQLiteDatabase.for_file(get_datadir()
+			.entry("mydb.sqlite"));
 		if(db == null) {
 			return(false);
 		}
