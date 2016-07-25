@@ -402,6 +402,9 @@ public class MySQLDatabaseImpl : SQLDatabase
 			}
 			return(null);
 		}
+
+		public void reset_statement() {
+		}
 	}
 
 	class ResultSet : Iterator
@@ -476,7 +479,7 @@ public class MySQLDatabaseImpl : SQLDatabase
 		ptr mysql = null;
 		strptr err = null;
 		embed "c" {{{
-			mysql = (void*)mysql_init(NULL); 
+			mysql = (MYSQL*)mysql_init(mysql);
 			if(mysql == NULL) {
 				err = mysql_error(mysql);
 				}}}
@@ -484,7 +487,9 @@ public class MySQLDatabaseImpl : SQLDatabase
 				return(false);
 				embed "c" {{{
 			}
-			if(mysql_real_connect(mysql, myserver, myusername, mypassword, mydatabase, 0, NULL, 0) == NULL) {
+			int reconnect = 1;
+			mysql_options(mysql, MYSQL_OPT_RECONNECT, &reconnect);
+			if(!mysql_real_connect(mysql, myserver, myusername, mypassword, mydatabase, 0, NULL, 0)) {
 				err = mysql_error(mysql);
 				}}}
 				log_error(String.for_strptr(err));
