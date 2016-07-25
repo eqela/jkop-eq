@@ -170,6 +170,8 @@ public class Main : SympathyWebServerApplication
 		set_require_datadir(true);
 	}
 
+	SessionDatabase sessiondb;
+
 	public bool initialize() {
 		if(base.initialize() == false) {
 			return(false);
@@ -187,7 +189,7 @@ public class Main : SympathyWebServerApplication
 		if(userdb == null) {
 			return(false);
 		}
-		var sessiondb = SessionDatabase.for_sqldatabase(db);
+		sessiondb = SessionDatabase.for_sqldatabase(db);
 		if(sessiondb == null) {
 			return(false);
 		}
@@ -202,5 +204,11 @@ public class Main : SympathyWebServerApplication
 			.set_request_handler("persons", new MyHTTPRequestHandler()
 				.set_persondb(persondb)));
 		return(true);
+	}
+
+	public override void on_maintenance() {
+		if(sessiondb != null) {
+			sessiondb.on_maintenance();
+		}
 	}
 }
