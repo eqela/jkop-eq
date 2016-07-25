@@ -479,18 +479,18 @@ public class MySQLDatabaseImpl : SQLDatabase
 		ptr mysql = null;
 		strptr err = null;
 		embed "c" {{{
-			mysql = (MYSQL*)mysql_init(mysql);
+			mysql = mysql_init(NULL);
 			if(mysql == NULL) {
-				err = mysql_error(mysql);
+				err = mysql_error((MYSQL*)mysql);
 				}}}
 				log_error(String.for_strptr(err));
 				return(false);
 				embed "c" {{{
 			}
 			int reconnect = 1;
-			mysql_options(mysql, MYSQL_OPT_RECONNECT, &reconnect);
-			if(!mysql_real_connect(mysql, myserver, myusername, mypassword, mydatabase, 0, NULL, 0)) {
-				err = mysql_error(mysql);
+			mysql_options((MYSQL*)mysql, MYSQL_OPT_RECONNECT, &reconnect);
+			if(mysql_real_connect((MYSQL*)mysql, myserver, myusername, mypassword, mydatabase, 0, NULL, 0) == NULL) {
+				err = mysql_error((MYSQL*)mysql);
 				}}}
 				log_error(String.for_strptr(err));
 				return(false);
