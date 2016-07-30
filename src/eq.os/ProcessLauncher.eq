@@ -227,13 +227,13 @@ public class ProcessLauncher : Stringable
 
 	public String execute_pipe_string(Logger logger = null) {
 		var sb = StringBuffer.create();
-		var r = execute_to_string_buffer(sb, logger);
+		execute_to_string_buffer(sb, logger);
 		return(sb.to_string());
 	}
 
 	public Buffer execute_pipe_buffer(Logger logger = null) {
 		var buf = DynamicBuffer.create();
-		var r = execute_to_buffer(buf, logger);
+		execute_to_buffer(buf, logger);
 		return(buf);
 	}
 }

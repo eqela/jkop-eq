@@ -68,9 +68,7 @@ class SystemEnvironmentImpl : SystemEnvironmentInterface
 				return(v);
 			}
 			if("macosx".equals(id)) {
-				int x = 0;
 				embed "cs" {{{
-					x = (int)System.Environment.OSVersion.Platform;
 					if(System.Environment.OSVersion.Platform == System.PlatformID.MacOSX) {
 						v = true;
 					}

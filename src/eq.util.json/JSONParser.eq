@@ -446,10 +446,8 @@ public class JSONParser
 
 	private Array array_value(Stack element_stack, StringIterator json_si, Stack error_stack) {
 		Array array_obj;
-		Array array_val;
 		array_obj = Array.create();
 		String array_key = "";
-		bool add_new_obj = true;
 		int s;
 		bool array_closed = false;
 		bool next_object = true;
