@@ -178,19 +178,6 @@ class TCPSocketImpl : TCPSocket, ConnectedSocket, Reader, Writer, ReaderWriter
 			catch(System.Exception e) {
 				v = -1;
 			}
-			/*
-			var socketarg = new System.Net.Sockets.SocketAsyncEventArgs();
-			var mutex = new System.Threading.ManualResetEvent(false);;
-			socketarg.Completed += new System.EventHandler<System.Net.Sockets.SocketAsyncEventArgs>((object sender, System.Net.Sockets.SocketAsyncEventArgs arg) => {
-				mutex.Set();
-			});
-			socketarg.SetBuffer(ptr, 0, ptr.Length);
-			if(socket.ReceiveAsync(socketarg)) {
-				mutex.WaitOne();
-				mutex.Reset();
-			}
-			v = socketarg.BytesTransferred;
-			*/
 			if(v < 1) {
 				close();
 				v = -1;
@@ -224,19 +211,6 @@ class TCPSocketImpl : TCPSocket, ConnectedSocket, Reader, Writer, ReaderWriter
 			catch(System.Exception e) {
 				v = -1;
 			}
-			/*
-			var socketarg = new System.Net.Sockets.SocketAsyncEventArgs();
-			var mutex = new System.Threading.ManualResetEvent(false);
-			socketarg.Completed += new System.EventHandler<System.Net.Sockets.SocketAsyncEventArgs>((object sender, System.Net.Sockets.SocketAsyncEventArgs arg) => {
-				mutex.Set();
-			});
-			socketarg.SetBuffer(ptr, 0, nsize);
-			if(socket.SendAsync(socketarg)) {
-				mutex.WaitOne();
-				mutex.Reset();
-			}
-			v = socketarg.BytesTransferred;
-			*/
 			if(v < 1) {
 				close();
 				v = -1;

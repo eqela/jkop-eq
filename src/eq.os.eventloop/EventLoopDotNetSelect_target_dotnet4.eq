@@ -261,7 +261,6 @@ public class EventLoopDotNetSelect : LoggerObject, EventLoop, BackgroundTaskMana
 	TCPSocket signalClient;
 
 	public void execute() {
-		int r;
 		exitflag = false;
 		running = true;
 		var signalSocket = open_signal_socket();

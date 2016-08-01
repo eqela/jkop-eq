@@ -243,7 +243,7 @@ public class SMTPClient
 		if(String.is_empty(sn)) {
 			sn = "eq.net.smtpclient";
 		}
-		if(writeline(ops, "HELO ".append(sn)) == false) {
+		if(writeline(ops, "EHLO ".append(sn)) == false) {
 			return(SMTPClientTransactionResult.for_network_error());
 		}
 		if((err = communicate(ins, "250")) != null) {
