@@ -22,21 +22,21 @@
  * SOFTWARE.
  */
 
-title = "Jkop EQ Core Framework";
-version = "4.0.x";
-type = "library";
-modules += "eq.api";
-modules += "eq.io";
-modules += "eq.io.console";
-modules += "eq.os";
-modules += "eq.os.task";
-modules += "eq.os.eventloop";
-modules += "eq.util.sort";
-modules += "eq.util.xml";
-modules += "eq.util.string";
-modules += "eq.util.json";
-modules += "eq.util.texttemplate";
-modules += "eq.util.richtextdocument";
-modules += "eq.util.mime";
-modules += "eq.util.md5";
-modules += "eq.net.socket";
+title = "Jkop EQ Core Framework"
+version = "4.0.x"
+type = "library"
+modules += "eq.api"
+modules += "eq.io"
+modules += "eq.io.console"
+modules += "eq.os"
+modules += "eq.os.task"
+modules += "eq.os.eventloop"
+modules += "eq.util.sort"
+modules += "eq.util.xml"
+modules += "eq.util.string"
+modules += "eq.util.json"
+modules += "eq.util.texttemplate"
+modules += "eq.util.richtextdocument"
+modules += "eq.util.mime"
+modules += "eq.util.md5"
+modules += "eq.net.socket"

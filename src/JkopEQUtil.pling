@@ -22,22 +22,21 @@
  * SOFTWARE.
  */
 
-name = "jkequtil";
-title = "Jkop EQ Framework Utilities";
-version = "4.0.x";
-type = "library";
-modules += "eq.util.zip";
-modules += "eq.util.shell";
-modules += "eq.util.shell.common";
-modules += "eq.util.configfile";
-modules += "eq.util.commandlineprocessor";
-modules += "eq.util.url";
-modules += "eq.util.applicationdata";
-modules += "eq.util.png";
-modules += "eq.util.imagefilter";
-modules += "eq.util.vector";
-modules += "eq.sql";
-modules += "eq.sql.sqlite";
-modules += "eq.net.localsocket";
-modules += "eq.net.ssl";
-modules += "eq.util.packetstream";
+title = "Jkop EQ Framework Utilities"
+version = "4.0.x"
+type = "library"
+modules += "eq.util.zip"
+modules += "eq.util.shell"
+modules += "eq.util.shell.common"
+modules += "eq.util.configfile"
+modules += "eq.util.commandlineprocessor"
+modules += "eq.util.url"
+modules += "eq.util.applicationdata"
+modules += "eq.util.png"
+modules += "eq.util.imagefilter"
+modules += "eq.util.vector"
+modules += "eq.sql"
+modules += "eq.sql.sqlite"
+modules += "eq.net.localsocket"
+modules += "eq.net.ssl"
+modules += "eq.util.packetstream"
