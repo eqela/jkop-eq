@@ -669,14 +669,18 @@ class FileImpl : FileAdapter
 		}
 		return(true);
 	}
+	
+	public bool exists() {
+		return(stat() != null);
+	}
 
 	public FileInfo stat() {
 		if(path == null) {
-			return(new FileInfo());
+			return(null);
 		}
 		var ps = path.to_strptr();
 		if(ps == null) {
-			return(new FileInfo());
+			return(null);
 		}
 		int r;
 		bool linkflag = false;
@@ -690,7 +694,7 @@ class FileImpl : FileAdapter
 			}
 		}}}
 		if(r != 0) {
-			return(new FileInfo());
+			return(null);
 		}
 		var o = new FileInfo();
 		o.set_islink(linkflag);
