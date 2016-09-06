@@ -196,6 +196,33 @@ class LocalSocketImpl : Reader, Writer, ReaderWriter, ConnectedSocket, LocalSock
 		return(v);
 	}
 
+	bool is_socket_available(String path) {
+		if(String.is_empty(path)) {
+			return(false);
+		}
+		var ux = File.for_native_path("/proc/net/unix");
+		if(ux != null) {
+			var is = InputStream.for_reader(ux.read());
+			if(is == null) {
+				return(false);
+			}
+			while(true) {
+				var line = is.readline();
+				if(String.is_empty(line)) {
+					break;
+				}
+				var itr = line.split(' ', 8);
+				foreach(String v in itr) {
+					if(path.equals(v)) {
+						return(false);
+					}
+				}
+			}
+			return(true);
+		}
+		return(false);
+	}
+
 	public bool listen(String apath) {
 		close();
 		if(apath == null) {
@@ -218,6 +245,10 @@ class LocalSocketImpl : Reader, Writer, ReaderWriter, ConnectedSocket, LocalSock
 		}}}
 		var ns = npath.to_strptr();
 		if(ff.exists()) {
+			if(is_socket_available(npath) == false) {
+				Log.error("Failed to listen to local socket '%s': Already in use".printf().add(ff).to_string());
+				return(false);
+			}
 			Log.debug("Deleting existing local socket file '%s'".printf().add(ff).to_string());
 			if(ff.remove() == false) {
 				Log.error("Failed to remove file: `%s'".printf().add(ff));
