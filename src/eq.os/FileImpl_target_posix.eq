@@ -669,18 +669,14 @@ class FileImpl : FileAdapter
 		}
 		return(true);
 	}
-	
-	public bool exists() {
-		return(stat() != null);
-	}
 
 	public FileInfo stat() {
 		if(path == null) {
-			return(null);
+			return(new FileInfo());
 		}
 		var ps = path.to_strptr();
 		if(ps == null) {
-			return(null);
+			return(new FileInfo());
 		}
 		int r;
 		bool linkflag = false;
@@ -694,7 +690,7 @@ class FileImpl : FileAdapter
 			}
 		}}}
 		if(r != 0) {
-			return(null);
+			return(new FileInfo());
 		}
 		var o = new FileInfo();
 		o.set_islink(linkflag);
@@ -728,6 +724,9 @@ class FileImpl : FileAdapter
 			}
 			else if(tt == S_IFDIR) {
 				type = tdir;
+			}
+			else {
+				type = 3;
 			}
 		}}}
 		o.set_type(type);
