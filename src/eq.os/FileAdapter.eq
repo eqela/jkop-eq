@@ -173,10 +173,7 @@ public class FileAdapter : File, Stringable
 		if(s == null) {
 			return(false);
 		}
-		if(s.is_file() || s.is_directory() || s.is_link()) {
-			return(true);
-		}
-		return(false);
+		return(s.exists());
 	}
 
 	public bool is_executable() {
