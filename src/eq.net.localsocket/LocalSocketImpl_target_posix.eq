@@ -196,7 +196,7 @@ class LocalSocketImpl : Reader, Writer, ReaderWriter, ConnectedSocket, LocalSock
 		return(v);
 	}
 
-	bool is_vhost_available(String path) {
+	bool is_socket_available(String path) {
 		if(String.is_empty(path)) {
 			return(false);
 		}
@@ -245,7 +245,7 @@ class LocalSocketImpl : Reader, Writer, ReaderWriter, ConnectedSocket, LocalSock
 		}}}
 		var ns = npath.to_strptr();
 		if(ff.exists()) {
-			if(is_vhost_available(npath) == false) {
+			if(is_socket_available(npath) == false) {
 				Log.error("Failed to listen to local socket '%s': Already in use".printf().add(ff).to_string());
 				return(false);
 			}
