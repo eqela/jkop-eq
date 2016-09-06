@@ -22,24 +22,24 @@
  * SOFTWARE.
  */
 
-title = "Sympathy Web Services";
-description = "Web service development framework";
-copyright = "Copyright (c) 2016 Job and Esther Technologies, Inc.";
-license = "All rights reserved";
-version = "1.0.x";
-type = "library";
-// modules += "sympathy.apiclient";
-modules += "sympathy.application";
-modules += "sympathy.blog";
-modules += "sympathy.blog.db";
-modules += "sympathy.contentcache";
-modules += "sympathy.handler";
-modules += "sympathy.httpserver";
-modules += "sympathy.networkservice";
-modules += "sympathy.padget";
-modules += "sympathy.padget.highlightjs";
-// modules += "sympathy.padget.social";
-modules += "sympathy.recordstore";
-modules += "sympathy.recordstore.handler";
-modules += "sympathy.recordstore.sql";
-modules += "sympathy.userdb";
+title = "Sympathy Web Services"
+description = "Web service development framework"
+copyright = "Copyright (c) 2016 Job and Esther Technologies, Inc."
+license = "All rights reserved"
+version = "1.0.x"
+type = "library"
+// modules += "sympathy.apiclient"
+modules += "sympathy.application"
+modules += "sympathy.blog"
+modules += "sympathy.blog.db"
+modules += "sympathy.contentcache"
+modules += "sympathy.handler"
+modules += "sympathy.httpserver"
+modules += "sympathy.networkservice"
+modules += "sympathy.padget"
+modules += "sympathy.padget.highlightjs"
+// modules += "sympathy.padget.social"
+modules += "sympathy.recordstore"
+modules += "sympathy.recordstore.handler"
+modules += "sympathy.recordstore.sql"
+modules += "sympathy.userdb"
