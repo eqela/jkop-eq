@@ -24,9 +24,10 @@
 
 public class FileInfo
 {
-	public static int FILE_TYPE_UNKNOWN = 0;
+	public static int FILE_TYPE_INVALID = 0;
 	public static int FILE_TYPE_FILE = 1;
 	public static int FILE_TYPE_DIR = 2;
+	public static int FILE_TYPE_UNKNOWN = 3;
 
 	public static FileInfo for_file(File file) {
 		if(file == null) {
@@ -169,7 +170,7 @@ public class FileInfo
 	}
 
 	public virtual bool exists() {
-		return(is_file() || is_directory() || is_link());
+		return(type > 0 || is_link());
 	}
 }
 

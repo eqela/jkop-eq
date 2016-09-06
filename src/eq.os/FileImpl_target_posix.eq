@@ -725,6 +725,9 @@ class FileImpl : FileAdapter
 			else if(tt == S_IFDIR) {
 				type = tdir;
 			}
+			else {
+				type = 3;
+			}
 		}}}
 		o.set_type(type);
 		o.set_mode(stmode);
