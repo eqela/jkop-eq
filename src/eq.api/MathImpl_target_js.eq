@@ -156,6 +156,22 @@ class MathImpl : MathInterface
 		return(v);
 	}
 
+	public double exp(double x) {
+		double v;
+		embed "js" {{{
+			v = Math.exp(x);
+		}}}
+		return(v);
+	}
+
+	public double pow(double a, double b) {
+		double v;
+		embed "js" {{{
+			v = Math.pow(a,b);
+		}}}
+		return(v);
+	}
+
 	public int random(int min, int max) {
 		int v;
 		embed "js" {{{

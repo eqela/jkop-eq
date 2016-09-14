@@ -97,7 +97,7 @@ class MyStringFormatter : StringFormatterBase
 		strptr r;
 		if(format.has_suffix("f") || format.has_suffix("F")) {
 			var dec = 6;
-			var dot = format.chr('.');
+			var dot = format.chr((int)'.');
 			if(dot > 0) {
 				dec = Integer.as_integer(format.substring(dot+1, format.get_length()-2));
 			}

@@ -34,6 +34,10 @@ class BufferImpl : Buffer, DynamicBuffer
 		this.buf = buf;
 	}
 
+	public ptr get_ptr() {
+		return(buf);
+	}
+
 	public Pointer get_pointer() {
 		return(PointerImpl.create(buf));
 	}

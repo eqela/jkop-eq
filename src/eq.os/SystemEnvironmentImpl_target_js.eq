@@ -66,7 +66,7 @@ class SystemEnvironmentImpl : PropertyObject, SystemEnvironmentInterface
 				}
 			}
 			else if(x == '+') {
-				sb.append_c(' ');
+				sb.append_c((int)' ');
 			}
 			else {
 				sb.append_c(x);
@@ -80,7 +80,7 @@ class SystemEnvironmentImpl : PropertyObject, SystemEnvironmentInterface
 		if(String.is_empty(url)) {
 			return;
 		}
-		var qm = url.chr('?');
+		var qm = url.chr((int)'?');
 		if(qm < 0) {
 			return;
 		}
@@ -88,8 +88,8 @@ class SystemEnvironmentImpl : PropertyObject, SystemEnvironmentInterface
 		if(String.is_empty(qrs)) {
 			return;
 		}
-		foreach(String comp in StringSplitter.split(qrs, '&')) {
-			var it = StringSplitter.split(comp, '=', 2);
+		foreach(String comp in StringSplitter.split(qrs, (int)'&')) {
+			var it = StringSplitter.split(comp, (int)'=', 2);
 			var key = it.next() as String;
 			var val = it.next() as String;
 			if(String.is_empty(key)) {

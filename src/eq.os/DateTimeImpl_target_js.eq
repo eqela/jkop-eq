@@ -105,13 +105,13 @@ class DateTimeImpl : DateTime, Stringable
 		}
 		if(minutes) {
 			if(v.count() > 0) {
-				v.append_c(':');
+				v.append_c((int)':');
 			}
 			v.append(String.for_strptr(mm));
 		}
 		if(seconds) {
 			if(v.count() > 0) {
-				v.append_c(':');
+				v.append_c((int)':');
 			}
 			v.append(String.for_strptr(ss));
 		}
