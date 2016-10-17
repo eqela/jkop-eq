@@ -52,6 +52,10 @@ public class BlogSiteHandler : PadgetSiteHandler
 			}
 			return(article.get_title());
 		}
+
+		public String get_content_string(String cid) {
+			return(null);
+		}
 	}
 
 	property BlogDatabase db;
