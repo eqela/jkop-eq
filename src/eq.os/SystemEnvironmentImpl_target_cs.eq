@@ -192,34 +192,22 @@ class SystemEnvironmentImpl : SystemEnvironmentInterface
 		if(cmd == null) {
 			return(null);
 		}
-		var cmdp = cmd.to_strptr();
-		if(cmdp == null) {
-			return(null);
-		}
 		var pd = Path.get_path_delimiter();
-		strptr v = null;
-		IFNDEF("target_winrtcs") {
-		embed "cs" {{{
-			var path = System.Environment.GetEnvironmentVariable("PATH");
-			if(path != null) {
-				char path_splitter = ';';
-				if(pd == '/') {
-					path_splitter = ':';
-				}
-				foreach(var dir in path.Split(path_splitter)) {
-					var fullpath = System.IO.Path.Combine(dir, cmdp);
-					if(System.IO.File.Exists(fullpath)) {
-						v = fullpath;
-						break;
-					}
+		File v = null;
+		var path = get_env_var("PATH");
+		if(path != null) {
+			char path_splitter = ';';
+			if(pd == '/') {
+				path_splitter = ':';
+			}
+			foreach(var dir in path.split((int)path_splitter)) {
+				var exe = File.for_native_path(dir).entry(cmd).as_executable();
+				if(exe.is_file()) {
+					v = exe;
 				}
 			}
-		}}}
 		}
-		if(v == null) {
-			return(null);
-		}
-		return(File.for_native_path(String.for_strptr(v)));
+		return(v);
 	}
 
 	public File get_temporary_dir() {
