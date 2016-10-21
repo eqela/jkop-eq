@@ -97,17 +97,10 @@ public class RichTextWikiMarkupParser
 		return(new RichTextBlockParagraph().set_id(id).set_text(sb.to_string()));
 	}
 
-	RichTextListParagraph read_list_paragraph(int markup, String _line, InputStream ins) {
+	RichTextListParagraph read_list_paragraph(String type, String _line, InputStream ins) {
 		var line = _line;
 		var list = LinkedList.create();
 		var sb = StringBuffer.create();
-		String tag = "";
-		if(markup == '*') {
-			tag = "ul";
-		}
-		else if(markup == '+') {
-			tag = "ol";
-		}
 		do
 		{
 			line = line.strip();
@@ -133,20 +126,9 @@ public class RichTextWikiMarkupParser
 			if(sb.count() > 0) {
 				list.add(sb.to_string());
 			}
-			
 		}
 		while((line = ins.readline()) != null);
-		return(new RichTextListParagraph().set_text(process_list(list)).set_tag(tag));
-	}
-	
-	String process_list(Collection col) {
-		var sb = StringBuffer.create();
-		foreach(String s in col) {
-			sb.append("<li>");
-			sb.append(s);
-			sb.append("</li>");
-		}
-		return(sb.to_string());
+		return(new RichTextListParagraph().set_list(list).set_type(type));
 	}
 
 	bool process_input(InputStream ins, RichTextDocument doc) {
@@ -275,11 +257,11 @@ public class RichTextWikiMarkupParser
 			return(true);
 		}
 		if(line.has_prefix("+ ")) {
-			doc.add_paragraph(read_list_paragraph('+', line, ins));
+			doc.add_paragraph(read_list_paragraph("unordered", line, ins));
 			return(true);
 		}
 		if(line.has_prefix("* ")) {
-			doc.add_paragraph(read_list_paragraph('*', line, ins));
+			doc.add_paragraph(read_list_paragraph("ordered", line, ins));
 			return(true);
 		}
 		var sb = StringBuffer.create();

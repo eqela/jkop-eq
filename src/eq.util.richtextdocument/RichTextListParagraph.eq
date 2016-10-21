@@ -24,21 +24,21 @@
 
 public class RichTextListParagraph : RichTextParagraph
 {
-	property String tag;
-	property String text;
-	
-	public String to_markup() {
-		return(null);
-	}
-
-	public String to_text() {
-		return(text);
-	}
+	property String type;
+	property Collection list;
 
 	public HashTable to_json() {
-		return(HashTable.create()
-			.set("type", "list")
-			.set("text", text));
+		return(HashTable.create().set("type", type).set("list", list));
+	}
+
+	String process_list(Collection col) {
+		var sb = StringBuffer.create();
+		foreach(String s in col) {
+			sb.append("<li>");
+			sb.append(s);
+			sb.append("</li>");
+		}
+		return(sb.to_string());
 	}
 
 	public String to_html(RichTextDocumentReferenceResolver refs, String xclass) {
@@ -46,6 +46,13 @@ public class RichTextListParagraph : RichTextParagraph
 		if(String.is_empty(xclass) == false) {
 			xclassh = " ".append(xclass);
 		}
-		return("<%s class=\"_rtd_block%s\">%s</%s>".printf().add(tag).add(xclassh).add(text).add(tag).to_string());
+		var tag = "";
+		if("unordered".equals(type)) {
+			tag = "ul";
+		}
+		else if("ordered".equals(type)) {
+			tag = "ol";
+		}
+		return("<%s class=\"_rtd_block%s\">%s</%s>".printf().add(tag).add(xclassh).add(process_list(list)).add(tag).to_string());
 	}
 }
