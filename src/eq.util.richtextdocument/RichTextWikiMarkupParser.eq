@@ -97,6 +97,40 @@ public class RichTextWikiMarkupParser
 		return(new RichTextBlockParagraph().set_id(id).set_text(sb.to_string()));
 	}
 
+	RichTextListParagraph read_list_paragraph(String type, String _line, InputStream ins) {
+		var line = _line;
+		var list = LinkedList.create();
+		var sb = StringBuffer.create();
+		do
+		{
+			line = line.strip();
+			if(String.is_empty(line)) {
+				break;
+			}
+			var it = line.iterate();
+			int c;
+			int pc = it.next_char(); // skip marker
+			while((c = it.next_char()) > 0) {
+				if(c == ' ' || c == '\t' || c == '\r' || c == '\n') {
+					if(pc == ' ') {
+						continue;
+					}
+					c = ' ';
+				}
+				if(pc == '*' && c == ' ') {
+					continue;
+				}
+				sb.append_c(c);
+				pc = c;
+			}
+			if(sb.count() > 0) {
+				list.add(sb.to_string());
+			}
+		}
+		while((line = ins.readline()) != null);
+		return(new RichTextListParagraph().set_list(list).set_type(type));
+	}
+
 	bool process_input(InputStream ins, RichTextDocument doc) {
 		var line = skip_empty_lines(ins);
 		if(line == null) {
@@ -220,6 +254,14 @@ public class RichTextWikiMarkupParser
 				id = null;
 			}
 			doc.add_paragraph(read_block_paragraph(id, ins));
+			return(true);
+		}
+		if(line.has_prefix("+ ")) {
+			doc.add_paragraph(read_list_paragraph("unordered", line, ins));
+			return(true);
+		}
+		if(line.has_prefix("* ")) {
+			doc.add_paragraph(read_list_paragraph("ordered", line, ins));
 			return(true);
 		}
 		var sb = StringBuffer.create();
