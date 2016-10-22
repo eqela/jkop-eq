@@ -115,7 +115,7 @@ public class RichTextWikiMarkupParser
 					if(pc == ' ') {
 						continue;
 					}
-					c = ' ';
+					c = (int)' ';
 				}
 				if(pc == '*' && c == ' ') {
 					continue;
