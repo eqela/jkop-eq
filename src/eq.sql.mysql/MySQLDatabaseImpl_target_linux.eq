@@ -631,6 +631,17 @@ public class MySQLDatabaseImpl : SQLDatabase
 		return(true);
 	}
 
+	public override String get_database_type_id() {
+		strptr tid = null;
+		embed "c" {{{
+			tid = mysql_get_client_info();
+		}}}
+		if(tid != null) {
+			return(String.for_strptr(tid));
+		}
+		return("unknown");
+	}
+
 	public override void close() {
 		database_name = null;
 		if(mysql_db == null) {
@@ -685,5 +696,77 @@ public class MySQLDatabaseImpl : SQLDatabase
 			return(table.equals(v.get_string("TABLE_NAME")));
 		}
 		return(false);
+	}
+
+	private String column_to_create_string(SQLTableColumnInfo cc) {
+		var sb = StringBuffer.create();
+		sb.append(cc.get_name());
+		sb.append_c(' ');
+		var tt = cc.get_type();
+		if(tt == SQLTableColumnInfo.TYPE_INTEGER_KEY) {
+			sb.append("INTEGER AUTO_INCREMENT, PRIMARY KEY (");
+			sb.append(cc.get_name());
+			sb.append_c(')');
+		}
+		else if(tt == SQLTableColumnInfo.TYPE_INTEGER) {
+			sb.append("INTEGER");
+		}
+		else if(tt == SQLTableColumnInfo.TYPE_STRING) {
+			sb.append("VARCHAR(255)");
+		}
+		else if(tt == SQLTableColumnInfo.TYPE_TEXT) {
+			sb.append("LONGTEXT");
+		}
+		else if(tt == SQLTableColumnInfo.TYPE_DOUBLE) {
+			sb.append("REAL");
+		}
+		else if(tt == SQLTableColumnInfo.TYPE_BLOB) {
+			sb.append("LONGBLOB");
+		}
+		return(sb.to_string());
+	}
+
+	public override bool create_table(String table, Collection columns) {
+		if(table == null || columns == null || mysql_db == null) {
+			return(false);
+		}
+		var sb = StringBuffer.create();
+		sb.append("CREATE TABLE ");
+		sb.append(table);
+		sb.append(" (");
+		var first = true;
+		foreach(SQLTableColumnInfo cc in columns) {
+			if(first == false ) {
+				sb.append_c(',');
+			}
+			sb.append_c(' ');
+			sb.append(column_to_create_string(cc));
+			first = false;
+		}
+		sb.append(" );");
+		return(execute(prepare(sb.to_string())));
+	}
+
+	public override bool delete_table(String table) {
+		if(table == null || mysql_db == null) {
+			return(false);
+		}
+		var sb = StringBuffer.create();
+		sb.append("DROP TABLE ");
+		sb.append(table);
+		sb.append_c(';');
+		return(execute(prepare(sb.to_string())));
+	}
+
+	public override bool create_index(String table, String column, bool unique) {
+		if(table == null || column == null || mysql_db == null) {
+			return(false);
+		}
+		var unq = "";
+		if(unique) {
+			unq = "UNIQUE ";
+		}
+		var sqlquery = "CREATE %sINDEX %s_%s ON %s (%s);".printf().add(unq).add(table).add(column).add(table).add(column).to_string();
+		return(execute(prepare(sqlquery)));
 	}
 }
