@@ -167,7 +167,11 @@ public class MySQLDatabaseImpl : SQLDatabase
 			embed "c" {{{
 				param_count = mysql_stmt_param_count(stmt);
 			}}}
-			Log.message("MySQL: parameter count: %d".printf().add(param_count).to_string());
+			mysql_param_count = param_count;
+			if(mysql_param_count < 0) {
+				Log.error("MySQL error: parameter count: %d".printf().add(mysql_param_count).to_string());
+				return(false);
+			}
 			embed "c" {{{
 				my_bool v = 1;
 				if(mysql_stmt_attr_set(stmt, STMT_ATTR_UPDATE_MAX_LENGTH, (void*)&v)) {
@@ -177,7 +181,6 @@ public class MySQLDatabaseImpl : SQLDatabase
 			embed "c" {{{
 				}
 			}}}
-			mysql_param_count = param_count;
 			return(true);
 		}
 
