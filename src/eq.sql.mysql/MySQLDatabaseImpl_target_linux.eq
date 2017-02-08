@@ -60,9 +60,11 @@ public class MySQLDatabaseImpl : SQLDatabase
 		}
 
 		public void reset_statement() {
+			// FIXME
 		}
 
 		public String get_error() {
+			// FIXME
 			return(null);
 		}
 
@@ -202,6 +204,8 @@ public class MySQLDatabaseImpl : SQLDatabase
 			embed "c" {{{
 				MYSQL_BIND bind_ptr[param_count];
 				memset(bind_ptr, 0, sizeof(bind_ptr));
+				int int_values[param_count];
+				double double_values[param_count];
 			}}}
 			var values = parameter_values;
 			int i;
@@ -224,8 +228,9 @@ public class MySQLDatabaseImpl : SQLDatabase
 				else if(o is IntegerValue) {
 					var v = ((IntegerValue)o).get_value();
 					embed "c" {{{
+						int_values[i] = v;
 						bind_ptr[i].buffer_type = MYSQL_TYPE_LONG;
-						bind_ptr[i].buffer = (char*)&(v);
+						bind_ptr[i].buffer = (char*)&int_values[i];
 						bind_ptr[i].is_null = 0;
 						bind_ptr[i].length = 0;
 					}}}
@@ -233,8 +238,9 @@ public class MySQLDatabaseImpl : SQLDatabase
 				else if(o is DoubleValue) {
 					var v = ((DoubleValue)o).get_value();
 					embed "c" {{{
+						double_values[i] = v;
 						bind_ptr[i].buffer_type = MYSQL_TYPE_DOUBLE;
-						bind_ptr[i].buffer = (char*)&(v);
+						bind_ptr[i].buffer = (char*)&double_values[i];
 						bind_ptr[i].is_null = 0;
 						bind_ptr[i].length = 0;
 					}}}
@@ -402,32 +408,57 @@ public class MySQLDatabaseImpl : SQLDatabase
 				i = 0;
 				while(i < field_count) {
 				embed "c" {{{
-							if(type[i] == 0) {
-								int_v = int_data[i];
+					if(type[i] == 0) {
+						if(is_null[i]) {
+							int_v = 0;
+						}
+						else {
+							int_v = int_data[i];
+						}
 				}}}
 				row.set_int(names.get(i) as String, int_v);
 				embed "c" {{{
-							}
-							else if(type[i] == 1) {
-								double_v = double_data[i];
+					}
+					else if(type[i] == 1) {
+						if(is_null[i]) {
+							double_v = 0.0;
+						}
+						else {
+							double_v = double_data[i];
+						}
 				}}}
 				row.set_double(names.get(i) as String, double_v);
 				embed "c" {{{
-							}
-							else if(type[i] == 2) {
-								str_v = str_data[i];
+					}
+					else if(type[i] == 2) {
+						if(is_null[i]) {
 				}}}
-				row.set(names.get(i) as String, String.for_strptr(str_v).dup());
+				row.set(names.get(i) as String, null);
 				embed "c" {{{
-							}
-							else if(type[i] == 3) {
-								sz = length[i];
-								blob_v = blob_data[i];
+						}
+						else {
+							sz = length[i];
+							str_v = str_data[i];
+				}}}
+				row.set(names.get(i) as String, String.for_utf8_buffer(Buffer.for_pointer(Pointer.create(str_v), sz), false).dup());
+				embed "c" {{{
+						}
+					}
+					else if(type[i] == 3) {
+						if(is_null[i]) {
+				}}}
+				row.set(names.get(i) as String, null);
+				embed "c" {{{
+						}
+						else {
+							sz = length[i];
+							blob_v = blob_data[i];
 				}}}
 				row.set(names.get(i) as String, Buffer.for_owned_pointer(Pointer.create(blob_v), sz));
 				embed "c" {{{
-							}
-							i++;
+						}
+					}
+					i++;
 				}}}
 				}
 				r++;
@@ -601,6 +632,7 @@ public class MySQLDatabaseImpl : SQLDatabase
 	}
 
 	public override void close() {
+		database_name = null;
 		if(mysql_db == null) {
 			return;
 		}
