@@ -264,7 +264,6 @@ public class MySQLDatabaseImpl : SQLDatabase
 				if(mysql_stmt_execute(stmt) != 0) {
 					err = mysql_stmt_error(stmt);
 				}
-				memset(bind_ptr, 0, sizeof(bind_ptr)); // FIXME - is this necessary?
 			}}}
 			if(String.is_empty(String.for_strptr(err)) == false) {
 				Log.error("MySQL error: '%s'".printf().add(String.for_strptr(err)).to_string());
