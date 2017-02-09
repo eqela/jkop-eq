@@ -276,7 +276,6 @@ public class MySQLDatabaseImpl : SQLDatabase
 					memset(bind_res, 0, sizeof(bind_res));
 					unsigned long length[field_count];
 					int type[field_count];
-					int is_null_v[field_count];
 					int int_data[field_count];
 					double double_data[field_count];
 					char *str_data[field_count];
@@ -349,22 +348,98 @@ public class MySQLDatabaseImpl : SQLDatabase
 					return(Result.for_fail());
 				}
 				var results = LinkedList.create();
+				int current_type;
+				int current_is_null;
+				strptr current_field = null;
 				int int_v = 0;
 				double double_v = 0.0;
 				strptr str_v = null;
 				ptr blob_v = null;
 				int sz = 0;
-				HashTable row = null;
-				int current_type;
-				int current_val;
-				strptr current_field_name = null;
-				// FIXME
-				embed "c" {{{
-					while(!mysql_stmt_fetch(stmt))
-					{
+				var fields = Array.create();
+				int exit_flag = 0;
+				int row_count = 0;
+				while(true) {
+					i = 0;
+					embed "c" {{{
+						if(!mysql_stmt_fetch(stmt)) {
+							row_count++;
+						}
+						else {
+							exit_flag = 1;
+						}
+					}}}
+					if(exit_flag != 0) {
+						Log.debug("MySQL: %d total row(s) fetched".printf().add(row_count).to_string());
+						break;
 					}
-					memset(bind_res, 0, sizeof(bind_res));
-				}}}
+					var row = HashTable.create();
+					while(i < field_count) {
+						str_v = null;
+						blob_v = null;
+						embed "c" {{{
+							current_type = type[i];
+							current_is_null = 0;
+							if(is_null[i]) {
+								current_is_null = 1;
+							}
+							current_field = field_name[i];
+							int_v = 0;
+							double_v = 0.0;
+							sz = 0;
+							if(current_type == 0) {
+								if(current_is_null == 0) {
+									int_v = int_data[i];
+								}
+							}
+							else if(current_type == 1) {
+								if(current_is_null == 0) {
+									double_v = double_data[i];
+								}
+							}
+							else if(current_type == 2) {
+								if(current_is_null == 0) {
+									sz = length[i];
+									str_v = str_data[i];
+								}
+							}
+							else if(current_type == 3) {
+								if(current_is_null == 0) {
+									sz = length[i];
+									blob_v = blob_data[i];
+								}
+							}
+						}}}
+						var key = String.for_strptr(current_field);
+						if(row_count == 1) {
+							fields.append(key);
+						}
+						if(current_type == 0) {
+							row.set_int(key, int_v);
+						}
+						else if(current_type == 1) {
+							row.set_double(key, double_v);
+						}
+						else if(current_type == 2) {
+							if(current_is_null == 0) {
+								row.set(key, String.for_utf8_buffer(Buffer.for_pointer(Pointer.create(str_v), sz), false).dup());
+							}
+							else {
+								row.set(key, null);
+							}
+						}
+						else if(current_type == 3) {
+							if(current_is_null == 0) {
+								row.set(key, Buffer.for_owned_pointer(Pointer.create(blob_v), sz));
+							}
+							else {
+								row.set(key, null);
+							}
+						}
+						i++;
+					}
+					results.append(row);
+				}
 				i = 0;
 				while(i < field_count) {
 					embed "c" {{{
@@ -401,8 +476,7 @@ public class MySQLDatabaseImpl : SQLDatabase
 				}
 				stmt = null;
 				values = null;
-				var names = Array.create(); // FIXME - This should not be here.
-				return(Result.for_result_set(MySQLResultSetIterator.create(results, names)));
+				return(Result.for_result_set(MySQLResultSetIterator.create(results, fields)));
 			}
 			embed "c" {{{
 				if(mysql_stmt_free_result((MYSQL_STMT*)stmt) != 0) {
