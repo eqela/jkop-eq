@@ -271,17 +271,17 @@ public class MySQLDatabaseImpl : SQLDatabase
 				return(Result.for_fail());
 			}
 			if(field_count > 0) {
-				var names = Array.create();
-				strptr name = null;
 				embed "c" {{{
 					MYSQL_BIND bind_res[field_count];
 					memset(bind_res, 0, sizeof(bind_res));
 					unsigned long length[field_count];
 					int type[field_count];
+					int is_null_v[field_count];
 					int int_data[field_count];
 					double double_data[field_count];
 					char *str_data[field_count];
 					char *blob_data[field_count];
+					char *field_name[field_count];
 					my_bool is_null[field_count];
 					my_bool error[field_count];
 					if(mysql_stmt_store_result(stmt)) {
@@ -296,11 +296,7 @@ public class MySQLDatabaseImpl : SQLDatabase
 					i = 0;
 					MYSQL_FIELD *field;
 					while((field = mysql_fetch_field(meta_result))) {
-						name = field->name;
-				}}}
-				names.append(String.for_strptr(name).dup());
-				name = null;
-				embed "c" {{{
+						field_name[i] = field->name;
 						switch(field->type) {
 							case MYSQL_TYPE_LONG:
 								type[i] = 0;
@@ -345,12 +341,13 @@ public class MySQLDatabaseImpl : SQLDatabase
 						i++;
 					}
 					if(mysql_stmt_bind_result(stmt, bind_res)) {
-				}}}
-				Log.error("MySQL error: call on mysql_stmt_bind_result() failed");
-				return(Result.for_fail());
-				embed "c" {{{
+						err = mysql_stmt_error(stmt);
 					}
 				}}}
+				if(String.is_empty(String.for_strptr(err)) == false) {
+					Log.error("MySQL error: '%s'".printf().add(String.for_strptr(err)).to_string());
+					return(Result.for_fail());
+				}
 				var results = LinkedList.create();
 				int int_v = 0;
 				double double_v = 0.0;
@@ -358,71 +355,13 @@ public class MySQLDatabaseImpl : SQLDatabase
 				ptr blob_v = null;
 				int sz = 0;
 				HashTable row = null;
-				int r = 0;
+				int current_type;
+				int current_val;
+				strptr current_field_name = null;
+				// FIXME
 				embed "c" {{{
 					while(!mysql_stmt_fetch(stmt))
 					{
-				}}}
-				row = HashTable.create();
-				i = 0;
-				while(i < field_count) {
-				embed "c" {{{
-					if(type[i] == 0) {
-						if(is_null[i]) {
-							int_v = 0;
-						}
-						else {
-							int_v = int_data[i];
-						}
-				}}}
-				row.set_int(names.get(i) as String, int_v);
-				embed "c" {{{
-					}
-					else if(type[i] == 1) {
-						if(is_null[i]) {
-							double_v = 0.0;
-						}
-						else {
-							double_v = double_data[i];
-						}
-				}}}
-				row.set_double(names.get(i) as String, double_v);
-				embed "c" {{{
-					}
-					else if(type[i] == 2) {
-						if(is_null[i]) {
-				}}}
-				row.set(names.get(i) as String, null);
-				embed "c" {{{
-						}
-						else {
-							sz = length[i];
-							str_v = str_data[i];
-				}}}
-				row.set(names.get(i) as String, String.for_utf8_buffer(Buffer.for_pointer(Pointer.create(str_v), sz), false).dup());
-				embed "c" {{{
-						}
-					}
-					else if(type[i] == 3) {
-						if(is_null[i]) {
-				}}}
-				row.set(names.get(i) as String, null);
-				embed "c" {{{
-						}
-						else {
-							sz = length[i];
-							blob_v = blob_data[i];
-				}}}
-				row.set(names.get(i) as String, Buffer.for_owned_pointer(Pointer.create(blob_v), sz));
-				embed "c" {{{
-						}
-					}
-					i++;
-				}}}
-				}
-				r++;
-				results.append(row);
-				embed "c" {{{
 					}
 					memset(bind_res, 0, sizeof(bind_res));
 				}}}
@@ -462,6 +401,7 @@ public class MySQLDatabaseImpl : SQLDatabase
 				}
 				stmt = null;
 				values = null;
+				var names = Array.create(); // FIXME - This should not be here.
 				return(Result.for_result_set(MySQLResultSetIterator.create(results, names)));
 			}
 			embed "c" {{{
