@@ -680,6 +680,7 @@ public class MySQLDatabaseImpl : SQLDatabase
 		embed "c" {{{
 			mysql_close(mysql_conn);
 			mysql_conn = NULL;
+			mysql_library_end();
 		}}}
 		mysql_db = null;
 	}
