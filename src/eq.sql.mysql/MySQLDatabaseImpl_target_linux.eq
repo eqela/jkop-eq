@@ -78,113 +78,20 @@ public class MySQLDatabaseImpl : SQLDatabase
 				parameter_values.clear();
 				parameter_values = null;
 			}
-			if(mysql_meta_result != null) {
-				var prepare_meta_result = mysql_meta_result;
-				embed "c" {{{
-					mysql_free_result((MYSQL_RES*)prepare_meta_result);
-				}}}
-				mysql_meta_result = null;
-			}
-			if(mysql_stmt != null) {
-				var stmt = mysql_stmt;
-				strptr err = null;
-				embed "c" {{{
-					if(mysql_stmt_close((MYSQL_STMT*)stmt) != 0) {
-						err = mysql_stmt_error(stmt);
-					}
-				}}}
-				mysql_stmt = null;
-			}
-			mysql_db = null;
 		}
 
 		property String mysql_sql;
 		Collection parameter_values;
-		ptr mysql_db = null;
-		ptr mysql_stmt = null;
-		ptr mysql_meta_result = null;
-		int mysql_param_count = 0;
 
-		public bool initialize(ptr mysql_conn, String mysql) {
-			if(mysql_conn == null || String.is_empty(mysql)) {
+		public bool initialize(String mysql) {
+			if(String.is_empty(mysql)) {
 				return(false);
 			}
-			mysql_db = mysql_conn;
 			mysql_sql = mysql;
 			return(true);
 		}
 
-		private bool prepare() {
-			if(mysql_db == null) {
-				Log.error("MySQL error: mysql_db object is null");
-				return(false);
-			}
-			if(String.is_empty(mysql_sql)) {
-				Log.error("MySQL error: mysql_sql string is empty");
-				return(false);
-			}
-			var db = mysql_db;
-			var mysql = mysql_sql;
-			var sql = mysql.to_strptr();
-			ptr stmt = null;
-			ptr meta_result = null;
-			int param_count = 0;
-			strptr err = null;
-			var result = false;
-			embed "c" {{{
-				stmt = (void*)mysql_stmt_init(db);
-				if(stmt == NULL) {
-			}}}
-			Log.error("MySQL error: stmt object is null.");
-			return(false);
-			embed "c" {{{
-				}
-				if(mysql_stmt_prepare(stmt, sql, strlen(sql)) != 0) {
-					err = mysql_stmt_error(stmt);
-			}}}
-			Log.error("MySQL error: %s".printf().add(String.for_strptr(err)).to_string());
-			return(false);
-			embed "c" {{{
-				}
-				MYSQL_RES *prepare_meta_result = mysql_stmt_result_metadata(stmt);
-				if(!prepare_meta_result) {
-					err = mysql_stmt_error(stmt);
-			}}}
-			if(String.is_empty(String.for_strptr(err)) == false) {
-				Log.error("MySQL error: '%s'".printf().add(String.for_strptr(err)).to_string());
-				return(false);
-			}
-			embed "c" {{{
-				}
-				else {
-					meta_result = (MYSQL_RES*)prepare_meta_result;
-			}}}
-			mysql_meta_result = meta_result;
-			embed "c" {{{
-				}
-			}}}
-			mysql_stmt = stmt;
-			embed "c" {{{
-				param_count = mysql_stmt_param_count(stmt);
-			}}}
-			mysql_param_count = param_count;
-			if(mysql_param_count < 0) {
-				Log.error("MySQL error: parameter count: %d".printf().add(mysql_param_count).to_string());
-				return(false);
-			}
-			embed "c" {{{
-				my_bool v = 1;
-				if(mysql_stmt_attr_set(stmt, STMT_ATTR_UPDATE_MAX_LENGTH, (void*)&v)) {
-			}}}
-			Log.error("MySQL error: call on mysql_stmt_attr_set() failed");
-			return(false);
-			embed "c" {{{
-				}
-			}}}
-			return(true);
-		}
-
-		public Result execute() {
+		public Result execute(ptr mysql_db) {
 			if(mysql_db == null) {
 				Log.error("MySQL error: mysql_db object is null");
 				return(Result.for_fail());
@@ -193,17 +100,64 @@ public class MySQLDatabaseImpl : SQLDatabase
 				Log.error("MySQL error: query string is empty");
 				return(Result.for_fail());
 			}
-			if(prepare() == false) {
-				Log.error("MySQL error: failed to prepare query statement");
+			var db = mysql_db;
+			var mysql = mysql_sql;
+			var sql = mysql.to_strptr();
+			ptr stmt = null;
+			ptr meta_result = null;
+			int param_count = 0;
+			strptr err = null;
+			embed "c" {{{
+				stmt = (void*)mysql_stmt_init(db);
+			}}}
+			if(stmt == null) {
+				Log.error("MySQL error: stmt object is null.");
 				return(Result.for_fail());
 			}
-			if(mysql_stmt == null) {
+			embed "c" {{{
+				if(mysql_stmt_prepare(stmt, sql, strlen(sql)) != 0) {
+					err = mysql_stmt_error(stmt);
+				}
+			}}}
+			if(String.is_empty(String.for_strptr(err)) == false) {
+				Log.error("MySQL error: '%s'".printf().add(String.for_strptr(err)).to_string());
+				return(Result.for_fail());
+			}
+			embed "c" {{{
+				MYSQL_RES *prepare_meta_result = mysql_stmt_result_metadata(stmt);
+				if(!prepare_meta_result) {
+					err = mysql_stmt_error(stmt);
+				}
+				else {
+					meta_result = (MYSQL_RES*)prepare_meta_result;
+				}
+			}}}
+			if(String.is_empty(String.for_strptr(err)) == false) {
+				Log.error("MySQL error: '%s'".printf().add(String.for_strptr(err)).to_string());
+				return(Result.for_fail());
+			}
+			embed "c" {{{
+				param_count = mysql_stmt_param_count(stmt);
+			}}}
+			if(param_count < 0) {
+				Log.error("MySQL error: parameter count: %d".printf().add(param_count).to_string());
+				return(Result.for_fail());
+			}
+			int error_flag = 0;
+			embed "c" {{{
+				my_bool v = 1;
+				if(mysql_stmt_attr_set(stmt, STMT_ATTR_UPDATE_MAX_LENGTH, (void*)&v)) {
+					error_flag = 1;
+				}
+			}}}
+			if(error_flag != 0) {
+				Log.error("MySQL error: call on mysql_stmt_attr_set() failed");
+				return(Result.for_fail());
+			}
+			if(stmt == null) {
 				Log.error("MySQL error: query statement object is null");
 				return(Result.for_fail());
 			}
-			var stmt = mysql_stmt;
-			var param_count = mysql_param_count;
-			strptr err = null;
 			embed "c" {{{
 				MYSQL_BIND bind_ptr[param_count];
 				memset(bind_ptr, 0, sizeof(bind_ptr));
@@ -271,12 +225,12 @@ public class MySQLDatabaseImpl : SQLDatabase
 			embed "c" {{{
 				if(mysql_stmt_bind_param(stmt, bind_ptr) != 0) {
 					err = mysql_stmt_error(stmt);
-			}}}
-			Log.error("MySQL error: '%s'".printf().add(String.for_strptr(err)).to_string());
-			return(Result.for_fail());
-			embed "c" {{{
 				}
 			}}}
+			if(String.is_empty(String.for_strptr(err)) == false) {
+				Log.error("MySQL error: '%s'".printf().add(String.for_strptr(err)).to_string());
+				return(Result.for_fail());
+			}
 			for(i = 0; i < param_count; i++) {
 				var o = values.get(i);
 				if(o is BlobValue) {
@@ -289,17 +243,16 @@ public class MySQLDatabaseImpl : SQLDatabase
 					embed "c" {{{
 						if(mysql_stmt_send_long_data(stmt, i, (const char*)data, sz)) {
 							err = mysql_stmt_error(stmt);
-							}}}
-							Log.error("MySQL error: '%s'".printf().add(String.for_strptr(err)).to_string());
-							return(Result.for_fail());
-							embed "c" {{{
 						}
 					}}}
+					if(String.is_empty(String.for_strptr(err)) == false) {
+						Log.error("MySQL error: '%s'".printf().add(String.for_strptr(err)).to_string());
+						return(Result.for_fail());
+					}
 				}
 			}
 			int field_count;
-			if(mysql_meta_result != null) {
-				var meta_result = mysql_meta_result;
+			if(meta_result != null) {
 				embed "c" {{{
 					field_count = mysql_num_fields(meta_result);
 				}}}
@@ -310,16 +263,13 @@ public class MySQLDatabaseImpl : SQLDatabase
 			embed "c" {{{
 				if(mysql_stmt_execute(stmt) != 0) {
 					err = mysql_stmt_error(stmt);
-			}}}
-			Log.error("MySQL error: '%s'".printf().add(String.for_strptr(err)).to_string());
-			return(Result.for_fail());
-			embed "c" {{{
 				}
 			}}}
+			if(String.is_empty(String.for_strptr(err)) == false) {
+				Log.error("MySQL error: '%s'".printf().add(String.for_strptr(err)).to_string());
+				return(Result.for_fail());
+			}
 			if(field_count > 0) {
-				var meta_result = mysql_meta_result;
-				var names = Array.create();
-				strptr name = null;
 				embed "c" {{{
 					MYSQL_BIND bind_res[field_count];
 					memset(bind_res, 0, sizeof(bind_res));
@@ -329,22 +279,22 @@ public class MySQLDatabaseImpl : SQLDatabase
 					double double_data[field_count];
 					char *str_data[field_count];
 					char *blob_data[field_count];
+					char *field_name[field_count];
 					my_bool is_null[field_count];
 					my_bool error[field_count];
 					if(mysql_stmt_store_result(stmt)) {
-				}}}
-				Log.error("MySQL error: call on mysql_stmt_store_result() failed");
-				return(Result.for_fail());
-				embed "c" {{{
+						error_flag = 1;
 					}
+				}}}
+				if(error_flag != 0) {
+					Log.error("MySQL error: call on mysql_stmt_store_result() failed");
+					return(Result.for_fail());
+				}
+				embed "c" {{{
 					i = 0;
 					MYSQL_FIELD *field;
 					while((field = mysql_fetch_field(meta_result))) {
-						name = field->name;
-				}}}
-				names.append(String.for_strptr(name).dup());
-				name = null;
-				embed "c" {{{
+						field_name[i] = field->name;
 						switch(field->type) {
 							case MYSQL_TYPE_LONG:
 								type[i] = 0;
@@ -375,11 +325,11 @@ public class MySQLDatabaseImpl : SQLDatabase
 								break;
 							case MYSQL_TYPE_BLOB:
 								type[i] = 3;
-								bind_ptr[i].buffer_type = MYSQL_TYPE_BLOB;
+								bind_res[i].buffer_type = MYSQL_TYPE_BLOB;
 								blob_data[i] = malloc(field->max_length);
 								bind_res[i].buffer = (char*)blob_data[i];
 								bind_res[i].buffer_length = field->max_length;
-								bind_ptr[i].is_null = &is_null[i];
+								bind_res[i].is_null = &is_null[i];
 								bind_res[i].length = &length[i];
 								bind_res[i].error = &error[i];
 								break;
@@ -389,88 +339,162 @@ public class MySQLDatabaseImpl : SQLDatabase
 						i++;
 					}
 					if(mysql_stmt_bind_result(stmt, bind_res)) {
-				}}}
-				Log.error("MySQL error: call on mysql_stmt_bind_result() failed");
-				return(Result.for_fail());
-				embed "c" {{{
+						err = mysql_stmt_error(stmt);
 					}
 				}}}
+				if(String.is_empty(String.for_strptr(err)) == false) {
+					Log.error("MySQL error: '%s'".printf().add(String.for_strptr(err)).to_string());
+					return(Result.for_fail());
+				}
 				var results = LinkedList.create();
+				int current_type;
+				int current_is_null;
+				strptr current_field = null;
 				int int_v = 0;
 				double double_v = 0.0;
 				strptr str_v = null;
 				ptr blob_v = null;
 				int sz = 0;
-				HashTable row = null;
-				int r = 0;
-				embed "c" {{{
-					while(!mysql_stmt_fetch(stmt))
-					{
-				}}}
-				row = HashTable.create();
-				i = 0;
-				while(i < field_count) {
-				embed "c" {{{
-					if(type[i] == 0) {
-						if(is_null[i]) {
+				var fields = Array.create();
+				int exit_flag = 0;
+				int row_count = 0;
+				while(true) {
+					i = 0;
+					embed "c" {{{
+						if(!mysql_stmt_fetch(stmt)) {
+							row_count++;
+						}
+						else {
+							exit_flag = 1;
+						}
+					}}}
+					if(exit_flag != 0) {
+						Log.debug("MySQL: %d total row(s) fetched".printf().add(row_count).to_string());
+						break;
+					}
+					var row = HashTable.create();
+					while(i < field_count) {
+						str_v = null;
+						blob_v = null;
+						embed "c" {{{
+							current_type = type[i];
+							current_is_null = 0;
+							if(is_null[i]) {
+								current_is_null = 1;
+							}
+							current_field = field_name[i];
 							int_v = 0;
-						}
-						else {
-							int_v = int_data[i];
-						}
-				}}}
-				row.set_int(names.get(i) as String, int_v);
-				embed "c" {{{
-					}
-					else if(type[i] == 1) {
-						if(is_null[i]) {
 							double_v = 0.0;
+							sz = 0;
+							if(current_type == 0) {
+								if(current_is_null == 0) {
+									int_v = int_data[i];
+								}
+							}
+							else if(current_type == 1) {
+								if(current_is_null == 0) {
+									double_v = double_data[i];
+								}
+							}
+							else if(current_type == 2) {
+								if(current_is_null == 0) {
+									sz = length[i];
+									str_v = str_data[i];
+								}
+							}
+							else if(current_type == 3) {
+								if(current_is_null == 0) {
+									sz = length[i];
+									blob_v = blob_data[i];
+								}
+							}
+						}}}
+						var key = String.for_strptr(current_field).dup();
+						if(row_count == 1) {
+							fields.append(key);
 						}
-						else {
-							double_v = double_data[i];
+						if(current_type == 0) {
+							row.set_int(key, int_v);
 						}
-				}}}
-				row.set_double(names.get(i) as String, double_v);
-				embed "c" {{{
+						else if(current_type == 1) {
+							row.set_double(key, double_v);
+						}
+						else if(current_type == 2) {
+							if(current_is_null == 0) {
+								row.set(key, String.for_utf8_buffer(Buffer.for_pointer(Pointer.create(str_v), sz), false).dup());
+							}
+							else {
+								row.set(key, null);
+							}
+						}
+						else if(current_type == 3) {
+							if(current_is_null == 0) {
+								row.set(key, Buffer.dup(Buffer.for_pointer(Pointer.create(blob_v), sz)));
+							}
+							else {
+								row.set(key, null);
+							}
+						}
+						i++;
 					}
-					else if(type[i] == 2) {
-						if(is_null[i]) {
-				}}}
-				row.set(names.get(i) as String, null);
-				embed "c" {{{
-						}
-						else {
-							sz = length[i];
-							str_v = str_data[i];
-				}}}
-				row.set(names.get(i) as String, String.for_utf8_buffer(Buffer.for_pointer(Pointer.create(str_v), sz), false).dup());
-				embed "c" {{{
-						}
-					}
-					else if(type[i] == 3) {
-						if(is_null[i]) {
-				}}}
-				row.set(names.get(i) as String, null);
-				embed "c" {{{
-						}
-						else {
-							sz = length[i];
-							blob_v = blob_data[i];
-				}}}
-				row.set(names.get(i) as String, Buffer.for_owned_pointer(Pointer.create(blob_v), sz));
-				embed "c" {{{
-						}
-					}
-					i++;
-				}}}
+					results.append(row);
 				}
-				r++;
-				results.append(row);
 				embed "c" {{{
+					i = 0;
+					while(i < field_count) {
+						if(type[i] == 2) {
+							free(str_data[i]);
+						}
+						else if(type[i] == 3) {
+							free(blob_data[i]);
+						}
+						i++;
+					}
+					mysql_free_result((MYSQL_RES*)meta_result);
+				}}}
+				meta_result = null;
+				embed "c" {{{
+					if(mysql_stmt_free_result((MYSQL_STMT*)stmt) != 0) {
+						err = mysql_stmt_error(stmt);
 					}
 				}}}
-				return(Result.for_result_set(MySQLResultSetIterator.create(results, names)));
+				if(String.is_empty(String.for_strptr(err)) == false) {
+					Log.error("MySQL error: '%s'".printf().add(String.for_strptr(err)).to_string());
+					return(Result.for_fail());
+				}
+				embed "c" {{{
+					if(mysql_stmt_close((MYSQL_STMT*)stmt) != 0) {
+						err = mysql_stmt_error(stmt);
+					}
+				}}}
+				if(String.is_empty(String.for_strptr(err)) == false) {
+					Log.error("MySQL error: '%s'".printf().add(String.for_strptr(err)).to_string());
+					return(Result.for_fail());
+				}
+				stmt = null;
+				values = null;
+				return(Result.for_result_set(MySQLResultSetIterator.create(results, fields)));
 			}
+			embed "c" {{{
+				if(mysql_stmt_free_result((MYSQL_STMT*)stmt) != 0) {
+					err = mysql_stmt_error(stmt);
+				}
+			}}}
+			if(String.is_empty(String.for_strptr(err)) == false) {
+				Log.error("MySQL error: '%s'".printf().add(String.for_strptr(err)).to_string());
+				return(Result.for_fail());
+			}
+			embed "c" {{{
+				if(mysql_stmt_close((MYSQL_STMT*)stmt) != 0) {
+					err = mysql_stmt_error(stmt);
+				}
+			}}}
+			if(String.is_empty(String.for_strptr(err)) == false) {
+				Log.error("MySQL error: '%s'".printf().add(String.for_strptr(err)).to_string());
+				return(Result.for_fail());
+			}
+			stmt = null;
+			values = null;
 			return(Result.for_success());
 		}
 	}
@@ -653,13 +677,15 @@ public class MySQLDatabaseImpl : SQLDatabase
 		var mysql_conn = mysql_db;
 		embed "c" {{{
 			mysql_close(mysql_conn);
+			mysql_conn = NULL;
+			mysql_library_end();
 		}}}
 		mysql_db = null;
 	}
 
 	public override SQLStatement prepare(String sql) {
 		var v = new MySQLStatement();
-		if(v.initialize(mysql_db, sql) == false) {
+		if(v.initialize(sql) == false) {
 		}
 		return(v);
 	}
@@ -667,7 +693,7 @@ public class MySQLDatabaseImpl : SQLDatabase
 	public override bool execute(SQLStatement stmt) {
 		var st = stmt as MySQLStatement;
 		if(st != null) {
-			var r = st.execute();
+			var r = st.execute(mysql_db);
 			return(r.get_result());
 		}
 		return(false);
@@ -676,7 +702,7 @@ public class MySQLDatabaseImpl : SQLDatabase
 	public override Iterator query(SQLStatement stmt) {
 		var st = stmt as MySQLStatement;
 		if(st != null) {
-			var r = st.execute();
+			var r = st.execute(mysql_db);
 			return(r.get_result_set());
 		}
 		return(null);
