@@ -325,11 +325,11 @@ public class MySQLDatabaseImpl : SQLDatabase
 								break;
 							case MYSQL_TYPE_BLOB:
 								type[i] = 3;
-								bind_ptr[i].buffer_type = MYSQL_TYPE_BLOB;
+								bind_res[i].buffer_type = MYSQL_TYPE_BLOB;
 								blob_data[i] = malloc(field->max_length);
 								bind_res[i].buffer = (char*)blob_data[i];
 								bind_res[i].buffer_length = field->max_length;
-								bind_ptr[i].is_null = &is_null[i];
+								bind_res[i].is_null = &is_null[i];
 								bind_res[i].length = &length[i];
 								bind_res[i].error = &error[i];
 								break;
@@ -409,7 +409,7 @@ public class MySQLDatabaseImpl : SQLDatabase
 								}
 							}
 						}}}
-						var key = String.for_strptr(current_field);
+						var key = String.for_strptr(current_field).dup();
 						if(row_count == 1) {
 							fields.append(key);
 						}
@@ -429,7 +429,7 @@ public class MySQLDatabaseImpl : SQLDatabase
 						}
 						else if(current_type == 3) {
 							if(current_is_null == 0) {
-								row.set(key, Buffer.for_owned_pointer(Pointer.create(blob_v), sz));
+								row.set(key, Buffer.dup(Buffer.for_pointer(Pointer.create(blob_v), sz)));
 							}
 							else {
 								row.set(key, null);
@@ -439,19 +439,17 @@ public class MySQLDatabaseImpl : SQLDatabase
 					}
 					results.append(row);
 				}
-				i = 0;
-				while(i < field_count) {
-					embed "c" {{{
+				embed "c" {{{
+					i = 0;
+					while(i < field_count) {
 						if(type[i] == 2) {
 							free(str_data[i]);
 						}
-						if(type[i] == 3) {
+						else if(type[i] == 3) {
 							free(blob_data[i]);
 						}
-					}}}
-					i++;
-				}
-				embed "c" {{{
+						i++;
+					}
 					mysql_free_result((MYSQL_RES*)meta_result);
 				}}}
 				meta_result = null;
