@@ -158,96 +158,98 @@ public class MySQLDatabaseImpl : SQLDatabase
 				Log.error("MySQL error: query statement object is null");
 				return(Result.for_fail());
 			}
-			embed "c" {{{
-				MYSQL_BIND bind_ptr[param_count];
-				memset(bind_ptr, 0, sizeof(bind_ptr));
-				int int_values[param_count];
-				double double_values[param_count];
-			}}}
 			var values = parameter_values;
 			int i;
-			for(i = 0; i < param_count; i++) {
-				var o = values.get(i);
-				if(o is String) {
-					var v = (String)o;
-					if(v == null) {
+			if(param_count > 0) {
+				embed "c" {{{
+					MYSQL_BIND bind_ptr[param_count];
+					memset(bind_ptr, 0, sizeof(bind_ptr));
+					int int_values[param_count];
+					double double_values[param_count];
+				}}}
+				for(i = 0; i < param_count; i++) {
+					var o = values.get(i);
+					if(o is String) {
+						var v = (String)o;
+						if(v == null) {
+							return(Result.for_fail());
+						}
+						var s = v.to_strptr();
+						embed "c" {{{
+							bind_ptr[i].buffer_type = MYSQL_TYPE_STRING;
+							bind_ptr[i].buffer = (char*)s;
+							bind_ptr[i].buffer_length = strlen(s);
+							bind_ptr[i].is_null = 0;
+							bind_ptr[i].length = 0;
+						}}}
+					}
+					else if(o is IntegerValue) {
+						var v = ((IntegerValue)o).get_value();
+						embed "c" {{{
+							int_values[i] = v;
+							bind_ptr[i].buffer_type = MYSQL_TYPE_LONG;
+							bind_ptr[i].buffer = (char*)&int_values[i];
+							bind_ptr[i].is_null = 0;
+							bind_ptr[i].length = 0;
+						}}}
+					}
+					else if(o is DoubleValue) {
+						var v = ((DoubleValue)o).get_value();
+						embed "c" {{{
+							double_values[i] = v;
+							bind_ptr[i].buffer_type = MYSQL_TYPE_DOUBLE;
+							bind_ptr[i].buffer = (char*)&double_values[i];
+							bind_ptr[i].is_null = 0;
+							bind_ptr[i].length = 0;
+						}}}
+					}
+					else if(o is BlobValue) {
+						var v = ((BlobValue)o).get_value();
+						if(v == null) {
+							return(Result.for_fail());
+						}
+						var sz = v.get_size();
+						embed "c" {{{
+							char *ch[sz];
+							bind_ptr[i].buffer_type = MYSQL_TYPE_BLOB;
+							bind_ptr[i].buffer = (char*)ch;
+							bind_ptr[i].buffer_length = sz;
+							bind_ptr[i].is_null = 0;
+							bind_ptr[i].length = sz;
+						}}}
+					}
+					else {
+						Log.error("MySQL error: unknown parameter detected");
 						return(Result.for_fail());
 					}
-					var s = v.to_strptr();
-					embed "c" {{{
-						bind_ptr[i].buffer_type = MYSQL_TYPE_STRING;
-						bind_ptr[i].buffer = (char*)s;
-						bind_ptr[i].buffer_length = strlen(s);
-						bind_ptr[i].is_null = 0;
-						bind_ptr[i].length = 0;
-					}}}
 				}
-				else if(o is IntegerValue) {
-					var v = ((IntegerValue)o).get_value();
-					embed "c" {{{
-						int_values[i] = v;
-						bind_ptr[i].buffer_type = MYSQL_TYPE_LONG;
-						bind_ptr[i].buffer = (char*)&int_values[i];
-						bind_ptr[i].is_null = 0;
-						bind_ptr[i].length = 0;
-					}}}
-				}
-				else if(o is DoubleValue) {
-					var v = ((DoubleValue)o).get_value();
-					embed "c" {{{
-						double_values[i] = v;
-						bind_ptr[i].buffer_type = MYSQL_TYPE_DOUBLE;
-						bind_ptr[i].buffer = (char*)&double_values[i];
-						bind_ptr[i].is_null = 0;
-						bind_ptr[i].length = 0;
-					}}}
-				}
-				else if(o is BlobValue) {
-					var v = ((BlobValue)o).get_value();
-					if(v == null) {
-						return(Result.for_fail());
+				embed "c" {{{
+					if(mysql_stmt_bind_param(stmt, bind_ptr) != 0) {
+						err = mysql_stmt_error(stmt);
 					}
-					var sz = v.get_size();
-					embed "c" {{{
-						char *ch[sz];
-						bind_ptr[i].buffer_type = MYSQL_TYPE_BLOB;
-						bind_ptr[i].buffer = (char*)ch;
-						bind_ptr[i].buffer_length = sz;
-						bind_ptr[i].is_null = 0;
-						bind_ptr[i].length = sz;
-					}}}
-				}
-				else {
-					Log.error("MySQL error: unknown parameter detected");
+				}}}
+				if(String.is_empty(String.for_strptr(err)) == false) {
+					Log.error("MySQL error: '%s'".printf().add(String.for_strptr(err)).to_string());
 					return(Result.for_fail());
 				}
-			}
-			embed "c" {{{
-				if(mysql_stmt_bind_param(stmt, bind_ptr) != 0) {
-					err = mysql_stmt_error(stmt);
-				}
-			}}}
-			if(String.is_empty(String.for_strptr(err)) == false) {
-				Log.error("MySQL error: '%s'".printf().add(String.for_strptr(err)).to_string());
-				return(Result.for_fail());
-			}
-			for(i = 0; i < param_count; i++) {
-				var o = values.get(i);
-				if(o is BlobValue) {
-					var v = ((BlobValue)o).get_value();
-					if(v == null) {
-						return(Result.for_fail());
-					}
-					var sz = v.get_size();
-					var data = v.get_ptr();
-					embed "c" {{{
-						if(mysql_stmt_send_long_data(stmt, i, (const char*)data, sz)) {
-							err = mysql_stmt_error(stmt);
+				for(i = 0; i < param_count; i++) {
+					var o = values.get(i);
+					if(o is BlobValue) {
+						var v = ((BlobValue)o).get_value();
+						if(v == null) {
+							return(Result.for_fail());
 						}
-					}}}
-					if(String.is_empty(String.for_strptr(err)) == false) {
-						Log.error("MySQL error: '%s'".printf().add(String.for_strptr(err)).to_string());
-						return(Result.for_fail());
+						var sz = v.get_size();
+						var data = v.get_ptr();
+						embed "c" {{{
+							if(mysql_stmt_send_long_data(stmt, i, (const char*)data, sz)) {
+								err = mysql_stmt_error(stmt);
+							}
+						}}}
+						if(String.is_empty(String.for_strptr(err)) == false) {
+							Log.error("MySQL error: '%s'".printf().add(String.for_strptr(err)).to_string());
+							return(Result.for_fail());
+						}
 					}
 				}
 			}
@@ -296,7 +298,10 @@ public class MySQLDatabaseImpl : SQLDatabase
 					while((field = mysql_fetch_field(meta_result))) {
 						field_name[i] = field->name;
 						switch(field->type) {
+							case MYSQL_TYPE_TINY:
+							case MYSQL_TYPE_SHORT:
 							case MYSQL_TYPE_LONG:
+							case MYSQL_TYPE_LONGLONG:
 								type[i] = 0;
 								bind_res[i].buffer_type = MYSQL_TYPE_LONG;
 								bind_res[i].buffer = (char*)&int_data[i];
@@ -304,6 +309,7 @@ public class MySQLDatabaseImpl : SQLDatabase
 								bind_res[i].length = &length[i];
 								bind_res[i].error = &error[i];
 								break;
+							case MYSQL_TYPE_FLOAT:
 							case MYSQL_TYPE_DOUBLE:
 								type[i] = 1;
 								bind_res[i].buffer_type = MYSQL_TYPE_DOUBLE;
@@ -334,7 +340,7 @@ public class MySQLDatabaseImpl : SQLDatabase
 								bind_res[i].error = &error[i];
 								break;
 							default:
-								;
+								printf("MySQL warning: unknown column data type detected\n");
 						}
 						i++;
 					}
