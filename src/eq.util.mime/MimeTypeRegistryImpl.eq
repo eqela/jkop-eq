@@ -820,6 +820,7 @@ class MimeTypeRegistryImpl : MimeTypeRegistry
 	public bool add(String pattern, String mimetype) {
 		bool v = false;
 		if(pattern == null || mimetype == null) {
+			;
 		}
 		else if(pattern.has_prefix("*.") == true) {
 			var key = pattern.substring(2, pattern.get_length() - 2);
@@ -834,6 +835,7 @@ class MimeTypeRegistryImpl : MimeTypeRegistry
 			v = true;
 		}
 		else if(pattern.has_prefix("#") == true) {
+			;
 		}
 		else {
 			ht_mime.set(pattern, mimetype);

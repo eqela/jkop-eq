@@ -296,6 +296,7 @@ public class TemplateProcessor : LoggerObject
 					content = null;
 				}
 				else if("raw".equals(type)) {
+					;
 				}
 				else {
 					log_error("Unknown type for import: `%s'".printf().add(type));
@@ -351,7 +352,7 @@ public class TemplateProcessor : LoggerObject
 				blockctr ++;
 			}
 			else if("end".equals(tagname)) {
-				// already handled
+				; // already handled
 			}
 			else if(tagname != null) {
 				on_custom_tag(vars, result, include_dirs, tagname, words);

@@ -188,6 +188,7 @@ public class PropertyObject : Object
 
 	public PropertyObject copy_properties_from(Object o) {
 		if(o == null) {
+			;
 		}
 		else if(o is PropertyObject) {
 			var it = ((PropertyObject)o).iterate_property_keys();
