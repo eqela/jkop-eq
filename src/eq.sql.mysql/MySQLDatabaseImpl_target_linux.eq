@@ -26,6 +26,11 @@ public class MySQLDatabaseImpl : SQLDatabase
 {
 	class MySQLStatement : SQLStatement
 	{
+		class StringValue
+		{
+			property String value;
+		}
+
 		class BlobValue
 		{
 			property Buffer value;
@@ -40,7 +45,7 @@ public class MySQLDatabaseImpl : SQLDatabase
 		}
 
 		public SQLStatement add_param_str(String val) {
-			parameter_values.append(val);
+			parameter_values.append(new StringValue().set_value(val));
 			return(this);
 		}
 
@@ -166,22 +171,28 @@ public class MySQLDatabaseImpl : SQLDatabase
 					memset(bind_ptr, 0, sizeof(bind_ptr));
 					int int_values[param_count];
 					double double_values[param_count];
+					my_bool is_null_values[param_count];
 				}}}
 				for(i = 0; i < param_count; i++) {
 					var o = values.get(i);
-					if(o is String) {
-						var v = (String)o;
+					if(o is StringValue) {
+						var v = ((StringValue)o).get_value();
 						if(v == null) {
-							return(Result.for_fail());
+							embed "c" {{{
+								is_null_values[i] = 1;
+								bind_ptr[i].is_null = &is_null_values[i];
+							}}}
 						}
-						var s = v.to_strptr();
-						embed "c" {{{
-							bind_ptr[i].buffer_type = MYSQL_TYPE_STRING;
-							bind_ptr[i].buffer = (char*)s;
-							bind_ptr[i].buffer_length = strlen(s);
-							bind_ptr[i].is_null = 0;
-							bind_ptr[i].length = 0;
-						}}}
+						else {
+							var s = v.to_strptr();
+							embed "c" {{{
+								bind_ptr[i].buffer_type = MYSQL_TYPE_STRING;
+								bind_ptr[i].buffer = (char*)s;
+								bind_ptr[i].buffer_length = strlen(s);
+								bind_ptr[i].is_null = 0;
+								bind_ptr[i].length = 0;
+							}}}
+						}
 					}
 					else if(o is IntegerValue) {
 						var v = ((IntegerValue)o).get_value();
@@ -206,17 +217,22 @@ public class MySQLDatabaseImpl : SQLDatabase
 					else if(o is BlobValue) {
 						var v = ((BlobValue)o).get_value();
 						if(v == null) {
-							return(Result.for_fail());
+							embed "c" {{{
+								is_null_values[i] = 1;
+								bind_ptr[i].is_null = &is_null_values[i];
+							}}}
 						}
-						var sz = v.get_size();
-						embed "c" {{{
-							char *ch[sz];
-							bind_ptr[i].buffer_type = MYSQL_TYPE_BLOB;
-							bind_ptr[i].buffer = (char*)ch;
-							bind_ptr[i].buffer_length = sz;
-							bind_ptr[i].is_null = 0;
-							bind_ptr[i].length = sz;
-						}}}
+						else {
+							var sz = v.get_size();
+							embed "c" {{{
+								char *ch[sz];
+								bind_ptr[i].buffer_type = MYSQL_TYPE_BLOB;
+								bind_ptr[i].buffer = (char*)ch;
+								bind_ptr[i].buffer_length = sz;
+								bind_ptr[i].is_null = 0;
+								bind_ptr[i].length = sz;
+							}}}
+						}
 					}
 					else {
 						Log.error("MySQL error: unknown parameter detected");
