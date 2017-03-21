@@ -680,6 +680,57 @@ public class MySQLDatabaseImpl : SQLDatabase
 		return(true);
 	}
 
+	BackgroundTask ping_task;
+
+	class MySQLPingTimer : TimerHandler
+	{
+		public bool on_timer(Object arg) {
+			var db = arg as MySQLDatabaseImpl;
+			if(db == null) {
+				return(false);
+			}
+			return(db.on_ping_timer());
+		}
+	}
+
+	public bool start_ping(BackgroundTaskManager btm, int sec) {
+		if(btm == null || sec < 1) {
+			return(false);
+		}
+		if(ping_task != null) {
+			if(ping_task.abort() == false) {
+				return(false);
+			}
+			ping_task = null;
+		}
+		ping_task = btm.start_timer((1000000 * sec), new MySQLPingTimer(), this);
+		return(ping_task != null);
+	}
+
+	bool allow_ping = true;
+
+	public bool on_ping_timer() {
+		if(mysql_db == null) {
+			return(false);
+		}
+		if(allow_ping == false) {
+			return(true);
+		}
+		var db = mysql_db;
+		strptr err = null;
+		embed "c" {{{
+			if(mysql_ping(db) != 0) {
+				err = mysql_error(db);
+			}
+		}}}
+		if(String.is_empty(String.for_strptr(err)) == false) {
+			Log.error("MySQL ping error: '%s'".printf().add(String.for_strptr(err)).to_string());
+			return(false);
+		}
+		Log.debug("MySQL ping: success");
+		return(true);
+	}
+
 	public override String get_database_type_id() {
 		strptr tid = null;
 		embed "c" {{{
@@ -692,6 +743,10 @@ public class MySQLDatabaseImpl : SQLDatabase
 	}
 
 	public override void close() {
+		if(ping_task != null) {
+			ping_task.abort();
+			ping_task = null;
+		}
 		database_name = null;
 		if(mysql_db == null) {
 			return;
@@ -713,20 +768,26 @@ public class MySQLDatabaseImpl : SQLDatabase
 	}
 
 	public override bool execute(SQLStatement stmt) {
+		allow_ping = false;
 		var st = stmt as MySQLStatement;
 		if(st != null) {
 			var r = st.execute(mysql_db);
+			allow_ping = true;
 			return(r.get_result());
 		}
+		allow_ping = true;
 		return(false);
 	}
 
 	public override Iterator query(SQLStatement stmt) {
+		allow_ping = false;
 		var st = stmt as MySQLStatement;
 		if(st != null) {
 			var r = st.execute(mysql_db);
+			allow_ping = true;
 			return(r.get_result_set());
 		}
+		allow_ping = true;
 		return(null);
 	}
 

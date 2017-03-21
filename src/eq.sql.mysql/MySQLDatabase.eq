@@ -30,4 +30,16 @@ public class MySQLDatabase
 		}
 		return(null);
 	}
+
+	public static bool start_ping(BackgroundTaskManager btm, SQLDatabase database, int sec) {
+		IFDEF("target_linux") {
+			var db = database as MySQLDatabaseImpl;
+			if(db == null) {
+				return(false);
+			}
+			return(db.start_ping(btm, sec));
+		}
+		return(false);
+	}
 }
+
