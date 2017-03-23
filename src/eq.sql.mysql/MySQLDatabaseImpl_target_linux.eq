@@ -640,10 +640,6 @@ public class MySQLDatabaseImpl : SQLDatabase
 		#include <mysql.h>
 	}}}
 
-	public MySQLDatabaseImpl() {
-		mutex = Mutex.create();
-	}
-
 	~MySQLDatabaseImpl() {
 		close();
 	}
@@ -661,6 +657,12 @@ public class MySQLDatabaseImpl : SQLDatabase
 	}
 
 	public bool initialize(String server, String database, String username, String password) {
+		if(String.is_empty(server) || String.is_empty(database) || String.is_empty(username) || String.is_empty(password)) {
+			return(false);
+		}
+		if(mutex == null) {
+			mutex = Mutex.create();
+		}
 		var host = server.to_strptr();
 		database_name = database;
 		var db = database.to_strptr();
@@ -713,7 +715,7 @@ public class MySQLDatabaseImpl : SQLDatabase
 	}
 
 	public bool on_ping_timer() {
-		if(mysql_db == null) {
+		if(mysql_db == null || mutex == null) {
 			return(false);
 		}
 		mutex.lock();
@@ -749,6 +751,7 @@ public class MySQLDatabaseImpl : SQLDatabase
 			ping_task.abort();
 			ping_task = null;
 		}
+		mutex = null;
 		database_name = null;
 		if(mysql_db == null) {
 			return;
@@ -771,7 +774,7 @@ public class MySQLDatabaseImpl : SQLDatabase
 
 	public override bool execute(SQLStatement stmt) {
 		var st = stmt as MySQLStatement;
-		if(st != null) {
+		if(st != null && mutex != null) {
 			mutex.lock();
 			var r = st.execute(mysql_db);
 			mutex.unlock();
@@ -782,7 +785,7 @@ public class MySQLDatabaseImpl : SQLDatabase
 
 	public override Iterator query(SQLStatement stmt) {
 		var st = stmt as MySQLStatement;
-		if(st != null) {
+		if(st != null && mutex != null) {
 			mutex.lock();
 			var r = st.execute(mysql_db);
 			mutex.unlock();
