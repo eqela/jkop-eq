@@ -640,12 +640,17 @@ public class MySQLDatabaseImpl : SQLDatabase
 		#include <mysql.h>
 	}}}
 
+	public MySQLDatabaseImpl() {
+		mutex = Mutex.create();
+	}
+
 	~MySQLDatabaseImpl() {
 		close();
 	}
 
 	ptr mysql_db = null;
 	String database_name;
+	Mutex mutex;
 
 	public static MySQLDatabaseImpl for_server(String server, String database, String username, String password) {
 		var v = new MySQLDatabaseImpl();
@@ -707,15 +712,11 @@ public class MySQLDatabaseImpl : SQLDatabase
 		return(ping_task != null);
 	}
 
-	bool allow_ping = true;
-
 	public bool on_ping_timer() {
 		if(mysql_db == null) {
 			return(false);
 		}
-		if(allow_ping == false) {
-			return(true);
-		}
+		mutex.lock();
 		var db = mysql_db;
 		strptr err = null;
 		embed "c" {{{
@@ -723,6 +724,7 @@ public class MySQLDatabaseImpl : SQLDatabase
 				err = mysql_error(db);
 			}
 		}}}
+		mutex.unlock();
 		if(String.is_empty(String.for_strptr(err)) == false) {
 			Log.error("MySQL ping error: '%s'".printf().add(String.for_strptr(err)).to_string());
 			return(false);
@@ -768,26 +770,24 @@ public class MySQLDatabaseImpl : SQLDatabase
 	}
 
 	public override bool execute(SQLStatement stmt) {
-		allow_ping = false;
 		var st = stmt as MySQLStatement;
 		if(st != null) {
+			mutex.lock();
 			var r = st.execute(mysql_db);
-			allow_ping = true;
+			mutex.unlock();
 			return(r.get_result());
 		}
-		allow_ping = true;
 		return(false);
 	}
 
 	public override Iterator query(SQLStatement stmt) {
-		allow_ping = false;
 		var st = stmt as MySQLStatement;
 		if(st != null) {
+			mutex.lock();
 			var r = st.execute(mysql_db);
-			allow_ping = true;
+			mutex.unlock();
 			return(r.get_result_set());
 		}
-		allow_ping = true;
 		return(null);
 	}
 
