@@ -26,6 +26,11 @@ public class MySQLDatabaseImpl : SQLDatabase
 {
 	class MySQLStatement : SQLStatement
 	{
+		class StringValue
+		{
+			property String value;
+		}
+
 		class BlobValue
 		{
 			property Buffer value;
@@ -40,7 +45,7 @@ public class MySQLDatabaseImpl : SQLDatabase
 		}
 
 		public SQLStatement add_param_str(String val) {
-			parameter_values.append(val);
+			parameter_values.append(new StringValue().set_value(val));
 			return(this);
 		}
 
@@ -166,22 +171,28 @@ public class MySQLDatabaseImpl : SQLDatabase
 					memset(bind_ptr, 0, sizeof(bind_ptr));
 					int int_values[param_count];
 					double double_values[param_count];
+					my_bool is_null_values[param_count];
 				}}}
 				for(i = 0; i < param_count; i++) {
 					var o = values.get(i);
-					if(o is String) {
-						var v = (String)o;
+					if(o is StringValue) {
+						var v = ((StringValue)o).get_value();
 						if(v == null) {
-							return(Result.for_fail());
+							embed "c" {{{
+								is_null_values[i] = 1;
+								bind_ptr[i].is_null = &is_null_values[i];
+							}}}
 						}
-						var s = v.to_strptr();
-						embed "c" {{{
-							bind_ptr[i].buffer_type = MYSQL_TYPE_STRING;
-							bind_ptr[i].buffer = (char*)s;
-							bind_ptr[i].buffer_length = strlen(s);
-							bind_ptr[i].is_null = 0;
-							bind_ptr[i].length = 0;
-						}}}
+						else {
+							var s = v.to_strptr();
+							embed "c" {{{
+								bind_ptr[i].buffer_type = MYSQL_TYPE_STRING;
+								bind_ptr[i].buffer = (char*)s;
+								bind_ptr[i].buffer_length = strlen(s);
+								bind_ptr[i].is_null = 0;
+								bind_ptr[i].length = 0;
+							}}}
+						}
 					}
 					else if(o is IntegerValue) {
 						var v = ((IntegerValue)o).get_value();
@@ -206,17 +217,22 @@ public class MySQLDatabaseImpl : SQLDatabase
 					else if(o is BlobValue) {
 						var v = ((BlobValue)o).get_value();
 						if(v == null) {
-							return(Result.for_fail());
+							embed "c" {{{
+								is_null_values[i] = 1;
+								bind_ptr[i].is_null = &is_null_values[i];
+							}}}
 						}
-						var sz = v.get_size();
-						embed "c" {{{
-							char *ch[sz];
-							bind_ptr[i].buffer_type = MYSQL_TYPE_BLOB;
-							bind_ptr[i].buffer = (char*)ch;
-							bind_ptr[i].buffer_length = sz;
-							bind_ptr[i].is_null = 0;
-							bind_ptr[i].length = sz;
-						}}}
+						else {
+							var sz = v.get_size();
+							embed "c" {{{
+								char *ch[sz];
+								bind_ptr[i].buffer_type = MYSQL_TYPE_BLOB;
+								bind_ptr[i].buffer = (char*)ch;
+								bind_ptr[i].buffer_length = sz;
+								bind_ptr[i].is_null = 0;
+								bind_ptr[i].length = sz;
+							}}}
+						}
 					}
 					else {
 						Log.error("MySQL error: unknown parameter detected");
@@ -630,6 +646,7 @@ public class MySQLDatabaseImpl : SQLDatabase
 
 	ptr mysql_db = null;
 	String database_name;
+	Mutex mutex;
 
 	public static MySQLDatabaseImpl for_server(String server, String database, String username, String password) {
 		var v = new MySQLDatabaseImpl();
@@ -640,6 +657,9 @@ public class MySQLDatabaseImpl : SQLDatabase
 	}
 
 	public bool initialize(String server, String database, String username, String password) {
+		if(String.is_empty(server) || String.is_empty(database) || String.is_empty(username) || String.is_empty(password)) {
+			return(false);
+		}
 		var host = server.to_strptr();
 		database_name = database;
 		var db = database.to_strptr();
@@ -664,6 +684,57 @@ public class MySQLDatabaseImpl : SQLDatabase
 		return(true);
 	}
 
+	BackgroundTask ping_task;
+
+	class MySQLPingTimer : TimerHandler
+	{
+		public bool on_timer(Object arg) {
+			var db = arg as MySQLDatabaseImpl;
+			if(db == null) {
+				return(false);
+			}
+			return(db.on_ping_timer());
+		}
+	}
+
+	public bool start_ping(BackgroundTaskManager btm, int sec) {
+		if(btm == null || sec < 1) {
+			return(false);
+		}
+		if(ping_task != null) {
+			if(ping_task.abort() == false) {
+				return(false);
+			}
+			ping_task = null;
+		}
+		if(mutex == null) {
+			mutex = Mutex.create();
+		}
+		ping_task = btm.start_timer((1000000 * sec), new MySQLPingTimer(), this);
+		return(ping_task != null);
+	}
+
+	public bool on_ping_timer() {
+		if(mysql_db == null || mutex == null) {
+			return(false);
+		}
+		mutex.lock();
+		var db = mysql_db;
+		strptr err = null;
+		embed "c" {{{
+			if(mysql_ping(db) != 0) {
+				err = mysql_error(db);
+			}
+		}}}
+		mutex.unlock();
+		if(String.is_empty(String.for_strptr(err)) == false) {
+			Log.error("MySQL ping error: '%s'".printf().add(String.for_strptr(err)).to_string());
+			return(false);
+		}
+		Log.debug("MySQL ping: success");
+		return(true);
+	}
+
 	public override String get_database_type_id() {
 		strptr tid = null;
 		embed "c" {{{
@@ -676,6 +747,11 @@ public class MySQLDatabaseImpl : SQLDatabase
 	}
 
 	public override void close() {
+		if(ping_task != null) {
+			ping_task.abort();
+			ping_task = null;
+		}
+		mutex = null;
 		database_name = null;
 		if(mysql_db == null) {
 			return;
@@ -699,7 +775,15 @@ public class MySQLDatabaseImpl : SQLDatabase
 	public override bool execute(SQLStatement stmt) {
 		var st = stmt as MySQLStatement;
 		if(st != null) {
-			var r = st.execute(mysql_db);
+			Result r;
+			if(mutex == null) {
+				r = st.execute(mysql_db);
+			}
+			else {
+				mutex.lock();
+				r = st.execute(mysql_db);
+				mutex.unlock();
+			}
 			return(r.get_result());
 		}
 		return(false);
@@ -708,7 +792,15 @@ public class MySQLDatabaseImpl : SQLDatabase
 	public override Iterator query(SQLStatement stmt) {
 		var st = stmt as MySQLStatement;
 		if(st != null) {
-			var r = st.execute(mysql_db);
+			Result r;
+			if(mutex == null) {
+				r = st.execute(mysql_db);
+			}
+			else {
+				mutex.lock();
+				r = st.execute(mysql_db);
+				mutex.unlock();
+			}
 			return(r.get_result_set());
 		}
 		return(null);
