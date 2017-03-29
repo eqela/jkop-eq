@@ -660,9 +660,6 @@ public class MySQLDatabaseImpl : SQLDatabase
 		if(String.is_empty(server) || String.is_empty(database) || String.is_empty(username) || String.is_empty(password)) {
 			return(false);
 		}
-		if(mutex == null) {
-			mutex = Mutex.create();
-		}
 		var host = server.to_strptr();
 		database_name = database;
 		var db = database.to_strptr();
@@ -709,6 +706,9 @@ public class MySQLDatabaseImpl : SQLDatabase
 				return(false);
 			}
 			ping_task = null;
+		}
+		if(mutex == null) {
+			mutex = Mutex.create();
 		}
 		ping_task = btm.start_timer((1000000 * sec), new MySQLPingTimer(), this);
 		return(ping_task != null);
@@ -774,10 +774,16 @@ public class MySQLDatabaseImpl : SQLDatabase
 
 	public override bool execute(SQLStatement stmt) {
 		var st = stmt as MySQLStatement;
-		if(st != null && mutex != null) {
-			mutex.lock();
-			var r = st.execute(mysql_db);
-			mutex.unlock();
+		if(st != null) {
+			Result r;
+			if(mutex == null) {
+				r = st.execute(mysql_db);
+			}
+			else {
+				mutex.lock();
+				r = st.execute(mysql_db);
+				mutex.unlock();
+			}
 			return(r.get_result());
 		}
 		return(false);
@@ -785,10 +791,16 @@ public class MySQLDatabaseImpl : SQLDatabase
 
 	public override Iterator query(SQLStatement stmt) {
 		var st = stmt as MySQLStatement;
-		if(st != null && mutex != null) {
-			mutex.lock();
-			var r = st.execute(mysql_db);
-			mutex.unlock();
+		if(st != null) {
+			Result r;
+			if(mutex == null) {
+				r = st.execute(mysql_db);
+			}
+			else {
+				mutex.lock();
+				r = st.execute(mysql_db);
+				mutex.unlock();
+			}
 			return(r.get_result_set());
 		}
 		return(null);
