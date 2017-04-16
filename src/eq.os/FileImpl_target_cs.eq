@@ -46,10 +46,15 @@ class FileImpl : FileAdapter
 
 	public static File for_app_directory() {
 		strptr v;
-		embed {{{
-			v = System.AppDomain.CurrentDomain.BaseDirectory;
-			// v = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase);
-		}}}
+		IFDEF("target_netcore") {
+			; // FIXME?
+		}
+		ELSE {
+			embed {{{
+				v = System.AppDomain.CurrentDomain.BaseDirectory;
+				// v = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase);
+			}}}
+		}
 		return(new FileImpl().set_complete_path(v));
 	}
 

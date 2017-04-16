@@ -24,8 +24,16 @@
 
 IFDEF("target_winrtcs")
 {
-	// FIXME: Do what???
-	// This is the dummy implementation "for the meantime"
+	class ProcessLauncherBackend
+	{
+		public static Process start_process(ProcessLauncher launcher, bool wait, ProcessLauncherListener listener, Logger logger) {
+			return(null);
+		}
+	}
+}
+
+ELSE IFDEF("target_netcore")
+{
 	class ProcessLauncherBackend
 	{
 		public static Process start_process(ProcessLauncher launcher, bool wait, ProcessLauncherListener listener, Logger logger) {
