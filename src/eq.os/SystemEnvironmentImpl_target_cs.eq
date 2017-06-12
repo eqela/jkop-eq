@@ -54,6 +54,30 @@ class SystemEnvironmentImpl : SystemEnvironmentInterface
 				return(false);
 			}
 		}
+		ELSE IFDEF("target_uwp") {
+			if("windows".equals(id)) {
+				int c;
+				embed {{{
+					c = System.IO.Path.DirectorySeparatorChar;
+				}}}
+				if(c == '\\') {
+					return(true);
+				}
+				return(false);
+			}
+			if("macosx".equals(id)) {
+				if(File.for_native_path("/Applications").is_directory()) {
+					return(true);
+				}
+				return(false);
+			}
+			if("posix".equals(id) || "linux".equals(id) || "unix".equals(id)) {
+				if(File.for_native_path("/bin/sh").is_file()) {
+					return(true);
+				}
+				return(false);
+			}
+		}
 		ELSE {
 			if("windows".equals(id)) {
 				embed "cs" {{{
@@ -264,6 +288,8 @@ class SystemEnvironmentImpl : SystemEnvironmentInterface
 		}
 		ELSE IFDEF("target_netcore") {
 		}
+		ELSE IFDEF("target_uwp") {
+		}
 		ELSE {
 			embed "cs" {{{
 				v = System.Environment.GetFolderPath(System.Environment.SpecialFolder.ProgramFiles);
@@ -280,6 +306,8 @@ class SystemEnvironmentImpl : SystemEnvironmentInterface
 		IFDEF("target_winrtcs") {
 		}
 		ELSE IFDEF("target_netcore") {
+		}
+		ELSE IFDEF("target_uwp") {
 		}
 		ELSE {
 			embed "cs" {{{

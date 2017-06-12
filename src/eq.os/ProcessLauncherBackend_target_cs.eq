@@ -32,6 +32,16 @@ IFDEF("target_winrtcs")
 	}
 }
 
+ELSE IFDEF("target_uwp")
+{
+	class ProcessLauncherBackend
+	{
+		public static Process start_process(ProcessLauncher launcher, bool wait, ProcessLauncherListener listener, Logger logger) {
+			return(null);
+		}
+	}
+}
+
 ELSE IFDEF("target_netcore")
 {
 	class ProcessLauncherBackend

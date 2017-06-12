@@ -49,6 +49,9 @@ class FileImpl : FileAdapter
 		IFDEF("target_netcore") {
 			; // FIXME?
 		}
+		ELSE IFDEF("target_uwp") {
+			; // FIXME?
+		}
 		ELSE {
 			embed {{{
 				v = System.AppDomain.CurrentDomain.BaseDirectory;
@@ -77,7 +80,11 @@ class FileImpl : FileAdapter
 				}
 			}}}
 		}
-		IFNDEF("target_netcore") {
+		IFDEF("target_netcore") {
+		}
+		ELSE IFDEF("target_uwp") {
+		}
+		ELSE {
 			if(v == null) {
 				embed {{{
 					v = System.Environment.GetFolderPath(System.Environment.SpecialFolder.UserProfile);
@@ -173,30 +180,39 @@ class FileImpl : FileAdapter
 			set_mode(-1);
 		}
 
-		embed {{{
-			bool isFileUnixExecutable(string filename) {
-				if(filename == null || System.IO.File.Exists("/bin/sh") == false) {
+		IFDEF("target_uwp") {
+			embed {{{
+				bool isFileUnixExecutable(string filename) {
 					return(false);
 				}
-				bool v = false;
-				try {
-					var process = System.Diagnostics.Process.Start("/bin/sh", "-c 'if [ -x \"" + filename + "\" ]; then exit 0; else exit 1; fi'");
-					if(process == null) {
+			}}}
+		}
+		ELSE {
+			embed {{{
+				bool isFileUnixExecutable(string filename) {
+					if(filename == null || System.IO.File.Exists("/bin/sh") == false) {
 						return(false);
 					}
-					process.WaitForExit();
-					if(process.ExitCode == 0) {
-						v = true;
+					bool v = false;
+					try {
+						var process = System.Diagnostics.Process.Start("/bin/sh", "-c 'if [ -x \"" + filename + "\" ]; then exit 0; else exit 1; fi'");
+						if(process == null) {
+							return(false);
+						}
+						process.WaitForExit();
+						if(process.ExitCode == 0) {
+							v = true;
+						}
+						process.Dispose();
+						process = null;
 					}
-					process.Dispose();
-					process = null;
+					catch(System.Exception e) {
+						v = false;
+					}
+					return(v);
 				}
-				catch(System.Exception e) {
-					v = false;
-				}
-				return(v);
-			}
-		}}}
+			}}}
+		}
 
 		public override int get_mode() {
 			var v = base.get_mode();
